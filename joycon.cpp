@@ -92,7 +92,7 @@ bool Joycon_Initialize(HINSTANCE hInstance, HWND hWnd)
 	}
 	c = 0;
 	HRESULT hr = g_pJoyconInput->EnumDevices(DI8DEVCLASS_GAMECTRL, (LPDIENUMDEVICESCALLBACK)EnumJoyDeviceCallBack, NULL, DIEDFL_ATTACHEDONLY);
-	if (SUCCEEDED(hr)) {
+	if (g_pDevJoycon!=NULL) {
 		//データフォーマットを設定
 		if (FAILED(hr))		return false; // データフォーマットの設定に失敗
 
