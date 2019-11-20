@@ -3,6 +3,7 @@
 #include "common.h"
 #include "mydirect3d.h"
 #include "input.h"
+#include "model.h"
 
 static LPDIRECT3DDEVICE9 g_pDevice;
 static float g_angle = 0.0f;
@@ -12,6 +13,7 @@ static float g_positionY = 1.0f;
 static float g_power = 0.0f;
 bool g_isFly = false;
 static int g_FlyCount = 0;
+static int g_model;
 
 typedef struct HammerVertex_tag
 {
@@ -71,6 +73,7 @@ static const HammerVertex g_cube_vertex[] = {
 void Hammer_Init(void)
 {
 	g_pDevice = MyDirect3D_GetDevice();
+	g_model=Model_SetLoadFile("Asset/Model/hammer.x");
 }
 
 void Hammer_Uninit(void)
@@ -135,8 +138,9 @@ void Hammer_Draw(void)
 	D3DXMatrixRotationY(&mtxRotation, g_angle);  //angleラジアンY軸回転する行列の作成
 	D3DXMatrixTranslation(&mtxTranslation, 2.0f, g_positionY, g_positionZ);
 	mtxWorld = mtxTranslation * mtxRotation;
-	g_pDevice->SetTransform(D3DTS_WORLD, &mtxWorld);  //デバイスにワールド変換を設定
-	g_pDevice->DrawPrimitiveUP(D3DPT_TRIANGLELIST, 12, &g_cube_vertex, sizeof(HammerVertex));
+	Model_Draw(&mtxWorld, g_model);
+	//g_pDevice->SetTransform(D3DTS_WORLD, &mtxWorld);  //デバイスにワールド変換を設定
+	//g_pDevice->DrawPrimitiveUP(D3DPT_TRIANGLELIST, 12, &g_cube_vertex, sizeof(HammerVertex));
 }
 
 D3DXVECTOR3 HamPosition_Get(void)
