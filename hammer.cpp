@@ -127,20 +127,15 @@ void Hammer_Update(void)
 
 void Hammer_Draw(void)
 {
-	D3DXMATRIX mtxNull, mtxWorld, mtxRotation, mtxTranslation;
+	D3DXMATRIX mtxWorld, mtxRotation, mtxTranslation,mtxS,mtxhammerR;
 
-	D3DXMatrixIdentity(&mtxNull);  //単位行列作成
-
-	//描画処理
-	g_pDevice->SetFVF(FVF_CUBE);
 	g_pDevice->SetTexture(0, NULL);
-
-	D3DXMatrixRotationY(&mtxRotation, g_angle);  //angleラジアンY軸回転する行列の作成
+	D3DXMatrixRotationY(&mtxhammerR, D3DXToRadian(90));
+	D3DXMatrixRotationY(&mtxRotation, g_angle);		//angleラジアンY軸回転する行列の作成
 	D3DXMatrixTranslation(&mtxTranslation, 2.0f, g_positionY, g_positionZ);
-	mtxWorld = mtxTranslation * mtxRotation;
+	D3DXMatrixScaling(&mtxS, 0.3f, 0.3f, 0.3f);
+	mtxWorld = mtxS * mtxhammerR * mtxTranslation * mtxRotation;
 	Model_Draw(&mtxWorld, g_model);
-	//g_pDevice->SetTransform(D3DTS_WORLD, &mtxWorld);  //デバイスにワールド変換を設定
-	//g_pDevice->DrawPrimitiveUP(D3DPT_TRIANGLELIST, 12, &g_cube_vertex, sizeof(HammerVertex));
 }
 
 D3DXVECTOR3 HamPosition_Get(void)
