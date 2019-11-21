@@ -2,14 +2,9 @@
 #ifndef CAMERA_H_
 #define CAMERA_H_
 #include<d3dx9.h>
+#include"common.h"
 
 #define AT_L (10.0f)
-
-typedef struct LocalVecter_Tag {
-	D3DXVECTOR3 Front;
-	D3DXVECTOR3 Right;
-	D3DXVECTOR3 Up;
-}LocalVecter;
 
 typedef struct Camera_Tag {
 	LocalVecter LocalVec;
