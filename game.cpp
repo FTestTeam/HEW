@@ -7,24 +7,24 @@
 
 void Game_Init()
 {
-	Hammer_Init();
 	Player_Init();
+	Hammer_Init();
 }
 
 void Game_UnInit()
 {
-	Hammer_Uninit();
 	Player_UnInit();
+	Hammer_Uninit();
 }
 
 void Game_Update()
 {
-	Hammer_Update();
 	Player_Update();
+	Hammer_Update();
 }
 
 void Game_Draw() 
 {
-	Hammer_Draw();
 	Player_Draw();
+	Hammer_Draw();
 }

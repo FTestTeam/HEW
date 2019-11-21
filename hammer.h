@@ -8,5 +8,6 @@ void Hammer_Update(void);
 void Hammer_Draw(void);
 
 D3DXVECTOR3 HamPosition_Get(void);
+void Hammer_SetPosition(D3DXVECTOR3 pos);
 
 #endif // !_HAMMER_H_
