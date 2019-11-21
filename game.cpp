@@ -3,32 +3,28 @@
 #include"model.h"
 #include"mydirect3d.h"
 #include"hammer.h"
-
-static int cart;
+#include"player.h"
 
 void Game_Init()
 {
+	Player_Init();
 	Hammer_Init();
-	Cube_Init();
-	cart=Model_SetLoadFile("Asset/Model/cart.x");
 }
 
 void Game_UnInit()
 {
+	Player_UnInit();
 	Hammer_Uninit();
-	Cube_UnInit();
 }
 
 void Game_Update()
 {
+	Player_Update();
 	Hammer_Update();
-	Cube_Update();
 }
 
 void Game_Draw() 
 {
+	Player_Draw();
 	Hammer_Draw();
-	D3DXMATRIX mtx;
-	D3DXMatrixIdentity(&mtx);
-	Model_Draw(&mtx,cart);
 }

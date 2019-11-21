@@ -4,71 +4,18 @@
 #include "mydirect3d.h"
 #include "input.h"
 #include "model.h"
+#include"DebugPrintf.h"
 
 static LPDIRECT3DDEVICE9 g_pDevice;
 static float g_angle = 0.0f;
 static int g_count = 0;
-static float g_positionZ = 0.0f;
-static float g_positionY = 1.0f;
+static float g_positionZ ;
+static float g_positionY ;
+static float g_positionX ;
 static float g_power = 0.0f;
 bool g_isFly = false;
 static int g_FlyCount = 0;
 static int g_model;
-
-typedef struct HammerVertex_tag
-{
-	D3DXVECTOR3 position;
-	D3DXVECTOR3 normal;
-	D3DCOLOR color;
-}HammerVertex;
-
-//ハンマー用キューブ設定(黒)
-static const HammerVertex g_cube_vertex[] = {
-	//正面
-	{ D3DXVECTOR3(-0.5f, 0.5f,-0.5f),D3DXVECTOR3(0.0f,0.0f,-1.0f),D3DCOLOR_RGBA(0,0,0,255) },
-	{ D3DXVECTOR3( 0.5f, 0.5f,-0.5f),D3DXVECTOR3(0.0f,0.0f,-1.0f),D3DCOLOR_RGBA(0,0,0,255) },
-	{ D3DXVECTOR3(-0.5f,-0.5f,-0.5f),D3DXVECTOR3(0.0f,0.0f,-1.0f),D3DCOLOR_RGBA(0,0,0,255) },
-	{ D3DXVECTOR3( 0.5f, 0.5f,-0.5f),D3DXVECTOR3(0.0f,0.0f,-1.0f),D3DCOLOR_RGBA(0,0,0,255) },
-	{ D3DXVECTOR3( 0.5f,-0.5f,-0.5f),D3DXVECTOR3(0.0f,0.0f,-1.0f),D3DCOLOR_RGBA(0,0,0,255) },
-	{ D3DXVECTOR3(-0.5f,-0.5f,-0.5f),D3DXVECTOR3(0.0f,0.0f,-1.0f),D3DCOLOR_RGBA(0,0,0,255) },
-	//右面
-	{ D3DXVECTOR3(0.5f, 0.5f,-0.5f),D3DXVECTOR3(1.0f,0.0f,0.0f),D3DCOLOR_RGBA(0,0,0,255) },
-	{ D3DXVECTOR3(0.5f, 0.5f, 0.5f),D3DXVECTOR3(1.0f,0.0f,0.0f),D3DCOLOR_RGBA(0,0,0,255) },
-	{ D3DXVECTOR3(0.5f,-0.5f,-0.5f),D3DXVECTOR3(1.0f,0.0f,0.0f),D3DCOLOR_RGBA(0,0,0,255) },
-	{ D3DXVECTOR3(0.5f, 0.5f, 0.5f),D3DXVECTOR3(1.0f,0.0f,0.0f),D3DCOLOR_RGBA(0,0,0,255) },
-	{ D3DXVECTOR3(0.5f,-0.5f, 0.5f),D3DXVECTOR3(1.0f,0.0f,0.0f),D3DCOLOR_RGBA(0,0,0,255) },
-	{ D3DXVECTOR3(0.5f,-0.5f,-0.5f),D3DXVECTOR3(1.0f,0.0f,0.0f),D3DCOLOR_RGBA(0,0,0,255) },
-	//左面
-	{ D3DXVECTOR3(-0.5f, 0.5f, 0.5f),D3DXVECTOR3(-1.0f,0.0f,0.0f),D3DCOLOR_RGBA(0,0,0,255) },
-	{ D3DXVECTOR3(-0.5f, 0.5f,-0.5f),D3DXVECTOR3(-1.0f,0.0f,0.0f),D3DCOLOR_RGBA(0,0,0,255) },
-	{ D3DXVECTOR3(-0.5f,-0.5f, 0.5f),D3DXVECTOR3(-1.0f,0.0f,0.0f),D3DCOLOR_RGBA(0,0,0,255) },
-	{ D3DXVECTOR3(-0.5f, 0.5f,-0.5f),D3DXVECTOR3(-1.0f,0.0f,0.0f),D3DCOLOR_RGBA(0,0,0,255) },
-	{ D3DXVECTOR3(-0.5f,-0.5f,-0.5f),D3DXVECTOR3(-1.0f,0.0f,0.0f),D3DCOLOR_RGBA(0,0,0,255) },
-	{ D3DXVECTOR3(-0.5f,-0.5f, 0.5f),D3DXVECTOR3(-1.0f,0.0f,0.0f),D3DCOLOR_RGBA(0,0,0,255) },
-	//後面
-	{ D3DXVECTOR3( 0.5f, 0.5f,0.5f),D3DXVECTOR3(0.0f,0.0f,1.0f),D3DCOLOR_RGBA(0,0,0,255) },
-	{ D3DXVECTOR3(-0.5f, 0.5f,0.5f),D3DXVECTOR3(0.0f,0.0f,1.0f),D3DCOLOR_RGBA(0,0,0,255) },
-	{ D3DXVECTOR3( 0.5f,-0.5f,0.5f),D3DXVECTOR3(0.0f,0.0f,1.0f),D3DCOLOR_RGBA(0,0,0,255) },
-	{ D3DXVECTOR3(-0.5f, 0.5f,0.5f),D3DXVECTOR3(0.0f,0.0f,1.0f),D3DCOLOR_RGBA(0,0,0,255) },
-	{ D3DXVECTOR3(-0.5f,-0.5f,0.5f),D3DXVECTOR3(0.0f,0.0f,1.0f),D3DCOLOR_RGBA(0,0,0,255) },
-	{ D3DXVECTOR3( 0.5f,-0.5f,0.5f),D3DXVECTOR3(0.0f,0.0f,1.0f),D3DCOLOR_RGBA(0,0,0,255) },
-	//上面
-	{ D3DXVECTOR3(-0.5f,0.5f, 0.5f),D3DXVECTOR3(0.0f,1.0f,0.0f),D3DCOLOR_RGBA(0,0,0,255) },
-	{ D3DXVECTOR3( 0.5f,0.5f, 0.5f),D3DXVECTOR3(0.0f,1.0f,0.0f),D3DCOLOR_RGBA(0,0,0,255) },
-	{ D3DXVECTOR3(-0.5f,0.5f,-0.5f),D3DXVECTOR3(0.0f,1.0f,0.0f),D3DCOLOR_RGBA(0,0,0,255) },
-	{ D3DXVECTOR3( 0.5f,0.5f, 0.5f),D3DXVECTOR3(0.0f,1.0f,0.0f),D3DCOLOR_RGBA(0,0,0,255) },
-	{ D3DXVECTOR3( 0.5f,0.5f,-0.5f),D3DXVECTOR3(0.0f,1.0f,0.0f),D3DCOLOR_RGBA(0,0,0,255) },
-	{ D3DXVECTOR3(-0.5f,0.5f,-0.5f),D3DXVECTOR3(0.0f,1.0f,0.0f),D3DCOLOR_RGBA(0,0,0,255) },
-	//下面
-	{ D3DXVECTOR3(-0.5f,-0.5f,-0.5f),D3DXVECTOR3(0.0f,-1.0f,0.0f),D3DCOLOR_RGBA(0,0,0,255) },
-	{ D3DXVECTOR3( 0.5f,-0.5f,-0.5f),D3DXVECTOR3(0.0f,-1.0f,0.0f),D3DCOLOR_RGBA(0,0,0,255) },
-	{ D3DXVECTOR3(-0.5f,-0.5f, 0.5f),D3DXVECTOR3(0.0f,-1.0f,0.0f),D3DCOLOR_RGBA(0,0,0,255) },
-	{ D3DXVECTOR3( 0.5f,-0.5f,-0.5f),D3DXVECTOR3(0.0f,-1.0f,0.0f),D3DCOLOR_RGBA(0,0,0,255) },
-	{ D3DXVECTOR3( 0.5f,-0.5f, 0.5f),D3DXVECTOR3(0.0f,-1.0f,0.0f),D3DCOLOR_RGBA(0,0,0,255) },
-	{ D3DXVECTOR3(-0.5f,-0.5f, 0.5f),D3DXVECTOR3(0.0f,-1.0f,0.0f),D3DCOLOR_RGBA(0,0,0,255) }
-};
-#define FVF_CUBE (D3DFVF_XYZ | D3DFVF_DIFFUSE | D3DFVF_NORMAL)
-
 
 void Hammer_Init(void)
 {
@@ -122,7 +69,7 @@ void Hammer_Update(void)
 	{
 		g_FlyCount = 0;
 	}
-
+	DebugPrintf("%f",g_positionZ);
 }
 
 void Hammer_Draw(void)
@@ -132,7 +79,7 @@ void Hammer_Draw(void)
 	g_pDevice->SetTexture(0, NULL);
 	D3DXMatrixRotationY(&mtxhammerR, D3DXToRadian(90));
 	D3DXMatrixRotationY(&mtxRotation, g_angle);		//angleラジアンY軸回転する行列の作成
-	D3DXMatrixTranslation(&mtxTranslation, 2.0f, g_positionY, g_positionZ);
+	D3DXMatrixTranslation(&mtxTranslation, g_positionX, g_positionY, g_positionZ);
 	D3DXMatrixScaling(&mtxS, 0.3f, 0.3f, 0.3f);
 	mtxWorld = mtxS * mtxhammerR * mtxTranslation * mtxRotation;
 	Model_Draw(&mtxWorld, g_model);
@@ -140,5 +87,13 @@ void Hammer_Draw(void)
 
 D3DXVECTOR3 HamPosition_Get(void)
 {
-	return D3DXVECTOR3 (2.0f, g_positionY, g_positionZ);
+	
+	return D3DXVECTOR3 (g_positionX, g_positionY, g_positionZ);
+}
+
+void Hammer_SetPosition(D3DXVECTOR3 pos) 
+{
+	g_positionX = pos.x;
+	g_positionY = pos.y;
+	g_positionZ = pos.z;
 }
