@@ -4,6 +4,7 @@
 #include "mydirect3d.h"
 #include "input.h"
 #include "model.h"
+#include"DebugPrintf.h"
 
 static LPDIRECT3DDEVICE9 g_pDevice;
 static float g_angle = 0.0f;
@@ -68,7 +69,7 @@ void Hammer_Update(void)
 	{
 		g_FlyCount = 0;
 	}
-
+	DebugPrintf("%f",g_positionZ);
 }
 
 void Hammer_Draw(void)
@@ -86,6 +87,7 @@ void Hammer_Draw(void)
 
 D3DXVECTOR3 HamPosition_Get(void)
 {
+	
 	return D3DXVECTOR3 (g_positionX, g_positionY, g_positionZ);
 }
 
