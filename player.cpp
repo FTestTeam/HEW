@@ -3,6 +3,7 @@
 #include"common.h"
 #include"model.h"
 #include"hammer.h"
+#include"joycon.h"
 
 typedef struct PLAYER_Tag{
 	LocalVecter LocalVec;
@@ -29,7 +30,6 @@ void Player_UnInit()
 
 void Player_Update()
 {
-
 }
 
 void Player_Draw()
@@ -37,4 +37,9 @@ void Player_Draw()
 	D3DXMATRIX mtx;
 	D3DXMatrixIdentity(&mtx);
 	Model_Draw(&mtx, g_Player.ModelId);
+}
+
+D3DXVECTOR3 Player_GetFront(void)
+{
+	return g_Player.LocalVec.Front;
 }

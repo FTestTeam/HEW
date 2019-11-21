@@ -189,9 +189,9 @@ void Joycon_Update(void)
 				g_JoyconState[i] = wJoyconState.rgbButtons[i];
 			}
 
-			g_JoyconAccel[DIJOY_ACCEL_X] = (float)wJoyconState.lRz - 32767.0f;
-			g_JoyconAccel[DIJOY_ACCEL_Y] = (float)wJoyconState.rglSlider[1] - 32767.0f;
-			g_JoyconAccel[DIJOY_ACCEL_Z] = (float)wJoyconState.rglSlider[0] - 32767.0f;
+			g_JoyconAccel[DIJOY_ACCEL_RZ] = (float)wJoyconState.lRz - 32767.0f;
+			g_JoyconAccel[DIJOY_ACCEL_SL0] = (float)wJoyconState.rglSlider[1] - 32767.0f;
+			g_JoyconAccel[DIJOY_ACCEL_SL1] = (float)wJoyconState.rglSlider[0] - 32767.0f;
 
 		}
 		else {

@@ -9,9 +9,7 @@
 static LPDIRECT3DDEVICE9 g_pDevice;
 static float g_angle = 0.0f;
 static int g_count = 0;
-static float g_positionZ ;
-static float g_positionY ;
-static float g_positionX ;
+static D3DXVECTOR3 g_Position;
 static float g_power = 0.0f;
 bool g_isFly = false;
 static int g_FlyCount = 0;
@@ -34,7 +32,6 @@ void Hammer_Update(void)
 	if (Keyboard_IsPress(DIK_SPACE))
 	{
 		g_angle -= 0.1f;
-		g_positionY = 1.0f;
 	}
 	if (Keyboard_IsRelease(DIK_SPACE))
 	{
@@ -45,31 +42,19 @@ void Hammer_Update(void)
 	if (g_isFly)
 	{
 		g_FlyCount+=1;
-		g_positionZ += 1.5f;
-		//g_power -= gravity;
+		g_Position.z += 0.5f;
 		g_power -= gravity * g_FlyCount;
-		g_positionY = (g_power * g_FlyCount);
-		//g_positionY += (g_power * time) - (0.5f*gravity*(time*time));
-		/*if (g_power > 0)
-		{
-			g_positionY += 0.2f;
-		}
-		else
-		{
-			g_positionY -= gravity * g_FlyCount;
-			
-		}*/
-		if (g_positionY <= 0.0f)
+		g_Position.y = (g_power * g_FlyCount);
+		if (g_Position.y <= 0.0f)
 		{
 			g_isFly = false;
-			g_positionY = 0.5f;
+			g_Position.y = 0.5f;
 		}
 	}
 	else
 	{
 		g_FlyCount = 0;
 	}
-	DebugPrintf("%f",g_positionZ);
 }
 
 void Hammer_Draw(void)
@@ -77,23 +62,22 @@ void Hammer_Draw(void)
 	D3DXMATRIX mtxWorld, mtxRotation, mtxTranslation,mtxS,mtxhammerR;
 
 	g_pDevice->SetTexture(0, NULL);
-	D3DXMatrixRotationY(&mtxhammerR, D3DXToRadian(90));
+	D3DXMatrixRotationY(&mtxhammerR, D3DXToRadian(180));
 	D3DXMatrixRotationY(&mtxRotation, g_angle);		//angleÉâÉWÉAÉìYé≤âÒì]Ç∑ÇÈçsóÒÇÃçÏê¨
-	D3DXMatrixTranslation(&mtxTranslation, g_positionX, g_positionY, g_positionZ);
+	D3DXMatrixTranslation(&mtxTranslation, g_Position.x, g_Position.y, g_Position.z);
 	D3DXMatrixScaling(&mtxS, 0.3f, 0.3f, 0.3f);
 	mtxWorld = mtxS * mtxhammerR * mtxTranslation * mtxRotation;
 	Model_Draw(&mtxWorld, g_model);
 }
 
-D3DXVECTOR3 HamPosition_Get(void)
+D3DXVECTOR3 Hammer_GetPosition(void)
 {
-	
-	return D3DXVECTOR3 (g_positionX, g_positionY, g_positionZ);
+	return g_Position;
 }
 
 void Hammer_SetPosition(D3DXVECTOR3 pos) 
 {
-	g_positionX = pos.x;
-	g_positionY = pos.y;
-	g_positionZ = pos.z;
+	g_Position.x = pos.x;
+	g_Position.y = pos.y+1.0f;
+	g_Position.z = pos.z;
 }

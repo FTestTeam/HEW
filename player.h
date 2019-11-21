@@ -7,4 +7,6 @@ void Player_UnInit();
 void Player_Update();
 void Player_Draw();
 
+D3DXVECTOR3 Player_GetFront(void);
+
 #endif // !PLAYER_H_

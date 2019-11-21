@@ -7,8 +7,6 @@
 SCENE g_NextScene = SCENE_TITLE;		//Å‰‚Ì‰æ–Ê Š®¬”Å‚Íƒ^ƒCƒgƒ‹‚É‚·‚é
 SCENE g_Scene = g_NextScene;
 
-
-
 void Scene_Init(void)
 {
 	switch (g_NextScene)
@@ -38,7 +36,7 @@ void Scene_Uninit(void)
 		Title_Uninit();
 		break;
 	case SCENE_GAME:
-		Game_Uninit();
+		Game_UnInit();
 		break;
 	case SCENE_RESULT:
 		Result_Uninit();
