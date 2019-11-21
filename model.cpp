@@ -17,10 +17,6 @@ typedef struct ModelData_Tag {
 }ModelData;
 
 static ModelData	g_ModelData[MODEL_NUM];
-static LPD3DXMESH	g_pMesh = NULL;			//メッシュインターフェース
-static DWORD		g_MaterialCount = 0;	//マテリアル数	メッシュを描画する回数
-static int 			*g_pTextureIDs = NULL;	//テクスチャ管理番号保存用
-static D3DMATERIAL9 *g_pMaterials = NULL;	//マテリアルカラー保存用
 
 void Model_Init()	//複数化するときにload関数に変更
 {
