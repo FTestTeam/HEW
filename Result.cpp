@@ -8,7 +8,7 @@ static int g_Result_TextureID;
 
 void Result_Init(void)
 {
-	g_Result_TextureID = Texture_SetLoadFile("Texture/Result.png", 1280, 720);
+	g_Result_TextureID = Texture_SetLoadFile("Asset/Texture/Result.png", 1280, 720);
 }
 
 void Result_Uninit(void)

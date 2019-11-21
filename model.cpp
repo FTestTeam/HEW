@@ -31,8 +31,6 @@ void Model_Init()	//•¡”‰»‚·‚é‚Æ‚«‚ÉloadŠÖ”‚É•ÏX
 
 int Model_SetLoadFile(const char *FileName) 
 {
-
-
 	for (int i = 0; i < MODEL_NUM; i++) {
 		if (strcmp(g_ModelData[i].FileName, FileName) == 0) {
 			return i;	//‚·‚Å‚É“o˜^‚³‚ê‚Ä‚¢‚éŠÇ—”Ô†‚ğreturn

@@ -221,6 +221,7 @@ bool Init(HWND hWnd) {
 
 	System_Init();
 	Scene_Init();
+
 	InitSound(hWnd);
 	Camera_Init();
 
@@ -251,6 +252,7 @@ void Update(void) {
 	Keyboard_Update();
 	Joycon_Update();
 	Mouse_Update();
+
 	System_Update();
 	Scene_Update();
 

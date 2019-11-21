@@ -31,7 +31,7 @@ void Hammer_Update(void)
 	float gravity = 0.005f;
 	if (Keyboard_IsPress(DIK_SPACE))
 	{
-		g_angle -= 0.1f;
+		g_angle += 0.1f;
 	}
 	if (Keyboard_IsRelease(DIK_SPACE))
 	{
@@ -65,7 +65,7 @@ void Hammer_Draw(void)
 	D3DXMatrixRotationY(&mtxhammerR, D3DXToRadian(180));
 	D3DXMatrixRotationY(&mtxRotation, g_angle);		//angleÉâÉWÉAÉìYé≤âÒì]Ç∑ÇÈçsóÒÇÃçÏê¨
 	D3DXMatrixTranslation(&mtxTranslation, g_Position.x, g_Position.y, g_Position.z);
-	D3DXMatrixScaling(&mtxS, 0.3f, 0.3f, 0.3f);
+	D3DXMatrixScaling(&mtxS, 0.1f, 0.1f, 0.1f);
 	mtxWorld = mtxS * mtxhammerR * mtxTranslation * mtxRotation;
 	Model_Draw(&mtxWorld, g_model);
 }

@@ -10,7 +10,7 @@ static int g_Title_TextureID;
 
 void Title_Init(void)
 {
-	g_Title_TextureID = Texture_SetLoadFile("Texture/title.png", 1280, 720);
+	g_Title_TextureID = Texture_SetLoadFile("Asset/Texture/title.png", 1280, 720);
 }
 
 void Title_Uninit(void)

@@ -4,6 +4,7 @@
 #include"model.h"
 #include"hammer.h"
 #include"joycon.h"
+#include"cube.h"
 
 typedef struct PLAYER_Tag{
 	LocalVecter LocalVec;
@@ -15,6 +16,8 @@ static PLAYER g_Player;
 
 void Player_Init() 
 {
+	Cube_Init();
+
 	g_Player.Position = {0.0f,0.0f,0.0f};
 	g_Player.LocalVec.Front = { 0.0f, 0.0f, -1.0f };
 	g_Player.ModelId = Model_SetLoadFile("Asset/Model/gradriel.x");
@@ -25,18 +28,25 @@ void Player_Init()
 
 void Player_UnInit()
 {
-
+	Cube_UnInit();
 }
 
 void Player_Update()
 {
+
 }
+
+static float g_fream;
 
 void Player_Draw()
 {
-	D3DXMATRIX mtx;
-	D3DXMatrixIdentity(&mtx);
-	Model_Draw(&mtx, g_Player.ModelId);
+	g_fream += 0.3f;
+	D3DXMATRIX mtx,mtxW,mtxR,mtxRT;
+	D3DXMatrixTranslation(&mtxRT ,-0.0f, 0.0f, 0.0f);
+	D3DXMatrixRotationY(&mtxR, g_fream);
+	D3DXMatrixTranslation(&mtx,0.0f,0.5f,0.0f);
+	mtxW =mtxRT * mtxR * mtx;
+	Cube_Draw(&mtxW);
 }
 
 D3DXVECTOR3 Player_GetFront(void)
