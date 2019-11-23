@@ -24,7 +24,7 @@ void Scene_Init(void)
 	default:
 		break;
 	};
- 	if (Texture_Load() < 0 || Model_Load() <0 ) {
+ 	if (Texture_Load() < 0 || Model_Load() < 0 ) {
 		MessageBox(NULL, "異常が発生したよ(´･ω･`)", "エラーパターン:Texture_Load() < 0", MB_OK);
 	}
 }

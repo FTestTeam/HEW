@@ -8,5 +8,7 @@ void Player_Update();
 void Player_Draw();
 
 D3DXVECTOR3 Player_GetFront(void);
+float Player_GetRotation(void);
+bool Player_IsFly(void);
 
 #endif // !PLAYER_H_

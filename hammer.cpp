@@ -4,7 +4,7 @@
 #include "mydirect3d.h"
 #include "input.h"
 #include "model.h"
-#include"DebugPrintf.h"
+#include "player.h"
 
 static LPDIRECT3DDEVICE9 g_pDevice;
 static float g_angle = 0.0f;
@@ -28,46 +28,31 @@ void Hammer_Uninit(void)
 
 void Hammer_Update(void)
 {
-	float gravity = 0.005f;
-	if (Keyboard_IsPress(DIK_SPACE))
-	{
-		g_angle += 0.1f;
-	}
-	if (Keyboard_IsRelease(DIK_SPACE))
-	{
-		g_isFly = true;
-		g_power = 1.0f;
-	}
-
-	if (g_isFly)
-	{
-		g_FlyCount+=1;
-		g_Position.z += 0.5f;
-		g_power -= gravity * g_FlyCount;
-		g_Position.y = (g_power * g_FlyCount);
-		if (g_Position.y <= 0.0f)
-		{
-			g_isFly = false;
-			g_Position.y = 0.5f;
-		}
-	}
-	else
-	{
-		g_FlyCount = 0;
+	if (Player_IsFly()) {
+		g_Position.z += 0.3f;
+		g_Position.y += 0.05f;
+		g_Position.y = min(g_Position.y, 3.0f);
 	}
 }
 
 void Hammer_Draw(void)
 {
-	D3DXMATRIX mtxWorld, mtxRotation, mtxTranslation,mtxS,mtxhammerR;
-
+	D3DXMATRIX mtxW,mtxS,mtxR,mtxRR,mtxT;
+	
 	g_pDevice->SetTexture(0, NULL);
-	D3DXMatrixRotationY(&mtxhammerR, D3DXToRadian(180));
-	D3DXMatrixRotationY(&mtxRotation, g_angle);		//angleÉâÉWÉAÉìYé≤âÒì]Ç∑ÇÈçsóÒÇÃçÏê¨
-	D3DXMatrixTranslation(&mtxTranslation, g_Position.x, g_Position.y, g_Position.z);
-	D3DXMatrixScaling(&mtxS, 0.1f, 0.1f, 0.1f);
-	mtxWorld = mtxS * mtxhammerR * mtxTranslation * mtxRotation;
-	Model_Draw(&mtxWorld, g_model);
+
+	if (!Player_IsFly()) {
+		D3DXMatrixIdentity(&mtxT);
+		D3DXMatrixRotationY(&mtxR, Player_GetRotation());
+	}
+	else {
+		D3DXMatrixTranslation(&mtxT, g_Position.x, g_Position.y, g_Position.z);
+		D3DXMatrixRotationY(&mtxR, D3DXToRadian(180));
+	}
+	D3DXMatrixRotationX(&mtxRR, D3DXToRadian(-90));
+	D3DXMatrixScaling(&mtxS, 0.01f, 0.01f, 0.01f);
+	mtxW = mtxS * mtxRR* mtxR * mtxT;
+	Model_Draw(&mtxW, g_model);
 }
 
 D3DXVECTOR3 Hammer_GetPosition(void)

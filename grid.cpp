@@ -52,7 +52,7 @@ void Grid_Draw()
 	pDevice->SetTransform(D3DTS_WORLD, &mtxW);
 	pDevice->SetFVF(FVF_GRID);
 	pDevice->SetTexture(0, NULL);
-	pDevice->DrawPrimitiveUP(D3DPT_LINELIST, GRID_PRIMITIVE, &g_Grid_Vertex, sizeof(GridVertex));
+	//pDevice->DrawPrimitiveUP(D3DPT_LINELIST, GRID_PRIMITIVE, &g_Grid_Vertex, sizeof(GridVertex));
 
 	pDevice->SetRenderState(D3DRS_LIGHTING, true);
 }

@@ -257,7 +257,6 @@ void Update(void) {
 	Scene_Update();
 
 	Camera_Update();
-	Cube_Update();
 
 	g_FrameCount++;
 	double time = SystemTimer_GetTime();
