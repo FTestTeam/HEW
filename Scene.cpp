@@ -3,11 +3,10 @@
 #include "game.h"
 #include "texture.h"
 #include "Result.h"
+#include "model.h"
 
 SCENE g_NextScene = SCENE_TITLE;		//最初の画面 完成版はタイトルにする
 SCENE g_Scene = g_NextScene;
-
-
 
 void Scene_Init(void)
 {
@@ -25,7 +24,7 @@ void Scene_Init(void)
 	default:
 		break;
 	};
- 	if (Texture_Load() < 0) {
+ 	if (Texture_Load() < 0 || Model_Load() < 0 ) {
 		MessageBox(NULL, "異常が発生したよ(´･ω･`)", "エラーパターン:Texture_Load() < 0", MB_OK);
 	}
 }
@@ -38,7 +37,7 @@ void Scene_Uninit(void)
 		Title_Uninit();
 		break;
 	case SCENE_GAME:
-		Game_Uninit();
+		Game_UnInit();
 		break;
 	case SCENE_RESULT:
 		Result_Uninit();

@@ -4,7 +4,7 @@
 #include<d3dx9.h>
 #include"common.h"
 
-#define AT_L (10.0f)
+#define AT_L (3.0f)
 
 typedef struct Camera_Tag {
 	LocalVecter LocalVec;

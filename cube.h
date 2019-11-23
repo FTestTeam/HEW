@@ -5,6 +5,6 @@
 void Cube_Init(void);
 void Cube_UnInit(void);
 void Cube_Update(void);
-void Cube_Draw(const D3DXMATRIX *mtx);
+void Cube_Draw(const D3DXMATRIX *mtx,int TextureID);
 
 #endif // !CUBE_H_

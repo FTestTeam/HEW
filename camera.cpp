@@ -4,6 +4,8 @@
 #include"input.h"
 #include"common.h"
 #include"camera.h"
+#include"player.h"
+#include"hammer.h"
 
 enum Dir_enum{
 	front,
@@ -20,8 +22,11 @@ static void camera_donnakimoti(Dir_enum dir);
 static Camera g_camera;
 static D3DXVECTOR3 g_VecDir(0.0f, 0.0f, 0.0f);
 
+static bool DebugCam;
+
 void Camera_Init()
 {
+	
 	g_camera.LocalVec.Front = D3DXVECTOR3(0.0f, -0.3f, 1.0f);
 	g_camera.LocalVec.Right = D3DXVECTOR3(1.0f, 0.0f, 0.0f);
 	D3DXVec3Cross(&g_camera.LocalVec.Up, &g_camera.LocalVec.Front, &g_camera.LocalVec.Right);	//D3DXVec3Cross外積を求める関数　二つのベクトルに直角なベクトルを作る
@@ -30,63 +35,73 @@ void Camera_Init()
 	D3DXVec3Normalize(&g_camera.LocalVec.Right, &g_camera.LocalVec.Right);
 	D3DXVec3Normalize(&g_camera.LocalVec.Up, &g_camera.LocalVec.Up);
 	
-	g_camera.Pos = D3DXVECTOR3(0.0f, 3.0f, -5.0f);
+	g_camera.Pos = D3DXVECTOR3(Hammer_GetPosition().x, Hammer_GetPosition().y+2.0f, Hammer_GetPosition().z-2.0f);
 	g_camera.Fov = D3DXToRadian(60);
 	g_camera.MoveSpeed = 0.3f;
 	g_camera.RotationSpeed = 0.05f;
+
+	DebugCam = false;
 }
 
 void Camera_Update()
 {
-	g_VecDir = D3DXVECTOR3(0.0f, 0.0f, 0.0f);
-	if (Keyboard_IsPress(DIK_LSHIFT)) {
-		if (Keyboard_IsPress(DIK_W)) {
-			camera_rotation(up);
+	if (!DebugCam && Player_IsFly) {
+		g_camera.Pos.y = Hammer_GetPosition().y + 2.0f;
+		g_camera.Pos.z = Hammer_GetPosition().z - 2.0f;
+	}
+	if (Keyboard_IsTrigger(DIK_0)) {
+		DebugCam = true;
+	}
+	if (DebugCam) {
+		g_VecDir = D3DXVECTOR3(0.0f, 0.0f, 0.0f);
+		if (Keyboard_IsPress(DIK_LSHIFT)) {
+			if (Keyboard_IsPress(DIK_W)) {
+				camera_rotation(up);
+			}
+			if (Keyboard_IsPress(DIK_S)) {
+				camera_rotation(down);
+			}
+
+			if (Keyboard_IsPress(DIK_D)) {
+				camera_rotation(right);
+			}
+			if (Keyboard_IsPress(DIK_A)) {
+				camera_rotation(left);
+			}
 		}
-		if (Keyboard_IsPress(DIK_S)) {
-			camera_rotation(down);
+		else {
+			if (Keyboard_IsPress(DIK_W)) {
+				camera_translation(front);
+			}
+			if (Keyboard_IsPress(DIK_S)) {
+				camera_translation(back);
+			}
+
+			if (Keyboard_IsPress(DIK_D)) {
+				camera_translation(right);
+			}
+			if (Keyboard_IsPress(DIK_A)) {
+				camera_translation(left);
+			}
 		}
 
-		if (Keyboard_IsPress(DIK_D)) {
-			camera_rotation(right);
+		if (Keyboard_IsPress(DIK_E)) {
+			camera_translation(up);
 		}
-		if (Keyboard_IsPress(DIK_A)) {
-			camera_rotation(left);
-		}
-	}
-	else {
-		if (Keyboard_IsPress(DIK_W)) {
-			camera_translation(front);
-		}
-		if (Keyboard_IsPress(DIK_S)) {
-			camera_translation(back);
+		if (Keyboard_IsPress(DIK_Q)) {
+			camera_translation(down);
 		}
 
-		if (Keyboard_IsPress(DIK_D)) {
-			camera_translation(right);
+		if (Keyboard_IsPress(DIK_Z)) {
+			camera_donnakimoti(left);
 		}
-		if (Keyboard_IsPress(DIK_A)) {
-			camera_translation(left);
+		if (Keyboard_IsPress(DIK_C)) {
+			camera_donnakimoti(right);
 		}
-	}
 
-	if (Keyboard_IsPress(DIK_E)) {
-		camera_translation(up);
+		D3DXVec3Normalize(&g_VecDir, &g_VecDir);
+		g_camera.Pos += g_VecDir * g_camera.MoveSpeed;
 	}
-	if (Keyboard_IsPress(DIK_Q)) {
-		camera_translation(down);
-	}
-
-	if (Keyboard_IsPress(DIK_Z)) {
-		camera_donnakimoti(left);
-	}
-	if (Keyboard_IsPress(DIK_C)) {
-		camera_donnakimoti(right);
-	}
-
-	D3DXVec3Normalize(&g_VecDir, &g_VecDir);
-	g_camera.Pos += g_VecDir * g_camera.MoveSpeed;
-	
 	LPDIRECT3DDEVICE9 pDevice = MyDirect3D_GetDevice();
 	//=================================================
 	//2．ビュー変換行列

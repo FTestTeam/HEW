@@ -40,9 +40,9 @@
 #define DIJOY_R_R3		26
 #define DIJOY_R_HOME	28
 
-#define DIJOY_ACCEL_X	0
-#define DIJOY_ACCEL_Y	1
-#define DIJOY_ACCEL_Z	2
+#define DIJOY_ACCEL_RZ	0
+#define DIJOY_ACCEL_SL0	1
+#define DIJOY_ACCEL_SL1	2
 /*------------------------------------------------------------------------------
    関数のプロトタイプ宣言
 ------------------------------------------------------------------------------*/

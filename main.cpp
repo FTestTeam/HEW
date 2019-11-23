@@ -22,7 +22,7 @@
 #include"input.h"
 #include"mouse_input.h"
 #include"joycon.h"
-#include"game.h"
+#include"Scene.h"
 #include"model.h"
 #include"texture.h"
 #include"grid.h"
@@ -150,6 +150,9 @@ int APIENTRY WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLi
 			else {
 				g_StaticFrameTime=time;
 				Update();
+				if (Scene_Change()) {
+					break;
+				}
 				Draw();
 			}
 		}
@@ -217,7 +220,8 @@ bool Init(HWND hWnd) {
 	g_pDevice->SetSamplerState(0, D3DSAMP_MINFILTER, D3DTEXF_LINEAR);
 
 	System_Init();
-	Game_Init();
+	Scene_Init();
+
 	InitSound(hWnd);
 	Camera_Init();
 
@@ -237,7 +241,7 @@ void Uninit(void) {
 	Joycon_Finalize();
 	Mouse_Finalize();
 	System_UnInit();
-	Game_UnInit();
+	Scene_Uninit();
 
 	DebugFont_Finalize();
 	MyDirect3D_UnInit();
@@ -248,11 +252,11 @@ void Update(void) {
 	Keyboard_Update();
 	Joycon_Update();
 	Mouse_Update();
+
 	System_Update();
-	Game_Update();
+	Scene_Update();
 
 	Camera_Update();
-	Cube_Update();
 
 	g_FrameCount++;
 	double time = SystemTimer_GetTime();
@@ -275,7 +279,7 @@ void Draw(void) {
 	Grid_Draw();
 	
 	System_Draw();
-	Game_Draw();
+	Scene_Draw();
 
 	debug_logDraw();
 	DebugFont_Draw(1, 1, "%.2f", g_FPS);
