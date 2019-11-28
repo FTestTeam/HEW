@@ -48,13 +48,17 @@ void Player_Update()
 			g_Rspeed += 0.005f;
 			//g_Rspeed = min(g_Rspeed, 1.0f);
 		}
+		else {
+			g_Rspeed -= 0.005f;
+			g_Rspeed = max(g_Rspeed, 0.0f);
+		}
 		g_Ratetion -= g_Rspeed;
 		g_fream++;
 	}
 	if (Keyboard_IsRelease(DIK_SPACE) || Joycon_IsRelease(DIJOY_R_R)) {
 		g_Fly = true;
 	}
-	DebugPrintf("%f\n", Joycon_GetAccel(DIJOY_ACCEL_SL1));
+	//DebugPrintf("%f\n", Joycon_GetAccel(DIJOY_ACCEL_SL1));
 }
 
 void Player_Draw()
