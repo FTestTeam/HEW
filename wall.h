@@ -6,6 +6,8 @@ void Wall_Init(void);
 void Wall_UnInit(void);
 void Wall_Update(void);
 void Wall_Draw(void);
+
 void Wall_Delete(void);
+D3DXVECTOR3 Wall_GetPosition(void);
 
 #endif // !WALL_H_

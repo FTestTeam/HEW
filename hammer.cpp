@@ -5,15 +5,19 @@
 #include "input.h"
 #include "model.h"
 #include "player.h"
+#include "wall.h"
 
 static LPDIRECT3DDEVICE9 g_pDevice;
 static D3DXVECTOR3 g_Position;
+static bool g_bFly;
+static float g_speed;
 static int g_model;
 
 void Hammer_Init(void)
 {
 	g_pDevice = MyDirect3D_GetDevice();
 	g_model=Model_SetLoadFile("Asset/Model/hammer.x");
+	g_bFly = true;
 }
 
 void Hammer_Uninit(void)
@@ -23,10 +27,27 @@ void Hammer_Uninit(void)
 
 void Hammer_Update(void)
 {
-	if (Player_IsFly()) {
+	if (!Keyboard_IsPress(DIK_SPACE)) {
+		if (Wall_GetPosition().z - 1.0f < g_Position.z && Wall_GetPosition().z + 1.0f > g_Position.z) {
+			g_bFly = false;
+		}
+	}
+	else if(Player_IsFly() && Keyboard_IsPress(DIK_SPACE)) {
+		if (Wall_GetPosition().z - 1.0f < g_Position.z) {
+			Wall_Delete();
+		}
+		g_Position.z += 0.1f;
+	}
+
+	if (Player_IsFly() && g_bFly) {
 		g_Position.z += 0.3f;
 		g_Position.y += 0.05f;
 		g_Position.y = min(g_Position.y, 3.0f);
+	}
+	if (!g_bFly) {
+		g_Position.z = Wall_GetPosition().z - 1.0f;
+		g_Position.y -= 0.05f;
+		g_Position.y = max(g_Position.y, -0.5f);
 	}
 }
 

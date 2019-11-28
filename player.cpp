@@ -44,7 +44,7 @@ void Player_UnInit()
 void Player_Update()
 {
 	if (Keyboard_IsPress(DIK_SPACE) || Joycon_IsPress(DIJOY_R_R)) {
-		if (Joycon_GetAccel(DIJOY_ACCEL_SL1) < -30000 || Joycon_GetAccel(DIJOY_ACCEL_SL1) > 30000) {
+		if (Joycon_GetAccel(DIJOY_ACCEL_SL1) < -30000 || Joycon_GetAccel(DIJOY_ACCEL_SL1) > 30000 || Keyboard_IsPress(DIK_SPACE)) {
 			g_Rspeed += 0.005f;
 			//g_Rspeed = min(g_Rspeed, 1.0f);
 		}
