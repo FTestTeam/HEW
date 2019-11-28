@@ -2,7 +2,10 @@
 #include "texture.h"
 #include "sprite.h"
 #include "Scene.h"
+
 #include "score.h"
+#include "input.h"
+#include "common.h"
 
 static int g_Result_TextureID;
 static int g_ResultScore = 0;
@@ -10,8 +13,9 @@ static int g_Score1 = 0, g_Score2 = 0, g_Score3 = 0;
 
 void Result_Init(void)
 {
+
 	g_Result_TextureID = Texture_SetLoadFile("Texture/Score.png", 1280, 720);
-	// “ü‚ê‘Ö‚¦ƒ\[ƒg
+	// ï¿½ï¿½ï¿½Ö‚ï¿½ï¿½\ï¿½[ï¿½g
 	Result_Sort();
 }
 
@@ -22,7 +26,7 @@ void Result_Uninit(void)
 
 void Result_Update(void)
 {
-	if (Keyboard_IsPress(DIK_SPACE))
+	if (Keyboard_IsTrigger(DIK_RETURN))
 	{
 		Scene_SetNextScene(SCENE_TITLE);
 	}
@@ -30,8 +34,9 @@ void Result_Update(void)
 
 void Result_Draw(void)
 {
+
 	Sprite_Draw(g_Result_TextureID, 0, 0);
-	//@Score_Draw(ƒXƒRƒA,xÀ•W,yÀ•W,Œ…”,0–„‚ß,¶Šñ‚¹);
+	//ï¿½@Score_Draw(ï¿½Xï¿½Rï¿½A,xï¿½ï¿½W,yï¿½ï¿½W,ï¿½ï¿½ï¿½ï¿½,0ï¿½ï¿½ï¿½ï¿½,ï¿½ï¿½ï¿½ï¿½);
 	Score_Draw(g_ResultScore, 652, 180, 7, false, true);
 	Score_Draw(g_Score1, 652, 300, 7, false, true);
 	Score_Draw(g_Score2, 652, 360, 7, false, true);

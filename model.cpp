@@ -31,8 +31,6 @@ void Model_Init()	//複数化するときにload関数に変更
 
 int Model_SetLoadFile(const char *FileName) 
 {
-
-
 	for (int i = 0; i < MODEL_NUM; i++) {
 		if (strcmp(g_ModelData[i].FileName, FileName) == 0) {
 			return i;	//すでに登録されている管理番号をreturn
@@ -73,7 +71,8 @@ int Model_Load(void)
 		for (DWORD j = 0; j < g_ModelData[i].Materialcount; j++) {
 			if (pMat[j].pTextureFilename == NULL) {
 				g_ModelData[i].pMaterials[j] = pMat[j].MatD3D;
-				//g_ModelData[i].pMaterials[i].Diffuse=pMat[i].MatD3D.Emissive	//デフューズにアンビエントやエミッシブを入れなおす作業が必要になる可能性がある
+				g_ModelData[i].pMaterials[j].Diffuse.a = 1.0f;
+				//g_ModelData[i].pMaterials[i].Diffuse = pMat[i].MatD3D.Emissive;	//デフューズにアンビエントやエミッシブを入れなおす作業が必要になる可能性がある
 				g_ModelData[i].pTextureID[j] = -1;
 			}
 			else {

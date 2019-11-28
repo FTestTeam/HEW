@@ -38,14 +38,15 @@ static BYTE		g_JoyconStateRelease[32];
 static float	g_JoyconAccel[3];
 
 static int c;	//vjoy Deviceの2つ目を読み込むための変数
+static bool g_bJoy;
 //=============================================================================
 // 入力処理の初期化
 //=============================================================================
 bool initialize(HINSTANCE hInstance)
 {
-	if(g_pJoyconInput == NULL) {
+	if (g_pJoyconInput == NULL) {
 		// DirectInputオブジェクトの作成
-		if(FAILED(DirectInput8Create(hInstance, DIRECTINPUT_VERSION, IID_IDirectInput8, (void**)&g_pJoyconInput, NULL))) {
+		if (FAILED(DirectInput8Create(hInstance, DIRECTINPUT_VERSION, IID_IDirectInput8, (void**)&g_pJoyconInput, NULL))) {
 
 			return false;
 		}
@@ -59,7 +60,7 @@ bool initialize(HINSTANCE hInstance)
 //=============================================================================
 void finalize(void)
 {
-	if(g_pJoyconInput != NULL) {
+	if (g_pJoyconInput != NULL) {
 
 		// DirectInputオブジェクトの開放
 		g_pJoyconInput->Release();
@@ -72,7 +73,7 @@ BOOL CALLBACK EnumJoyDeviceCallBack(LPDIDEVICEINSTANCE lpddi, LPVOID pvRef)
 {
 	HRESULT hr;
 	hr = g_pJoyconInput->CreateDevice(lpddi->guidInstance, &g_pDevJoycon, NULL);
-	if (FAILED(hr)||c!=1) {
+	if (FAILED(hr) || c != 1) {
 		c++;
 		return DIENUM_CONTINUE;
 	}
@@ -85,70 +86,83 @@ BOOL CALLBACK EnumJoyDeviceCallBack(LPDIDEVICEINSTANCE lpddi, LPVOID pvRef)
 bool Joycon_Initialize(HINSTANCE hInstance, HWND hWnd)
 {
 	// 入力処理の初期化
-	if( !initialize(hInstance) ) {
-
+	if (!initialize(hInstance)) {		
 		MessageBox(hWnd, "DirectInputオブジェクトが作れねぇ！", "警告！", MB_ICONWARNING);
+		g_bJoy = false;
 		return false;
 	}
 	c = 0;
-	HRESULT hr = g_pJoyconInput->EnumDevices(DI8DEVCLASS_GAMECTRL, (LPDIENUMDEVICESCALLBACK)EnumJoyDeviceCallBack, NULL, DIEDFL_ATTACHEDONLY);
-	if (g_pDevJoycon!=NULL) {
-		//データフォーマットを設定
-		if (FAILED(hr))		return false; // データフォーマットの設定に失敗
+	g_pJoyconInput->EnumDevices(DI8DEVCLASS_GAMECTRL, (LPDIENUMDEVICESCALLBACK)EnumJoyDeviceCallBack, NULL, DIEDFL_ATTACHEDONLY);
 
-		//モードを設定（フォアグラウンド＆非排他モード）
-		hr = g_pDevJoycon->SetCooperativeLevel(hWnd, DISCL_NONEXCLUSIVE | DISCL_FOREGROUND);
-		if (FAILED(hr))		return false; // モードの設定に失敗
-
-		///*軸の値の範囲を設定
-		//	X軸、Y軸のそれぞれについて、オブジェクトが報告可能な値の範囲をセットする。
-		//	(max-min)は、最大10,000(?)。(max-min)/2が中央値になる。
-		//	差を大きくすれば、アナログ値の細かな動きを捕らえられる。(パッドは、関係なし)
-		//DIPROPRANGE diprg;
-		//ZeroMemory(&diprg, sizeof(diprg));
-		//diprg.diph.dwSize = sizeof(diprg);
-		//diprg.diph.dwHeaderSize = sizeof(diprg.diph);
-		//diprg.diph.dwHow = DIPH_BYOFFSET;
-		//diprg.lMin = RANGE_MIN;
-		//diprg.lMax = RANGE_MAX;
-		//X軸の範囲を設定
-		//diprg.diph.dwObj = DIJOFS_X;
-		//hr = g_pDevJoycon->SetProperty(DIPROP_RANGE, &diprg.diph);
-		//if (FAILED(hr))		return FALSE;
-		//Y軸の範囲を設定
-		//diprg.diph.dwObj = DIJOFS_Y;
-		//hr = g_pDevJoycon->SetProperty(DIPROP_RANGE, &diprg.diph);
-		//if (FAILED(hr))		return FALSE;*/
-
-		// 各軸ごとに、無効のゾーン値を設定する。
-		// 無効ゾーンとは、中央からの微少なジョイスティックの動きを無視する範囲のこと。
-		// 指定する値は、10000に対する相対値(2000なら20パーセント)。
-		//DIPROPDWORD				dipdw;
-		//dipdw.diph.dwSize = sizeof(DIPROPDWORD);
-		//dipdw.diph.dwHeaderSize = sizeof(dipdw.diph);
-		//dipdw.diph.dwHow = DIPH_BYOFFSET;
-		//dipdw.dwData = DEADZONE;
-		////X軸の無効ゾーンを設定
-		//dipdw.diph.dwObj = DIJOFS_X;
-		//hr = g_pDevJoycon->SetProperty(DIPROP_DEADZONE, &dipdw.diph);
-		//if (FAILED(hr))		return FALSE;
-		////Y軸の無効ゾーンを設定
-		//dipdw.diph.dwObj = DIJOFS_Y;
-		//hr = g_pDevJoycon->SetProperty(DIPROP_DEADZONE, &dipdw.diph);
-		//if (FAILED(hr))		return FALSE;
-
-		hr = g_pDevJoycon->Poll();
-		if (FAILED(hr)) {
+	//データフォーマットを設定
+	HRESULT hr = g_pDevJoycon->SetDataFormat(&c_dfDIJoystick);	// ジョイコン用のデータ・フォーマットを設定
+	if (FAILED(hr)) {
+		g_bJoy = false;
+		return false; // データフォーマットの設定に失敗
+	}
+	//モードを設定（フォアグラウンド＆非排他モード）
+	hr = g_pDevJoycon->SetCooperativeLevel(hWnd, DISCL_NONEXCLUSIVE | DISCL_FOREGROUND);
+	if (FAILED(hr)) {
+		g_bJoy = false;
+		return false; // モードの設定に失敗
+	}
+	//軸の値の範囲を設定
+		//X軸、Y軸のそれぞれについて、オブジェクトが報告可能な値の範囲をセットする。
+		//(max-min)は、最大10,000(?)。(max-min)/2が中央値になる。
+		//差を大きくすれば、アナログ値の細かな動きを捕らえられる。(パッドは、関係なし)
+	DIPROPRANGE diprg;
+	ZeroMemory(&diprg, sizeof(diprg));
+	diprg.diph.dwSize = sizeof(diprg);
+	diprg.diph.dwHeaderSize = sizeof(diprg.diph);
+	diprg.diph.dwHow = DIPH_BYOFFSET;
+	diprg.lMin = RANGE_MIN;
+	diprg.lMax = RANGE_MAX;
+	//X軸の範囲を設定
+	diprg.diph.dwObj = DIJOFS_X;
+	hr = g_pDevJoycon->SetProperty(DIPROP_RANGE, &diprg.diph);
+	if (FAILED(hr)) {
+		g_bJoy = false;
+		return FALSE;
+	}
+	//Y軸の範囲を設定
+	diprg.diph.dwObj = DIJOFS_Y;
+	hr = g_pDevJoycon->SetProperty(DIPROP_RANGE, &diprg.diph);
+	if (FAILED(hr)) {
+		g_bJoy = false;
+		return FALSE;
+	}
+	// 各軸ごとに、無効のゾーン値を設定する。
+	// 無効ゾーンとは、中央からの微少なジョイスティックの動きを無視する範囲のこと。
+	// 指定する値は、10000に対する相対値(2000なら20パーセント)。
+	DIPROPDWORD				dipdw;
+	dipdw.diph.dwSize = sizeof(DIPROPDWORD);
+	dipdw.diph.dwHeaderSize = sizeof(dipdw.diph);
+	dipdw.diph.dwHow = DIPH_BYOFFSET;
+	dipdw.dwData = DEADZONE;
+	//X軸の無効ゾーンを設定
+	dipdw.diph.dwObj = DIJOFS_X;
+	hr = g_pDevJoycon->SetProperty(DIPROP_DEADZONE, &dipdw.diph);
+	if (FAILED(hr)) {
+		g_bJoy = false;
+		return FALSE;
+	}
+	//Y軸の無効ゾーンを設定
+	dipdw.diph.dwObj = DIJOFS_Y;
+	hr = g_pDevJoycon->SetProperty(DIPROP_DEADZONE, &dipdw.diph);
+	if (FAILED(hr)) {
+		g_bJoy = false;
+		return FALSE;
+	}
+	hr = g_pDevJoycon->Poll();
+	if (FAILED(hr)) {
+		hr = g_pDevJoycon->Acquire();
+		while (hr == DIERR_INPUTLOST) {
 			hr = g_pDevJoycon->Acquire();
-			while (hr == DIERR_INPUTLOST) {
-				hr = g_pDevJoycon->Acquire();
-			}
 		}
-
-		return true;
 	}
 
-	return false;
+	g_bJoy = true;
+	return true;
 }
 
 
@@ -157,7 +171,7 @@ bool Joycon_Initialize(HINSTANCE hInstance, HWND hWnd)
 //=============================================================================
 void Joycon_Finalize(void)
 {
-	if(g_pDevJoycon != NULL)
+	if (g_bJoy)
 	{// 入力デバイス(ジョイコン)の開放
 		// ジョイコンへのアクセス権を開放(入力制御終了)
 		g_pDevJoycon->Unacquire();
@@ -175,7 +189,7 @@ void Joycon_Finalize(void)
 //=============================================================================
 void Joycon_Update(void)
 {
-	if (g_pDevJoycon != NULL) {
+	if (g_bJoy) {
 		DIJOYSTATE wJoyconState;
 		g_pDevJoycon->Poll();
 		HRESULT hr = g_pDevJoycon->GetDeviceState(sizeof(DIJOYSTATE), &wJoyconState);
@@ -189,9 +203,9 @@ void Joycon_Update(void)
 				g_JoyconState[i] = wJoyconState.rgbButtons[i];
 			}
 
-			g_JoyconAccel[DIJOY_ACCEL_X] = (float)wJoyconState.lRz - 32767.0f;
-			g_JoyconAccel[DIJOY_ACCEL_Y] = (float)wJoyconState.rglSlider[1] - 32767.0f;
-			g_JoyconAccel[DIJOY_ACCEL_Z] = (float)wJoyconState.rglSlider[0] - 32767.0f;
+			g_JoyconAccel[DIJOY_ACCEL_RZ] = (float)wJoyconState.lRz - 32767.0f;
+			g_JoyconAccel[DIJOY_ACCEL_SL0] = (float)wJoyconState.rglSlider[0] - 32767.0f;
+			g_JoyconAccel[DIJOY_ACCEL_SL1] = (float)wJoyconState.rglSlider[1] - 32767.0f;
 
 		}
 		else {
@@ -213,7 +227,7 @@ bool Joycon_IsPress(int nKey)
 //=============================================================================
 bool Joycon_IsTrigger(int nKey)
 {
-	return (g_JoyconStateTrigger[nKey] & 0x80) ? true: false;
+	return (g_JoyconStateTrigger[nKey] & 0x80) ? true : false;
 
 }
 
@@ -222,10 +236,13 @@ bool Joycon_IsTrigger(int nKey)
 //=============================================================================
 bool Joycon_IsRelease(int nKey)
 {
-	return (g_JoyconStateRelease[nKey] & 0x80) ? true: false;
+	return (g_JoyconStateRelease[nKey] & 0x80) ? true : false;
 }
 
-float Joycon_GetAccel(int vec) 
+//=============================================================================
+// ジョイコンの加速度の状態を取得
+//=============================================================================
+float Joycon_GetAccel(int vec)
 {
 	return g_JoyconAccel[vec];
 }
