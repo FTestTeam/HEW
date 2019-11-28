@@ -68,8 +68,8 @@ void Cube_Init(void)
 
 void Cube_UnInit(void)
 {
-	/*g_pIndexBuffer->Release();
-	g_VertexBuffer->Release();*/
+	g_pIndexBuffer->Release();
+	g_VertexBuffer->Release();
 }
 
 void Cube_Update(void) 
