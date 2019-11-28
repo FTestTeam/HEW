@@ -7,12 +7,7 @@
 #include "player.h"
 
 static LPDIRECT3DDEVICE9 g_pDevice;
-static float g_angle = 0.0f;
-static int g_count = 0;
 static D3DXVECTOR3 g_Position;
-static float g_power = 0.0f;
-bool g_isFly = false;
-static int g_FlyCount = 0;
 static int g_model;
 
 void Hammer_Init(void)
@@ -38,8 +33,6 @@ void Hammer_Update(void)
 void Hammer_Draw(void)
 {
 	D3DXMATRIX mtxW,mtxS,mtxR,mtxRR,mtxT;
-	
-	g_pDevice->SetTexture(0, NULL);
 
 	if (!Player_IsFly()) {
 		D3DXMatrixIdentity(&mtxT);
@@ -63,6 +56,6 @@ D3DXVECTOR3 Hammer_GetPosition(void)
 void Hammer_SetPosition(D3DXVECTOR3 pos) 
 {
 	g_Position.x = pos.x;
-	g_Position.y = pos.y+1.0f;
+	g_Position.y = pos.y + 1.0f;
 	g_Position.z = pos.z;
 }
