@@ -6,6 +6,8 @@
 #include"player.h"
 #include"stage.h"
 #include"wall.h"
+#include"Scene.h"
+#include"input.h"
 
 void Game_Init()
 {
@@ -29,6 +31,9 @@ void Game_Update()
 	Hammer_Update();
 	Stage_Update();
 	Wall_Update();
+
+	if(Keyboard_IsTrigger(DIK_RETURN))
+	Scene_SetNextScene(SCENE_RESULT);
 }
 
 void Game_Draw() 

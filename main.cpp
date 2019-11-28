@@ -253,6 +253,9 @@ void Update(void) {
 	Joycon_Update();
 	Mouse_Update();
 
+	if (Joycon_IsPress(DIJOY_L_L)) {
+
+	}
 	System_Update();
 	Scene_Update();
 

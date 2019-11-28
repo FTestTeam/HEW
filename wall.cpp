@@ -18,10 +18,10 @@ typedef struct WallVertex_tag
 static Wall_Vertex g_wall_vertex[] = {
 	//前面
 	{D3DXVECTOR3(-0.5f,0.5f,-0.5f),D3DXVECTOR3(0.0f,0.0f,-1.0f),D3DCOLOR_RGBA(255,255,255,255),D3DXVECTOR2(0.0f,0.0f)},
-	{D3DXVECTOR3(0.5f,0.5f,-0.5f),D3DXVECTOR3(0.0f,0.0f,-1.0f),D3DCOLOR_RGBA(255,255,255,255),D3DXVECTOR2(0.0f,0.25f)},
-	{D3DXVECTOR3(-0.5f,-0.5f,-0.5f),D3DXVECTOR3(0.0f,0.0f,-1.0f),D3DCOLOR_RGBA(255,255,255,255),D3DXVECTOR2(0.25f,0.0f)},
+	{D3DXVECTOR3(0.5f,0.5f,-0.5f),D3DXVECTOR3(0.0f,0.0f,-1.0f),D3DCOLOR_RGBA(255,255,255,255),D3DXVECTOR2(1.0f,0.0f)},
+	{D3DXVECTOR3(-0.5f,-0.5f,-0.5f),D3DXVECTOR3(0.0f,0.0f,-1.0f),D3DCOLOR_RGBA(255,255,255,255),D3DXVECTOR2(0.0f,1.0f)},
 	//{D3DXVECTOR3(0.5f,0.5f,-0.5f),D3DXVECTOR3(0.0f,0.0f,-1.0f),D3DCOLOR_RGBA(255,255,255,255),D3DXVECTOR2(0.0f,0.25f)},
-	{D3DXVECTOR3(0.5f,-0.5f,-0.5f),D3DXVECTOR3(0.0f,0.0f,-1.0f),D3DCOLOR_RGBA(255,255,255,255),D3DXVECTOR2(0.25f,0.25f)},
+	{D3DXVECTOR3(0.5f,-0.5f,-0.5f),D3DXVECTOR3(0.0f,0.0f,-1.0f),D3DCOLOR_RGBA(255,255,255,255),D3DXVECTOR2(1.0f,1.0f)},
 	//{D3DXVECTOR3(-0.5f,-0.5f,-0.5f),D3DXVECTOR3(0.0f,0.0f,-1.0f),D3DCOLOR_RGBA(255,255,255,255),D3DXVECTOR2(0.25f,0.0f)},
 
 	//右側面
@@ -73,7 +73,7 @@ static D3DXVECTOR3 g_pos;
 
 void Wall_Init(void)
 {
-	g_textureID=Texture_SetLoadFile("Asset/Texture/spice_and_wolf.png", 1024, 1024);
+	g_textureID=Texture_SetLoadFile("Asset/Texture/koku-nn.png", 1024, 1024);
 
 	LPDIRECT3DDEVICE9 pDevice = MyDirect3D_GetDevice();
 
@@ -102,7 +102,8 @@ void Wall_Init(void)
 	memcpy(pV, g_wall_vertex, sizeof(g_wall_vertex));
 	g_VertexBuffer->Unlock();
 
-	g_pos = { 0.0f,0.0f,20.0f };
+	g_pos = { 0.0f,-1.0f,30.0f };
+	g_WallUse = true;
 }
 
 void Wall_UnInit(void)
@@ -125,9 +126,9 @@ void Wall_Draw(void)
 		pDevice->SetRenderState(D3DRS_DIFFUSEMATERIALSOURCE, D3DMCS_COLOR1);	//ディフューズマテリアルは頂点カラー
 
 		D3DXMATRIX mtxWorld, mtxRotation, mtxTranslation, mtxTranslation_Center, mtxScaling;
-		D3DXMatrixTranslation(&mtxTranslation_Center, 0.0, 0.0, 0.5);//壁：手前の面の下辺中央を中心に変更
+		D3DXMatrixTranslation(&mtxTranslation_Center, 0.0, 0.5, 0.5);//壁：手前の面の下辺中央を中心に変更
 		D3DXMatrixTranslation(&mtxTranslation, g_pos.x, g_pos.y, g_pos.z);//壁の座標変更
-		D3DXMatrixScaling(&mtxScaling, 4.0f, 12.0f, 0.4f);//壁の拡大率
+		D3DXMatrixScaling(&mtxScaling, 8.0f, 8.0f, 8.0f);//壁の拡大率
 		mtxWorld = mtxTranslation_Center * mtxScaling * mtxTranslation;
 		pDevice->SetTransform(D3DTS_WORLD, &mtxWorld);
 

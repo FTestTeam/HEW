@@ -3,6 +3,7 @@
 #include "sprite.h"
 #include "Scene.h"
 #include "input.h"
+#include "common.h"
 
 static int g_Result_TextureID;
 
@@ -18,7 +19,7 @@ void Result_Uninit(void)
 
 void Result_Update(void)
 {
-	if (Keyboard_IsPress(DIK_RETURN))
+	if (Keyboard_IsTrigger(DIK_RETURN))
 	{
 		Scene_SetNextScene(SCENE_TITLE);
 	}
@@ -26,5 +27,5 @@ void Result_Update(void)
 
 void Result_Draw(void)
 {
-	Sprite_Draw(g_Result_TextureID, 0, 0);
+	Sprite_Draw(g_Result_TextureID, 0 + SCREEN_WIDTH / 2, 0 + SCREEN_HEIGHT / 2);
 }
