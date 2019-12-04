@@ -7,6 +7,7 @@
 #include "player.h"
 #include "wall.h"
 #include "score.h"
+#include "mic.h"
 
 static LPDIRECT3DDEVICE9 g_pDevice;
 static D3DXVECTOR3 g_Position;
@@ -28,7 +29,7 @@ void Hammer_Uninit(void)
 
 void Hammer_Update(void)
 {
-	if (!Keyboard_IsPress(DIK_SPACE)) {
+	/*if (!Keyboard_IsPress(DIK_SPACE)) {
 		if (Wall_GetPosition().z - 1.0f < g_Position.z && Wall_GetPosition().z + 1.0f > g_Position.z) {
 			g_bFly = false;
 		}
@@ -38,10 +39,10 @@ void Hammer_Update(void)
 			Wall_Delete();
 		}
 		g_Position.z += 0.1f;
-	}
+	}*/
 
 	if (Player_IsFly() && g_bFly) {
-		g_Position.z += 0.3f;
+		g_Position.z += 0.3f + Mic_GetVolume()/100.0f;
 		g_Position.y += 0.05f;
 		g_Position.y = min(g_Position.y, 3.0f);
 		AddScore();

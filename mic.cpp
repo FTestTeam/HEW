@@ -53,7 +53,7 @@ void Mic_UnInit()
 
 void Mic_Update()
 {
-	//DebugPrintf("%f\n", fabsf((float)*inHdr->lpData));
+	DebugPrintf("%f\n", fabsf((float)*g_inHdr->lpData));
 	g_inHdr->dwBytesRecorded = 0;
 	waveInAddBuffer(g_Mic, g_inHdr, sizeof(WAVEHDR));
 }

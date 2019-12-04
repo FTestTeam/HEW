@@ -3,14 +3,13 @@
 #include"model.h"
 #include"sound.h"
 #include"light.h"
+#include"mic.h"
 
 void System_Init()
 {
 	Texture_Init();
 	Model_Init();
 	Grid_Init();
-
-
 }
 
 void System_UnInit()
@@ -22,7 +21,7 @@ void System_UnInit()
 
 void System_Update()
 {
-	
+
 }
 
 void System_Draw()
