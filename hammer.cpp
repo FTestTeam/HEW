@@ -6,6 +6,7 @@
 #include "model.h"
 #include "player.h"
 #include "wall.h"
+#include "score.h"
 
 static LPDIRECT3DDEVICE9 g_pDevice;
 static D3DXVECTOR3 g_Position;
@@ -43,6 +44,7 @@ void Hammer_Update(void)
 		g_Position.z += 0.3f;
 		g_Position.y += 0.05f;
 		g_Position.y = min(g_Position.y, 3.0f);
+		AddScore();
 	}
 	if (!g_bFly) {
 		g_Position.z = Wall_GetPosition().z - 1.0f;

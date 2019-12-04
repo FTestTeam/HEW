@@ -26,6 +26,7 @@
 #include"model.h"
 #include"texture.h"
 #include"grid.h"
+#include"mic.h"
 
 /*----------------------------
 	’è”,ƒ}ƒNƒ’è‹`
@@ -219,6 +220,7 @@ bool Init(HWND hWnd) {
 	g_pDevice->SetSamplerState(0, D3DSAMP_ADDRESSV, D3DTADDRESS_WRAP);
 	g_pDevice->SetSamplerState(0, D3DSAMP_MINFILTER, D3DTEXF_LINEAR);
 
+	Mic_Init(hWnd);
 	System_Init();
 	Scene_Init();
 
@@ -240,6 +242,7 @@ void Uninit(void) {
 	Keyboard_Finalize();
 	Joycon_Finalize();
 	Mouse_Finalize();
+	Mic_UnInit();
 	System_UnInit();
 	Scene_Uninit();
 
@@ -256,6 +259,7 @@ void Update(void) {
 	if (Joycon_IsPress(DIJOY_L_L)) {
 
 	}
+	Mic_Update();
 	System_Update();
 	Scene_Update();
 

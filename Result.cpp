@@ -2,7 +2,7 @@
 #include "texture.h"
 #include "sprite.h"
 #include "Scene.h"
-
+#include "common.h"
 #include "score.h"
 #include "input.h"
 #include "common.h"
@@ -35,12 +35,12 @@ void Result_Update(void)
 void Result_Draw(void)
 {
 
-	Sprite_Draw(g_Result_TextureID, 0, 0);
+	Sprite_Draw(g_Result_TextureID, 0 + SCREEN_WIDTH / 2, 0 + SCREEN_HEIGHT / 2);
 	//�@Score_Draw(�X�R�A,x��W,y��W,����,0����,����);
-	Score_Draw(g_ResultScore, 652, 180, 7, false, true);
+	Score_Draw(g_ResultScore, 652, 180 , 7, false, true);
 	Score_Draw(g_Score1, 652, 300, 7, false, true);
-	Score_Draw(g_Score2, 652, 360, 7, false, true);
-	Score_Draw(g_Score3, 652, 420, 7, false, true);
+	Score_Draw(g_Score2, 652 , 360, 7, false, true);
+	Score_Draw(g_Score3, 652 , 420 , 7, false, true);
 }
 
 void Result_GetScore(int x)
