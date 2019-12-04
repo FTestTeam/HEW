@@ -1,6 +1,8 @@
 #include "common.h"
 #include "score.h"
 #include "Result.h"
+#include "sprite.h"
+#include "texture.h"
 
 int g_Score_TextureID;
 int g_Score;

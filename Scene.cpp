@@ -4,6 +4,7 @@
 #include "texture.h"
 #include "Result.h"
 #include "model.h"
+#include "score.h"
 
 SCENE g_NextScene = SCENE_TITLE;		//Å‰‚Ì‰æ–Ê Š®¬”Å‚Íƒ^ƒCƒgƒ‹‚É‚·‚é
 SCENE g_Scene = g_NextScene;
@@ -19,6 +20,7 @@ void Scene_Init(void)
 		Game_Init();
 		break;
 	case SCENE_RESULT:
+		Score_Init();
 		Result_Init();
 		break;
 	default:
@@ -40,6 +42,7 @@ void Scene_Uninit(void)
 		Game_UnInit();
 		break;
 	case SCENE_RESULT:
+		Score_Uninit();
 		Result_Uninit();
 		break;
 	default:

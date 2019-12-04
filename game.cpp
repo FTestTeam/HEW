@@ -8,9 +8,12 @@
 #include"wall.h"
 #include"Scene.h"
 #include"input.h"
+#include"score.h"
+#include"common.h"
 
 void Game_Init()
 {
+	Score_Init();
 	Player_Init();
 	Hammer_Init();
 	Stage_Init();
@@ -42,4 +45,6 @@ void Game_Draw()
 	Hammer_Draw();
 	Stage_Draw();
 	Wall_Draw();
+
+	Score_Draw(GetScore() , SCREEN_WIDTH -48, 0, 7, false, true);
 }
