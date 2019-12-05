@@ -33,7 +33,9 @@ void Player_Init()
 
 	D3DXVECTOR3 w;
 	w = g_Player.Position + g_Player.LocalVec.Front * 1.5f;
-	Hammer_SetPosition(w);
+	Hammer_SetPosition(POS_X,w.x);
+	Hammer_SetPosition(POS_Y, w.y);
+	Hammer_SetPosition(POS_Z, w.z);
 }
 
 void Player_UnInit()

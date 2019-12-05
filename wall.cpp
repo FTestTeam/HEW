@@ -17,52 +17,10 @@ typedef struct WallVertex_tag
 
 static Wall_Vertex g_wall_vertex[] = {
 	//前面
-	{D3DXVECTOR3(-0.5f,0.5f,-0.5f),D3DXVECTOR3(0.0f,0.0f,-1.0f),D3DCOLOR_RGBA(255,255,255,255),D3DXVECTOR2(0.0f,0.0f)},
-	{D3DXVECTOR3(0.5f,0.5f,-0.5f),D3DXVECTOR3(0.0f,0.0f,-1.0f),D3DCOLOR_RGBA(255,255,255,255),D3DXVECTOR2(1.0f,0.0f)},
-	{D3DXVECTOR3(-0.5f,-0.5f,-0.5f),D3DXVECTOR3(0.0f,0.0f,-1.0f),D3DCOLOR_RGBA(255,255,255,255),D3DXVECTOR2(0.0f,1.0f)},
-	//{D3DXVECTOR3(0.5f,0.5f,-0.5f),D3DXVECTOR3(0.0f,0.0f,-1.0f),D3DCOLOR_RGBA(255,255,255,255),D3DXVECTOR2(0.0f,0.25f)},
-	{D3DXVECTOR3(0.5f,-0.5f,-0.5f),D3DXVECTOR3(0.0f,0.0f,-1.0f),D3DCOLOR_RGBA(255,255,255,255),D3DXVECTOR2(1.0f,1.0f)},
-	//{D3DXVECTOR3(-0.5f,-0.5f,-0.5f),D3DXVECTOR3(0.0f,0.0f,-1.0f),D3DCOLOR_RGBA(255,255,255,255),D3DXVECTOR2(0.25f,0.0f)},
-
-	//右側面
-	{D3DXVECTOR3(0.5f,0.5f,-0.5f),D3DXVECTOR3(1.0f,0.0f,0.0f),D3DCOLOR_RGBA(255,255,255,255),D3DXVECTOR2(0.25f,0.0f)},
-	{D3DXVECTOR3(0.5f,0.5f,0.5f),D3DXVECTOR3(1.0f,0.0f,0.0f),D3DCOLOR_RGBA(255,255,255,255),D3DXVECTOR2(0.25f,0.25f)},
-	{D3DXVECTOR3(0.5f,-0.5f,-0.5f),D3DXVECTOR3(1.0f,0.0f,0.0f),D3DCOLOR_RGBA(255,255,255,255),D3DXVECTOR2(0.5f,0.0f)},
-	//{D3DXVECTOR3(0.5f,0.5f,0.5f),D3DXVECTOR3(1.0f,0.0f,0.0f),D3DCOLOR_RGBA(255,255,255,255),D3DXVECTOR2(0.25f,0.25f)},
-	{D3DXVECTOR3(0.5f,-0.5f,0.5f),D3DXVECTOR3(1.0f,0.0f,0.0f),D3DCOLOR_RGBA(255,255,255,255),D3DXVECTOR2(0.5f,0.25f)},
-	//{D3DXVECTOR3(0.5f,-0.5f,-0.5f),D3DXVECTOR3(1.0f,0.0f,0.0f),D3DCOLOR_RGBA(255,255,255,255),D3DXVECTOR2(0.5f,0.0f)},
-
-	//左側面
-	{D3DXVECTOR3(-0.5f,0.5f,0.5f),D3DXVECTOR3(-1.0f,0.0f,0.0f),D3DCOLOR_RGBA(255,255,255,255),D3DXVECTOR2(0.5f,0.0f)},
-	{D3DXVECTOR3(-0.5f,0.5f,-0.5f),D3DXVECTOR3(-1.0f,0.0f,0.0f),D3DCOLOR_RGBA(255,255,255,255),D3DXVECTOR2(0.5f,0.25f)},
-	{D3DXVECTOR3(-0.5f,-0.5f,0.5f),D3DXVECTOR3(-1.0f,0.0f,0.0f),D3DCOLOR_RGBA(255,255,255,255),D3DXVECTOR2(0.75f,0.0f)},
-	//{D3DXVECTOR3(-0.5f,0.5f,-0.5f),D3DXVECTOR3(-1.0f,0.0f,0.0f),D3DCOLOR_RGBA(255,255,255,255),	D3DXVECTOR2(0.5f,0.25f)},
-	{D3DXVECTOR3(-0.5f,-0.5f,-0.5f),D3DXVECTOR3(-1.0f,0.0f,0.0f),D3DCOLOR_RGBA(255,255,255,255),D3DXVECTOR2(0.75f,0.25f)},
-	//{D3DXVECTOR3(-0.5f,-0.5f,0.5f),D3DXVECTOR3(-1.0f,0.0f,0.0f),D3DCOLOR_RGBA(255,255,255,255),D3DXVECTOR2(0.75f,0.0f)},
-
-	//後面
-	{D3DXVECTOR3(0.5f,0.5f,0.5f),D3DXVECTOR3(0.0f,0.0f,1.0f),D3DCOLOR_RGBA(255,255,255,255),D3DXVECTOR2(0.75f,0.0f)},
-	{D3DXVECTOR3(-0.5f,0.5f,0.5f),D3DXVECTOR3(0.0f,0.0f,1.0f),D3DCOLOR_RGBA(255,255,255,255),D3DXVECTOR2(0.75f,0.25f)},
-	{D3DXVECTOR3(0.5f,-0.5f,0.5f),D3DXVECTOR3(0.0f,0.0f,1.0f),D3DCOLOR_RGBA(255,255,255,255),D3DXVECTOR2(1.0f,0.0f)},
-	//{D3DXVECTOR3(-0.5f,0.5f,0.5f),D3DXVECTOR3(0.0f,0.0f,1.0f),D3DCOLOR_RGBA(255,255,255,255),D3DXVECTOR2(0.75f,0.25f)},
-	{D3DXVECTOR3(-0.5f,-0.5f,0.5f),D3DXVECTOR3(0.0f,0.0f,1.0f),D3DCOLOR_RGBA(255,255,255,255),D3DXVECTOR2(1.0f,0.25f)},
-	//{D3DXVECTOR3(0.5f,-0.5f,0.5f),D3DXVECTOR3(0.0f,0.0f,1.0f),D3DCOLOR_RGBA(255,255,255,255),D3DXVECTOR2(1.0f,0.0f)},
-
-	//下面
-	{D3DXVECTOR3(-0.5f,-0.5f,-0.5f),D3DXVECTOR3(0.0f,-1.0f,0.0f),D3DCOLOR_RGBA(255,255,255,255),D3DXVECTOR2(0.0f,0.25f)},
-	{D3DXVECTOR3(0.5f,-0.5f,-0.5f),D3DXVECTOR3(0.0f,-1.0f,0.0f),D3DCOLOR_RGBA(255,255,255,255),D3DXVECTOR2(0.0f,0.5f)},
-	{D3DXVECTOR3(-0.5f,-0.5f,0.5f),D3DXVECTOR3(0.0f,-1.0f,0.0f),D3DCOLOR_RGBA(255,255,255,255),D3DXVECTOR2(0.25f,0.25f)},
-	//{D3DXVECTOR3(0.5f,-0.5f,-0.5f),D3DXVECTOR3(0.0f,-1.0f,0.0f),D3DCOLOR_RGBA(255,255,255,255),D3DXVECTOR2(0.0f,0.5f)},
-	{D3DXVECTOR3(0.5f,-0.5f,0.5f),D3DXVECTOR3(0.0f,-1.0f,0.0f),D3DCOLOR_RGBA(255,255,255,255),D3DXVECTOR2(0.25f,0.5f)},
-	//{D3DXVECTOR3(-0.5f,-0.5f,0.5f),D3DXVECTOR3(0.0f,-1.0f,0.0f),D3DCOLOR_RGBA(255,255,255,255),D3DXVECTOR2(0.25f,0.25f)},
-
-	//上面
-	{D3DXVECTOR3(-0.5f,0.5f,0.5f),D3DXVECTOR3(0.0f,1.0f,0.0f),D3DCOLOR_RGBA(255,255,255,255),D3DXVECTOR2(0.25f,0.25f)},
-	{D3DXVECTOR3(0.5f,0.5f,0.5f),D3DXVECTOR3(0.0f,1.0f,0.0f),D3DCOLOR_RGBA(255,255,255,255),D3DXVECTOR2(0.25f,0.5f)},
-	{D3DXVECTOR3(-0.5f,0.5f,-0.5f),D3DXVECTOR3(0.0f,1.0f,0.0f),D3DCOLOR_RGBA(255,255,255,255),D3DXVECTOR2(0.5f,0.25f)},
-	//{D3DXVECTOR3(0.5f,0.5f,0.5f),D3DXVECTOR3(0.0f,1.0f,0.0f),D3DCOLOR_RGBA(255,255,255,255),D3DXVECTOR2(0.25f,0.5f)},
-	{D3DXVECTOR3(0.5f,0.5f,-0.5f),D3DXVECTOR3(0.0f,1.0f,0.0f),D3DCOLOR_RGBA(255,255,255,255),D3DXVECTOR2(0.5f,0.5f)},
-	//{D3DXVECTOR3(-0.5f,0.5f,-0.5f),D3DXVECTOR3(0.0f,1.0f,0.0f),D3DCOLOR_RGBA(255,255,255,255),D3DXVECTOR2(0.5f,0.25f)},
+	{D3DXVECTOR3(-0.5f,0.5f,0.0f),D3DXVECTOR3(0.0f,0.0f,-1.0f),D3DCOLOR_RGBA(255,255,255,255),D3DXVECTOR2(0.0f,0.0f)},
+	{D3DXVECTOR3(0.5f,0.5f,0.0f),D3DXVECTOR3(0.0f,0.0f,-1.0f),D3DCOLOR_RGBA(255,255,255,255),D3DXVECTOR2(1.0f,0.0f)},
+	{D3DXVECTOR3(-0.5f,-0.5f,0.0f),D3DXVECTOR3(0.0f,0.0f,-1.0f),D3DCOLOR_RGBA(255,255,255,255),D3DXVECTOR2(0.0f,1.0f)},
+	{D3DXVECTOR3(0.5f,-0.5f,0.0f),D3DXVECTOR3(0.0f,0.0f,-1.0f),D3DCOLOR_RGBA(255,255,255,255),D3DXVECTOR2(1.0f,1.0f)},
 };
 
 static int g_textureID = 0;
@@ -75,46 +33,23 @@ void Wall_Init(void)
 {
 	g_textureID=Texture_SetLoadFile("Asset/Texture/koku-nn.png", 1024, 1024);
 
-	LPDIRECT3DDEVICE9 pDevice = MyDirect3D_GetDevice();
-
-	//頂点バッファ
-	pDevice->CreateVertexBuffer(sizeof(Wall_Vertex) * 24, D3DUSAGE_WRITEONLY, FVF_WALL, D3DPOOL_MANAGED, &g_VertexBuffer, NULL);
-	//(Length=借りるメモリの大きさ , usage=D3DUSAGE_WRITEONLYにしておけ , FVF , pool=D3DPOOL_MANAGED , VertexBufferのアドレス,NULL)
-
-	//indexbuffer
-	pDevice->CreateIndexBuffer(sizeof(WORD) * 36, D3DUSAGE_WRITEONLY, D3DFMT_INDEX16, D3DPOOL_MANAGED, &g_pIndexBuffer, NULL);
-	WORD *pIndex;
-	g_pIndexBuffer->Lock(0, 0, (void**)&pIndex, D3DLOCK_DISCARD);
-	int j = 0;
-	for (int i = 0 ; i < 36; i += 6 ) {
-		pIndex[0 + i] = 0 + j;
-		pIndex[1 + i] = 1 + j;
-		pIndex[2 + i] = 2 + j;
-		pIndex[3 + i] = 1 + j;
-		pIndex[4 + i] = 3 + j;
-		pIndex[5 + i] = 2 + j;
-		j += 4;
-	}
-	g_pIndexBuffer->Unlock();
-
-	Wall_Vertex *pV;	//仮想アドレス　g_VertexBuffer->Unlock()を呼ぶともう使えない
-	g_VertexBuffer->Lock(0, 0, (void**)&pV, D3DLOCK_DISCARD);//(ロックする初めのアドレス,どこまでロックするか？　0にすると全部,CPUにVRAMの仮想アドレスを作る (void**)&pV , D3DLOCK_DISCARD)
-	memcpy(pV, g_wall_vertex, sizeof(g_wall_vertex));
-	g_VertexBuffer->Unlock();
-
 	g_pos = { 0.0f,-1.0f,30.0f };
 	g_WallUse = true;
 }
 
 void Wall_UnInit(void)
 {
-	g_pIndexBuffer->Release();
-	g_VertexBuffer->Release();
+
 }
 
 void Wall_Update(void) 
 {
-	
+	for (int i = 0; i < 4; i++) {
+		D3DXCOLOR color = g_wall_vertex[i].color;
+		if (color.a <= 0) {
+			g_WallUse = false;
+		}
+	}
 }
 
 void Wall_Draw(void)
@@ -126,18 +61,15 @@ void Wall_Draw(void)
 		pDevice->SetRenderState(D3DRS_DIFFUSEMATERIALSOURCE, D3DMCS_COLOR1);	//ディフューズマテリアルは頂点カラー
 
 		D3DXMATRIX mtxWorld, mtxRotation, mtxTranslation, mtxTranslation_Center, mtxScaling;
-		D3DXMatrixTranslation(&mtxTranslation_Center, 0.0, 0.5, 0.5);//壁：手前の面の下辺中央を中心に変更
+		D3DXMatrixTranslation(&mtxTranslation_Center, 0.0f, 0.5f, 0.0f);//壁：手前の面の下辺中央を中心に変更
 		D3DXMatrixTranslation(&mtxTranslation, g_pos.x, g_pos.y, g_pos.z);//壁の座標変更
 		D3DXMatrixScaling(&mtxScaling, 8.0f, 8.0f, 8.0f);//壁の拡大率
 		mtxWorld = mtxTranslation_Center * mtxScaling * mtxTranslation;
 		pDevice->SetTransform(D3DTS_WORLD, &mtxWorld);
 
-		pDevice->SetStreamSource(0, g_VertexBuffer, 0, sizeof(Wall_Vertex));
-		pDevice->SetIndices(g_pIndexBuffer);
-
 		pDevice->SetFVF(FVF_WALL);
 		pDevice->SetTexture(0, Texture_GetTexture(g_textureID));
-		pDevice->DrawIndexedPrimitive(D3DPT_TRIANGLELIST, 0, 0, 24, 0, 36);
+		pDevice->DrawPrimitiveUP(D3DPT_TRIANGLESTRIP,2,g_wall_vertex,sizeof(g_wall_vertex[0]));
 	}
 }
 
@@ -149,4 +81,23 @@ void Wall_Delete(void)
 D3DXVECTOR3 Wall_GetPosition(void)
 {
 	return g_pos;
+}
+
+void Wall_MinAlpha(float n)
+{
+	for (int i = 0; i < 4; i++) {
+		D3DXCOLOR color = g_wall_vertex[i].color;
+		color.a -= n;
+		g_wall_vertex[i].color = color;
+	}
+}
+
+bool Wall_isUse() 
+{
+	return g_WallUse;
+}
+
+D3DXCOLOR Wall_GetColor()
+{
+	return g_wall_vertex[0].color;
 }
