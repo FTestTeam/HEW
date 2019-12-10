@@ -1,74 +1,64 @@
-#define DIRECTSOUND_VERSION (0x0900)  /* Version 9.0 */
-#include<dsound.h>
+#include<Windows.h>
+#include<mmsystem.h>
+#include<math.h>
+#include"common.h"
 #include"DebugPrintf.h"
 
-static LPDIRECTSOUNDCAPTURE8 g_Mic=NULL;
-static LPDIRECTSOUNDCAPTUREBUFFER g_MicBuffer = NULL;
+static WAVEHDR g_inHdr[2];
+static HWAVEIN g_Mic;
 
-
-void Mic_Init()
+void Mic_Init(HWND hwnd)
 {
-	if (!DirectSoundCaptureCreate8(&DSDEVID_DefaultVoiceCapture, &g_Mic, NULL) == DS_OK) {
-		MessageBox(NULL, "キャプチャデバイスが作れません", "警告！", MB_ICONWARNING);
+	UINT a = waveInGetNumDevs();
+	WAVEINCAPS caps;
+	waveInGetDevCaps(0, &caps, sizeof(WAVEINCAPS));
+	
+	WAVEFORMATEX Format;
+	Format.wFormatTag = WAVE_FORMAT_PCM;
+	Format.nChannels = 2;
+	Format.wBitsPerSample = 16;
+	Format.nBlockAlign = 4;
+	Format.nSamplesPerSec = 22050;
+	Format.nAvgBytesPerSec = 22050 * 4;
+	Format.cbSize = 0;
+
+	if (waveInOpen(&g_Mic, 0, &Format, (DWORD)hwnd, NULL, NULL) != MMSYSERR_NOERROR) {
+		MessageBox(NULL, "マイクがオープンできません", "マイク", MB_ICONWARNING);
+	}
+	
+	memset(g_inHdr, 0, sizeof(g_inHdr));
+	for (int i = 0; i < 2; i++) {
+		g_inHdr[i].lpData = new char[BUFSIZ];
+		g_inHdr[i].dwBufferLength = BUFSIZ;
+		if (waveInPrepareHeader(g_Mic, &g_inHdr[i], sizeof(WAVEHDR)) != MMSYSERR_NOERROR) {
+			MessageBox(NULL, "データブロックを登録できません", "マイク", MB_ICONWARNING);
+		}
+	}
+	
+	for (DWORD i = 0; i < 2; i++) {
+		g_inHdr[i].dwBytesRecorded = 0;
+		if (waveInAddBuffer(g_Mic, &g_inHdr[i], sizeof(WAVEHDR)) != MMSYSERR_NOERROR) {
+			MessageBox(NULL, "バッファを作れません", "マイク", MB_ICONWARNING);
+		}
 	}
 
-	WAVEFORMATEX wfx = { WAVE_FORMAT_PCM, 1, 44100, 44100, 1, 8, 0 };
-
-	DSCBUFFERDESC desc;
-	memset(&desc, 0, sizeof(DSCBUFFERDESC));
-	desc.dwSize = sizeof(DSCBUFFERDESC);
-	desc.dwFlags = 0;
-	desc.dwBufferBytes = wfx.nAvgBytesPerSec * 1;
-	desc.dwReserved = 0;
-	desc.lpwfxFormat = &wfx;
-	desc.dwFXCount = 0;
-	desc.lpDSCFXDesc = NULL;
-
-	HRESULT hr;
-	hr = g_Mic->CreateCaptureBuffer(&desc, &g_MicBuffer, NULL);
-	if (FAILED(hr)) {
-		MessageBox(NULL, "バッファが作れません", "警告！", MB_ICONWARNING);
-	}
+	waveInStart(g_Mic);
 }
 
 void Mic_UnInit()
 {
-	//キャプチャバッファストップ
-	g_MicBuffer->Stop();
-
-	//オブジェクトのリリース。まあ、DirectSoundオブジェクトの後始末。
-	g_MicBuffer->Release();
-	g_MicBuffer = NULL;
-	g_Mic->Release();
-	g_Mic = NULL;
+	waveInStop(g_Mic);
+	waveInClose(g_Mic);
 }
-
-static int g_fream=0;
-static short g_data;
 
 void Mic_Update()
 {
-	//g_MicBuffer->Start(DSCBSTART_LOOPING);
-	DWORD capturepos;
-	DWORD readpos;
-	void* pbCaptureData = NULL;
-	DWORD dwCaptureLength;
-	void* pbCaptureData2 = NULL;
-	DWORD dwCaptureLength2;
-
-	g_MicBuffer->GetCurrentPosition(&capturepos, &readpos);
-
-	HRESULT hr;
-	hr = g_MicBuffer->Lock(capturepos, 1, &pbCaptureData, &dwCaptureLength, &pbCaptureData2, &dwCaptureLength2, NULL);
-
-	g_data = (BYTE)pbCaptureData;
-	DebugPrintf("%d\n", g_data);
-	g_MicBuffer->Unlock(pbCaptureData, dwCaptureLength, pbCaptureData2, dwCaptureLength2);
-	
-	g_fream++;
+	DebugPrintf("%f\n", fabsf((float)*g_inHdr->lpData));
+	g_inHdr->dwBytesRecorded = 0;
+	waveInAddBuffer(g_Mic, g_inHdr, sizeof(WAVEHDR));
 }
 
-short Mic_GetData(void) 
+float Mic_GetVolume(void)
 {
-	return g_data;
+	return fabsf((float)*g_inHdr->lpData);
 }

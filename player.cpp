@@ -6,6 +6,7 @@
 #include"joycon.h"
 #include"cube.h"
 #include"input.h"
+#include"DebugPrintf.h"
 
 typedef struct PLAYER_Tag{
 	LocalVecter LocalVec;
@@ -28,7 +29,7 @@ void Player_Init()
 	g_Player.ModelId = Model_SetLoadFile("Asset/Model/player.x");
 
 	g_Fly = false;
-	g_Rspeed = 0.1f;
+	g_Rspeed = 0.0f;
 
 	D3DXVECTOR3 w;
 	w = g_Player.Position + g_Player.LocalVec.Front * 1.5f;
@@ -42,20 +43,23 @@ void Player_UnInit()
 
 void Player_Update()
 {
-	if (Keyboard_IsPress(DIK_SPACE)) {
-		if (g_fream % 60 == 0) {
-			g_Rspeed += 0.05f;
-			g_Rspeed = min(g_Rspeed, 1.0f);
+	if (Keyboard_IsPress(DIK_SPACE) || Joycon_IsPress(DIJOY_R_R)) {
+		if (Joycon_GetAccel(DIJOY_ACCEL_SL1) < -30000 || Joycon_GetAccel(DIJOY_ACCEL_SL1) > 30000 || Keyboard_IsPress(DIK_SPACE)) {
+			g_Rspeed += 0.001f;
+			//g_Rspeed = min(g_Rspeed, 1.0f);
+		}
+		else {
+			g_Rspeed -= 0.005f;
+			g_Rspeed = max(g_Rspeed, 0.0f);
 		}
 		g_Ratetion -= g_Rspeed;
 		g_fream++;
 	}
-	if (Keyboard_IsRelease(DIK_SPACE)) {
+	if (Keyboard_IsRelease(DIK_SPACE) || Joycon_IsRelease(DIJOY_R_R)) {
 		g_Fly = true;
 	}
+	//DebugPrintf("%f\n", Joycon_GetAccel(DIJOY_ACCEL_SL1));
 }
-
-
 
 void Player_Draw()
 {

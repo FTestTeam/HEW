@@ -20,7 +20,7 @@ void Title_Uninit(void)
 
 void Title_Update(void)
 {
-	if (Keyboard_IsPress(DIK_RETURN))
+	if (Keyboard_IsTrigger(DIK_RETURN))
 	{
 		Scene_SetNextScene(SCENE_GAME);
 	}

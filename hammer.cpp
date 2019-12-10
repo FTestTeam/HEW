@@ -5,20 +5,21 @@
 #include "input.h"
 #include "model.h"
 #include "player.h"
+#include "wall.h"
+#include "score.h"
+#include "mic.h"
 
 static LPDIRECT3DDEVICE9 g_pDevice;
-static float g_angle = 0.0f;
-static int g_count = 0;
 static D3DXVECTOR3 g_Position;
-static float g_power = 0.0f;
-bool g_isFly = false;
-static int g_FlyCount = 0;
+static bool g_bFly;
+static float g_speed;
 static int g_model;
 
 void Hammer_Init(void)
 {
 	g_pDevice = MyDirect3D_GetDevice();
 	g_model=Model_SetLoadFile("Asset/Model/hammer.x");
+	g_bFly = true;
 }
 
 void Hammer_Uninit(void)
@@ -28,18 +29,34 @@ void Hammer_Uninit(void)
 
 void Hammer_Update(void)
 {
-	if (Player_IsFly()) {
-		g_Position.z += 0.3f;
+	/*if (!Keyboard_IsPress(DIK_SPACE)) {
+		if (Wall_GetPosition().z - 1.0f < g_Position.z && Wall_GetPosition().z + 1.0f > g_Position.z) {
+			g_bFly = false;
+		}
+	}
+	else if(Player_IsFly() && Keyboard_IsPress(DIK_SPACE)) {
+		if (Wall_GetPosition().z - 1.0f < g_Position.z) {
+			Wall_Delete();
+		}
+		g_Position.z += 0.1f;
+	}*/
+
+	if (Player_IsFly() && g_bFly) {
+		g_Position.z += 0.3f + Mic_GetVolume()/100.0f;
 		g_Position.y += 0.05f;
 		g_Position.y = min(g_Position.y, 3.0f);
+		AddScore();
+	}
+	if (!g_bFly) {
+		g_Position.z = Wall_GetPosition().z - 1.0f;
+		g_Position.y -= 0.05f;
+		g_Position.y = max(g_Position.y, -0.5f);
 	}
 }
 
 void Hammer_Draw(void)
 {
 	D3DXMATRIX mtxW,mtxS,mtxR,mtxRR,mtxT;
-	
-	g_pDevice->SetTexture(0, NULL);
 
 	if (!Player_IsFly()) {
 		D3DXMatrixIdentity(&mtxT);
@@ -63,6 +80,6 @@ D3DXVECTOR3 Hammer_GetPosition(void)
 void Hammer_SetPosition(D3DXVECTOR3 pos) 
 {
 	g_Position.x = pos.x;
-	g_Position.y = pos.y+1.0f;
+	g_Position.y = pos.y + 1.0f;
 	g_Position.z = pos.z;
 }
