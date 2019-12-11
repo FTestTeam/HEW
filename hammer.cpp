@@ -37,6 +37,12 @@ void Hammer_Update(void)
 		g_Position.y += 0.05f;
 		g_Position.y = min(g_Position.y, 3.0f);
 	}
+
+	if (!g_bFly) {
+		g_Position.z += 0;
+		g_Position.y -= 0.05f;
+		g_Position.y = max(g_Position.y, -0.5f);
+	}
 }
 
 void Hammer_Draw()
@@ -62,18 +68,33 @@ D3DXVECTOR3 Hammer_GetPosition(void)
 	return g_Position;
 }
 
-void Hammer_SetPosition(int pos,float n) 
+void Hammer_Stop()
+{
+	g_bFly = false;
+}
+
+bool Hammer_IsFly()
+{
+	return g_bFly;
+}
+
+void Hammer_SetPosition(D3DXVECTOR3 vec)
+{
+	g_Position = vec;
+}
+
+void Hammer_AddPosition(int pos,float n) 
 {
 	switch (pos)
 	{
 	case POS_X:
-		g_Position.x = n;
+		g_Position.x += n;
 		break;
 	case POS_Y:
-		g_Position.y = n;
+		g_Position.y += n;
 		break;
 	case POS_Z:
-		g_Position.z = n;
+		g_Position.z += n;
 		break;
 	default:
 		break;

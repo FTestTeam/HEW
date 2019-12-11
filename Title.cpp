@@ -22,7 +22,7 @@ void Title_Update(void)
 {
 	if (Keyboard_IsTrigger(DIK_RETURN))
 	{
-		Scene_SetNextScene(SCENE_RAID);
+		Scene_SetNextScene(SCENE_ZAKO);
 	}
 }
 

@@ -45,10 +45,12 @@ void Camera_Init()
 
 void Camera_Update()
 {
-	if (!DebugCam && Player_IsFly) {
-		g_camera.Pos.y = Hammer_GetPosition().y + 2.0f;
-		g_camera.Pos.z = Hammer_GetPosition().z - 2.0f;
+	if (!DebugCam && Player_IsFly()) {
+		g_camera.Pos.y = Hammer_GetPosition().y + 3.0f;
+		g_camera.Pos.z = Hammer_GetPosition().z - 3.0f;
 	}
+
+
 	if (Keyboard_IsTrigger(DIK_0)) {
 		DebugCam = true;
 	}

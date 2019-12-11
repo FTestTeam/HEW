@@ -12,6 +12,9 @@ void Hammer_Update(void);
 void Hammer_Draw(void);
 
 D3DXVECTOR3 Hammer_GetPosition(void);
-void Hammer_SetPosition(int pos, float n);
+bool Hammer_IsFly();
+void Hammer_Stop();
+void Hammer_AddPosition(int pos, float n);
+void Hammer_SetPosition(D3DXVECTOR3 vec);
 
 #endif // !_HAMMER_H_

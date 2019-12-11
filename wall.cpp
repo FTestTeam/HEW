@@ -35,6 +35,10 @@ void Wall_Init(void)
 
 	g_pos = { 0.0f,-1.0f,30.0f };
 	g_WallUse = true;
+
+	for (int i = 0; i < 4; i++) {
+		g_wall_vertex[i].color = D3DCOLOR_RGBA(255, 255, 255, 255);
+	}
 }
 
 void Wall_UnInit(void)
