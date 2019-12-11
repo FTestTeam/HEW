@@ -10,17 +10,12 @@
 #include "mic.h"
 #include "hammer.h"
 
-static LPDIRECT3DDEVICE9 g_pDevice;
 static D3DXVECTOR3 g_Position;
-static bool g_bFly;
-static float g_speed;
-static int g_model;
-static int g_MicFream;
-static bool g_bMic;
+static bool g_bFly;		//ハンマーが止まったらfalse
+static int g_model;		//モデルID
 
 void Hammer_Init(void)
 {
-	g_pDevice = MyDirect3D_GetDevice();
 	g_model = Model_SetLoadFile("Asset/Model/hammer.x");
 	g_bFly = true;
 }
@@ -32,12 +27,14 @@ void Hammer_Uninit(void)
 
 void Hammer_Update(void)
 {
+	//プレーヤーがハンマーを投げたら進む
 	if (Player_IsFly() && g_bFly) {
 		g_Position.z += 0.3f;
 		g_Position.y += 0.05f;
 		g_Position.y = min(g_Position.y, 3.0f);
 	}
 
+	//ハンマーが止まったらだんだん落とす
 	if (!g_bFly) {
 		g_Position.z += 0;
 		g_Position.y -= 0.05f;
@@ -47,9 +44,10 @@ void Hammer_Update(void)
 
 void Hammer_Draw()
 {
-	D3DXMATRIX mtxW,mtxS,mtxR,mtxRR,mtxT;
+	D3DXMATRIX mtxW,mtxR,mtxT;
+	D3DXMATRIX mtxS, mtxRR;	//モデルの大きさとかがバグってるから無理やり直す用
 
-	if (!Player_IsFly()) {
+	if (!Player_IsFly()) {	//プレーヤーが投げるまではプレイヤーに合わせて回転
 		D3DXMatrixIdentity(&mtxT);
 		D3DXMatrixRotationY(&mtxR, Player_GetRotation());
 	}
@@ -57,8 +55,10 @@ void Hammer_Draw()
 		D3DXMatrixTranslation(&mtxT, g_Position.x, g_Position.y, g_Position.z);
 		D3DXMatrixRotationY(&mtxR, D3DXToRadian(180));
 	}
+	//大きさとかを無理やり直すよう--------------------
 	D3DXMatrixRotationX(&mtxRR, D3DXToRadian(-90));
 	D3DXMatrixScaling(&mtxS, 0.01f, 0.01f, 0.01f);
+	//----------------------------------------------
 	mtxW = mtxS * mtxRR* mtxR * mtxT;
 	Model_Draw(&mtxW, g_model);
 }

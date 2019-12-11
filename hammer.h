@@ -13,8 +13,20 @@ void Hammer_Draw(void);
 
 D3DXVECTOR3 Hammer_GetPosition(void);
 bool Hammer_IsFly();
-void Hammer_Stop();
-void Hammer_AddPosition(int pos, float n);
+
+//ハンマー止める用関数
+void Hammer_Stop();	
+
+//普通に飛んでるハンマーに対してさらに力を加えるよう
+//第一引数：
+//	XYZをPOS_□で指定
+//第二引数：
+//	float 加える数値
+void Hammer_AddPosition(int pos, float n);	
+
+//ハンマーをその位置にセット
+//第一引数：
+//	D3DXVECTER3
 void Hammer_SetPosition(D3DXVECTOR3 vec);
 
 #endif // !_HAMMER_H_

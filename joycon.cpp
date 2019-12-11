@@ -202,7 +202,7 @@ void Joycon_Update(void)
 				// キープレス情報を保存
 				g_JoyconState[i] = wJoyconState.rgbButtons[i];
 			}
-
+			
 			g_JoyconAccel[DIJOY_ACCEL_RZ] = (float)wJoyconState.lRz - 32767.0f;
 			g_JoyconAccel[DIJOY_ACCEL_SL0] = (float)wJoyconState.rglSlider[0] - 32767.0f;
 			g_JoyconAccel[DIJOY_ACCEL_SL1] = (float)wJoyconState.rglSlider[1] - 32767.0f;
