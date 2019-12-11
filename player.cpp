@@ -22,8 +22,6 @@ static bool g_Fly;
 
 void Player_Init() 
 {
-	Cube_Init();
-
 	g_Player.Position = {0.0f,0.0f,0.0f};
 	g_Player.LocalVec.Front = { 0.0f, 0.0f, -1.0f };
 	g_Player.ModelId = Model_SetLoadFile("Asset/Model/player.x");
@@ -31,6 +29,7 @@ void Player_Init()
 	g_Fly = false;
 	g_Rspeed = 0.0f;
 
+	//ハンマーのポジションをプレイヤーの前に初期化
 	D3DXVECTOR3 w;
 	w = g_Player.Position + g_Player.LocalVec.Front * 1.5f;
 	Hammer_SetPosition(w);
@@ -38,24 +37,24 @@ void Player_Init()
 
 void Player_UnInit()
 {
-	Cube_UnInit();
+
 }
 
 void Player_Update()
 {
 	if (Keyboard_IsPress(DIK_SPACE) || Joycon_IsPress(DIJOY_R_R)) {
 		if (Joycon_GetAccel(DIJOY_ACCEL_SL1) < -30000 || Joycon_GetAccel(DIJOY_ACCEL_SL1) > 30000 || Keyboard_IsPress(DIK_SPACE)) {
-			g_Rspeed += 0.001f;
+			g_Rspeed += 0.001f + Joycon_GetAccel(DIJOY_ACCEL_SL1)/10000;
 			//g_Rspeed = min(g_Rspeed, 1.0f);
 		}
-		else {
+		else {	//	ジョイコン振ってない間回転減少
 			g_Rspeed -= 0.005f;
 			g_Rspeed = max(g_Rspeed, 0.0f);
 		}
 		g_Ratetion -= g_Rspeed;
 		g_fream++;
 	}
-	if (Keyboard_IsRelease(DIK_SPACE) || Joycon_IsRelease(DIJOY_R_R)) {
+	if (Keyboard_IsRelease(DIK_SPACE) || Joycon_IsRelease(DIJOY_R_R)) {	//ボタン離したら投げる
 		g_Fly = true;
 	}
 	//DebugPrintf("%f\n", Joycon_GetAccel(DIJOY_ACCEL_SL1));

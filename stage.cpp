@@ -12,6 +12,8 @@ static STAGE g_Sky;
 
 void Stage_Init()
 {
+	Cube_Init();
+
 	g_Floor.Position = {0.0f,0.0f,15.0f};
 	g_Floor.TextureID = Texture_SetLoadFile("Asset/Texture/S__20209690.jpg", 0, 0);
 
@@ -21,7 +23,7 @@ void Stage_Init()
 
 void Stage_UnInit()
 {
-
+	Cube_UnInit();
 }
 
 void Stage_Update()

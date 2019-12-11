@@ -2,6 +2,10 @@
 #ifndef RAID_H_
 #define RAID_H_
 
+//================================
+//	レイドのコントロールプログラム
+//================================
+
 void Raid_Init();
 void Raid_UnInit();
 void Raid_Update();

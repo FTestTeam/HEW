@@ -5,9 +5,9 @@
 #include"score.h"
 #include"zako.h"
 
-static int	g_MicFream;
-static int	g_EndFream;
-static bool g_bMic = false;
+static int	g_MicFream;	//障害に当たってから叫ぶ時間のカウンタ
+static int	g_EndFream;	//叫び終わってからシーンを切り替えるまでの時間
+static bool g_bMic = false;	//マイクを使うかどうかのフラグ
 
 void Raid_Init()
 {
@@ -23,11 +23,12 @@ void Raid_UnInit()
 
 void Raid_Update()
 {
-	if (Wall_GetPosition().z - 1.0f < Hammer_GetPosition().z && Wall_isUse()) {
+	if (Wall_GetPosition().z - 1.0f < Hammer_GetPosition().z && Wall_isUse()) {	//障害に当たったら
 		D3DXVECTOR3 w(Wall_GetPosition().x, Hammer_GetPosition().y, Wall_GetPosition().z-0.5f);
 		Hammer_SetPosition(w);
+		
 		g_bMic = true;
-		if (g_MicFream < 120) {
+		if (g_bMic) {
 			if (Mic_GetVolume() > 80) {
 				Wall_MinAlpha(0.01f);
 			}
