@@ -5,6 +5,9 @@
 #include "Result.h"
 #include "model.h"
 #include "score.h"
+#include "raid.h"
+#include "zako.h"
+#include "camera.h"
 
 SCENE g_NextScene = SCENE_TITLE;		//ç≈èâÇÃâÊñ  äÆê¨î≈ÇÕÉ^ÉCÉgÉãÇ…Ç∑ÇÈ
 SCENE g_Scene = g_NextScene;
@@ -16,8 +19,15 @@ void Scene_Init(void)
 	case SCENE_TITLE:
 		Title_Init();
 		break;
-	case SCENE_GAME:
+	case SCENE_RAID:
 		Game_Init();
+		Camera_Init();
+		Raid_Init();
+		break;
+	case SCENE_ZAKO:
+		Game_Init();
+		Camera_Init();
+		Zako_Init();
 		break;
 	case SCENE_RESULT:
 		Score_Init();
@@ -38,8 +48,13 @@ void Scene_Uninit(void)
 	case SCENE_TITLE:
 		Title_Uninit();
 		break;
-	case SCENE_GAME:
+	case SCENE_RAID:
 		Game_UnInit();
+		Raid_UnInit();
+		break;
+	case SCENE_ZAKO:
+		Game_UnInit();
+		Zako_UnInit();
 		break;
 	case SCENE_RESULT:
 		Score_Uninit();
@@ -58,8 +73,13 @@ void Scene_Update(void)
 	case SCENE_TITLE:
 		Title_Update();
 		break;
-	case SCENE_GAME:
+	case SCENE_RAID:
 		Game_Update();
+		Raid_Update();
+		break;
+	case SCENE_ZAKO:
+		Game_Update();
+		Zako_Update();
 		break;
 	case SCENE_RESULT:
 		Result_Update();
@@ -77,8 +97,13 @@ void Scene_Draw(void)
 	case SCENE_TITLE:
 		Title_Draw();
 		break;
-	case SCENE_GAME:
+	case SCENE_RAID:
 		Game_Draw();
+		Raid_Draw();
+		break;
+	case SCENE_ZAKO:
+		Game_Draw();
+		Zako_Draw();
 		break;
 	case SCENE_RESULT:
 		Result_Draw();
