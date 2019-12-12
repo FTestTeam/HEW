@@ -10,6 +10,7 @@
 #include"hammer.h"
 #include"mic.h"
 #include"Scene.h"
+#include"score.h"
 
 #define ZAKO_SCENE_CHANGE_FREAM (120)
 
@@ -65,6 +66,7 @@ void Zako_Update(void)
 			if (Zako_GetPosition(Id).z < Hammer_GetPosition().z) {
 				if (g_ZakoData[Id].g_ZakoUse) {
 					g_BreakCount++;
+					Score_AddScore(1);
 				}
 				g_ZakoData[Id].g_ZakoUse = false;
 			}

@@ -46,5 +46,5 @@ void Game_Draw()
 	Stage_Draw();
 	Wall_Draw();
 
-	Score_Draw(GetScore() , SCREEN_WIDTH -48, 0, 7, false, true);
+	Score_Draw(Score_GetScore() , SCREEN_WIDTH -48, 0, 7, false, true);
 }

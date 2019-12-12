@@ -36,7 +36,7 @@ void Result_Draw(void)
 
 	Sprite_Draw(g_Result_TextureID, 0 + SCREEN_WIDTH / 2, 0 + SCREEN_HEIGHT / 2);
 
-	Score_Draw(g_ResultScore, 652, 180 , 7, false, true);
+	Score_Draw(Score_GetScore(), 652, 180 , 7, false, true);
 	Score_Draw(g_Score1, 652, 300, 7, false, true);
 	Score_Draw(g_Score2, 652 , 360, 7, false, true);
 	Score_Draw(g_Score3, 652 , 420 , 7, false, true);
