@@ -62,6 +62,7 @@ int Model_Load(void)
 		if (FAILED(hr)) {
 			MessageBox(NULL, "ƒ‚ƒfƒ‹‚ª“Ç‚Ýž‚ß‚Ü‚¹‚ñ", "Œx", MB_ICONWARNING);
 			error_count++;
+			continue;
 		}
 
 		D3DXMATERIAL *pMat = (D3DXMATERIAL*)pMaterialBuffer->GetBufferPointer();

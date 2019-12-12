@@ -8,6 +8,7 @@
 #include "raid.h"
 #include "zako.h"
 #include "camera.h"
+#include "wall.h"
 
 SCENE g_NextScene = SCENE_TITLE;		//ç≈èâÇÃâÊñ  äÆê¨î≈ÇÕÉ^ÉCÉgÉãÇ…Ç∑ÇÈ
 SCENE g_Scene = g_NextScene;
@@ -22,6 +23,7 @@ void Scene_Init(void)
 	case SCENE_RAID:
 		Game_Init();
 		Camera_Init();
+		Wall_Init();
 		Raid_Init();
 		break;
 	case SCENE_ZAKO:
@@ -50,6 +52,7 @@ void Scene_Uninit(void)
 		break;
 	case SCENE_RAID:
 		Game_UnInit();
+		Wall_UnInit();
 		Raid_UnInit();
 		break;
 	case SCENE_ZAKO:
@@ -75,6 +78,7 @@ void Scene_Update(void)
 		break;
 	case SCENE_RAID:
 		Game_Update();
+		Wall_Update();
 		Raid_Update();
 		break;
 	case SCENE_ZAKO:
@@ -99,6 +103,7 @@ void Scene_Draw(void)
 		break;
 	case SCENE_RAID:
 		Game_Draw();
+		Wall_Draw();
 		Raid_Draw();
 		break;
 	case SCENE_ZAKO:

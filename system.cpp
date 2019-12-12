@@ -3,13 +3,14 @@
 #include"model.h"
 #include"sound.h"
 #include"light.h"
-#include"mic.h"
+#include"cube.h"
 
 void System_Init()
 {
 	Texture_Init();
 	Model_Init();
 	Grid_Init();
+	Cube_Init();
 }
 
 void System_UnInit()
@@ -17,6 +18,7 @@ void System_UnInit()
 	Grid_UnInit();
 	Texture_Release();
 	Model_UnInit();
+	Cube_UnInit();
 }
 
 void System_Update()

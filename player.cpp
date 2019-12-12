@@ -43,8 +43,8 @@ void Player_UnInit()
 void Player_Update()
 {
 	if (Keyboard_IsPress(DIK_SPACE) || Joycon_IsPress(DIJOY_R_R)) {
-		if (Joycon_GetAccel(DIJOY_ACCEL_SL1) < -30000 || Joycon_GetAccel(DIJOY_ACCEL_SL1) > 30000 || Keyboard_IsPress(DIK_SPACE)) {
-			g_Rspeed += 0.001f + Joycon_GetAccel(DIJOY_ACCEL_SL1)/10000;
+		if (Joycon_GetAccel(DIJOY_ACCEL_SL1) > -30000 || Joycon_GetAccel(DIJOY_ACCEL_SL1) < 30000 || Keyboard_IsPress(DIK_SPACE)) {
+			g_Rspeed += fabsf(Joycon_GetAccel(DIJOY_ACCEL_SL1)/10000000);
 			//g_Rspeed = min(g_Rspeed, 1.0f);
 		}
 		else {	//	ƒWƒ‡ƒCƒRƒ“U‚Á‚Ä‚È‚¢ŠÔ‰ñ“]Œ¸­
