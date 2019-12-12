@@ -8,6 +8,7 @@
 #define DIRECTINPUT_VERSION (0x0800)
 #include <dinput.h>
 #include"joycon.h"
+#include"DebugPrintf.h"
 
 //*****************************************************************************
 // ƒ}ƒNƒ’è‹`
@@ -207,6 +208,7 @@ void Joycon_Update(void)
 			g_JoyconAccel[DIJOY_ACCEL_SL0] = (float)wJoyconState.rglSlider[0] - 32767.0f;
 			g_JoyconAccel[DIJOY_ACCEL_SL1] = (float)wJoyconState.rglSlider[1] - 32767.0f;
 
+			//DebugPrintf("%f\n", g_JoyconAccel[DIJOY_ACCEL_SL1]);
 		}
 		else {
 			g_pDevJoycon->Acquire();
