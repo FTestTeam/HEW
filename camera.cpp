@@ -38,7 +38,7 @@ void Camera_Init()
 	D3DXVec3Normalize(&g_camera.LocalVec.Right, &g_camera.LocalVec.Right);
 	D3DXVec3Normalize(&g_camera.LocalVec.Up, &g_camera.LocalVec.Up);
 	
-	g_camera.Pos = D3DXVECTOR3(Hammer_GetPosition().x, Hammer_GetPosition().y+2.0f, Hammer_GetPosition().z-2.0f);	//カメラをハンマーの位置に初期化
+	g_camera.Pos = D3DXVECTOR3(Hammer_GetPosition().x, Hammer_GetPosition().y+4.0f, Hammer_GetPosition().z-4.0f);	//カメラをハンマーの位置に初期化
 	g_camera.Fov = D3DXToRadian(60);
 	g_camera.MoveSpeed = 0.3f;
 	g_camera.RotationSpeed = 0.05f;
@@ -52,8 +52,8 @@ void Camera_Update()
 	//	ゲーム
 	//======================
 	if (!DebugCam && Player_IsFly()) {		//カメラをハンマーに追従
-		g_camera.Pos.y = Hammer_GetPosition().y + 3.0f;
-		g_camera.Pos.z = Hammer_GetPosition().z - 3.0f;
+		g_camera.Pos.y = Hammer_GetPosition().y + 4.0f;
+		g_camera.Pos.z = Hammer_GetPosition().z - 4.0f;
 	}
 
 
