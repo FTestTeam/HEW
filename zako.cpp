@@ -13,11 +13,14 @@
 #include"score.h"
 
 #define ZAKO_SCENE_CHANGE_FREAM (120)
+#define ZAKO_STRIDE (5.0f)
 
 typedef struct ZakoData_tag
 {
 	D3DXVECTOR3 position;
-	bool g_ZakoUse;
+	bool use;
+	bool bLast;
+	int zSort;
 }ZakoData;
 static ZakoData g_ZakoData[ZAKO_MAX];
 
@@ -42,8 +45,10 @@ void Zako_Init(void)
 	//初期化
 	for (int i = 0; i < ZAKO_MAX; i++)
 	{
-		g_ZakoData[i].g_ZakoUse = true;
-		g_ZakoData[i].position = { 0.0f,-1.0f,(5.0f*i) + 30.0f };
+		g_ZakoData[i].use = true;
+		g_ZakoData[i].position = { 0.0f,-1.0f,(ZAKO_STRIDE*i) + 30.0f };
+		g_ZakoData[i].bLast = i == ZAKO_MAX - 1;
+		g_ZakoData[i].zSort = i;
 	}
 }
 
@@ -56,6 +61,20 @@ void Zako_Update(void)
 {
 	for (int Id = 0; Id < ZAKO_MAX; Id++)
 	{
+		if (!g_ZakoData[Id].use) {
+			for (int j = 0; j < ZAKO_MAX; j++) {
+				if (!g_ZakoData[j].bLast) {
+					continue;
+				}
+				g_ZakoData[Id].position = g_ZakoData[j].position;
+				g_ZakoData[Id].position.z += ZAKO_STRIDE;
+				g_ZakoData[Id].bLast = true;
+				g_ZakoData[j].bLast = false;
+				break;
+			}
+			g_ZakoData[Id].use = true;
+		}
+
 		if (Mic_GetVolume() < 10) {
 			if (Zako_GetPosition(Id).z-1.0f < Hammer_GetPosition().z && Zako_GetPosition(Id).z + 0.3f > Hammer_GetPosition().z) {
 				Hammer_Stop();
@@ -64,11 +83,22 @@ void Zako_Update(void)
 		}
 		else if (Hammer_IsFly()) {
 			if (Zako_GetPosition(Id).z < Hammer_GetPosition().z) {
-				if (g_ZakoData[Id].g_ZakoUse) {
+				if (g_ZakoData[Id].use) {
 					g_BreakCount++;
 					Score_AddScore(1);
 				}
-				g_ZakoData[Id].g_ZakoUse = false;
+				g_ZakoData[Id].use = false;
+			}
+		}
+	}
+
+	int rank = 0;
+	g_ZakoData[0].zSort = rank;
+	for (int i = 0; i < ZAKO_MAX; i++) {
+		for (int j=1; j<ZAKO_MAX; j++) {
+			if (g_ZakoData[i].position.z > g_ZakoData[j].position.z) {
+				g_ZakoData[i].zSort = rank;
+				rank++;
 			}
 		}
 	}
@@ -77,9 +107,9 @@ void Zako_Update(void)
 		g_SceneFream--;
 	}
 
-	if (g_SceneFream < 0) {
-		Scene_SetNextScene(SCENE_RAID);
-	}
+	//if (g_SceneFream < 0) {
+	//	Scene_SetNextScene(SCENE_RAID);
+	//}
 }
 
 void Zako_Draw(void)
@@ -89,7 +119,8 @@ void Zako_Draw(void)
 
 	for (int i = 0; i < ZAKO_MAX; i++)
 	{
-		if (g_ZakoData[i].g_ZakoUse)
+
+		if (g_ZakoData[i].use)
 		{
 			D3DXMATRIX mtxWorld, mtxRotation, mtxTranslation, mtxTranslation_Center, mtxScaling;
 			D3DXMatrixTranslation(&mtxTranslation_Center, 0.0, 0.5, 0.5);//壁：手前の面の下辺中央を中心に変更
@@ -103,7 +134,7 @@ void Zako_Draw(void)
 
 void Zako_Delete(int Id)
 {
-	g_ZakoData[Id].g_ZakoUse = false;
+	g_ZakoData[Id].use = false;
 }
 
 D3DXVECTOR3 Zako_GetPosition(int Id)

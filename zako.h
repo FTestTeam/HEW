@@ -3,7 +3,7 @@
 #define ZAKO_H_
 #include<d3dx9.h>
 
-#define ZAKO_MAX (20)
+#define ZAKO_MAX (4)
 
 void Zako_Init(void);
 void Zako_UnInit(void);

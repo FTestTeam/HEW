@@ -38,10 +38,10 @@ void Stage_Draw()
 	mtx = mtxR * mtxS * mtxT;
 	Cube_Draw(&mtx, g_Floor.TextureID);
 
-	D3DXMatrixTranslation(&mtxST, 0.0f, 0.5f, 0.0f);
+	/*D3DXMatrixTranslation(&mtxST, 0.0f, 0.5f, 0.0f);
 	D3DXMatrixTranslation(&mtxT, g_Kannkyaku.Position.x, g_Kannkyaku.Position.y, g_Kannkyaku.Position.z);
 	D3DXMatrixScaling(&mtxS, 30.0f, 15.0f, 1.0f);
 	D3DXMatrixRotationY(&mtxR, D3DXToRadian(-45));
 	mtx =mtxST * mtxS * mtxR * mtxT;
-	Cube_Draw(&mtx, g_Kannkyaku.TextureID);
+	Cube_Draw(&mtx, g_Kannkyaku.TextureID);*/
 }
