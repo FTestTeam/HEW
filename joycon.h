@@ -64,21 +64,17 @@ void Joycon_Finalize(void);
 //
 void Joycon_Update(void);
 
-// ジョイコンのキー状態の取得
-//
-// Joycon_Update()で取得したキーの状態を確認する関数群
-//
-// 戻り値：指定のキーが
-//     Press   ... 押されている
-//     Trigger ... 押した瞬間
-//     Release ... 離した瞬間
-// であった場合trueを返す
-//
-// 引数：nKey ... キー指定（DIJOY_～というキー列挙）
-//
+//ジョイコンのキー状態の取得
+//引数：
+//	DIJOY_L_...	<-左のコントローラのボタン
+//	DIJOY_R_... <-右のコントローラのボタン
 bool Joycon_IsPress(int nKey);
 bool Joycon_IsTrigger(int nKey);
 bool Joycon_IsRelease(int nKey);
+
+//右のコントローラの加速度取得
+//引数：
+//	DIJOY_ACCEL_...
 float Joycon_GetAccel(int vec);
 
 #endif

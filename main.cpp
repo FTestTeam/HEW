@@ -20,7 +20,6 @@
 #include"light.h"
 #include"system.h"
 #include"input.h"
-#include"mouse_input.h"
 #include"joycon.h"
 #include"Scene.h"
 #include"model.h"
@@ -124,10 +123,6 @@ int APIENTRY WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLi
 	//キーボード初期化
 	if (!Keyboard_Initialize(hInstance, hWnd)) {
 		MessageBox(NULL, "キーボードが初期化できませんでした", "エラー", MB_OK);
-		return 0;
-	}
-	if (!Mouse_Initialize(hInstance, hWnd)) {
-		MessageBox(NULL, "マウスが初期化できませんでした", "エラー", MB_OK);
 		return 0;
 	}
 	if (!Joycon_Initialize(hInstance, hWnd)) {
@@ -241,7 +236,6 @@ void Uninit(void) {
 
 	Keyboard_Finalize();
 	Joycon_Finalize();
-	Mouse_Finalize();
 	Mic_UnInit();
 	System_UnInit();
 	Scene_Uninit();
@@ -254,11 +248,7 @@ void Uninit(void) {
 void Update(void) {
 	Keyboard_Update();
 	Joycon_Update();
-	Mouse_Update();
 
-	if (Joycon_IsPress(DIJOY_L_L)) {
-
-	}
 	Mic_Update();
 	System_Update();
 	Scene_Update();

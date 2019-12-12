@@ -15,18 +15,21 @@ enum Dir_enum{
 	up,
 	down,
 };
+
+//カメラ操作用関数
 static void camera_translation(Dir_enum dir);
 static void camera_rotation(Dir_enum dir);
 static void camera_donnakimoti(Dir_enum dir);
-
-static Camera g_camera;
+//カメラ操作用変数
 static D3DXVECTOR3 g_VecDir(0.0f, 0.0f, 0.0f);
 
+static Camera g_camera;
+
+//カメラデバッグモード
 static bool DebugCam;
 
 void Camera_Init()
 {
-	
 	g_camera.LocalVec.Front = D3DXVECTOR3(0.0f, -0.3f, 1.0f);
 	g_camera.LocalVec.Right = D3DXVECTOR3(1.0f, 0.0f, 0.0f);
 	D3DXVec3Cross(&g_camera.LocalVec.Up, &g_camera.LocalVec.Front, &g_camera.LocalVec.Right);	//D3DXVec3Cross外積を求める関数　二つのベクトルに直角なベクトルを作る
@@ -35,7 +38,7 @@ void Camera_Init()
 	D3DXVec3Normalize(&g_camera.LocalVec.Right, &g_camera.LocalVec.Right);
 	D3DXVec3Normalize(&g_camera.LocalVec.Up, &g_camera.LocalVec.Up);
 	
-	g_camera.Pos = D3DXVECTOR3(Hammer_GetPosition().x, Hammer_GetPosition().y+2.0f, Hammer_GetPosition().z-2.0f);
+	g_camera.Pos = D3DXVECTOR3(Hammer_GetPosition().x, Hammer_GetPosition().y+2.0f, Hammer_GetPosition().z-2.0f);	//カメラをハンマーの位置に初期化
 	g_camera.Fov = D3DXToRadian(60);
 	g_camera.MoveSpeed = 0.3f;
 	g_camera.RotationSpeed = 0.05f;
@@ -45,10 +48,17 @@ void Camera_Init()
 
 void Camera_Update()
 {
-	if (!DebugCam && Player_IsFly) {
-		g_camera.Pos.y = Hammer_GetPosition().y + 2.0f;
-		g_camera.Pos.z = Hammer_GetPosition().z - 2.0f;
+	//======================
+	//	ゲーム
+	//======================
+	if (!DebugCam && Player_IsFly()) {		//カメラをハンマーに追従
+		g_camera.Pos.y = Hammer_GetPosition().y + 3.0f;
+		g_camera.Pos.z = Hammer_GetPosition().z - 3.0f;
 	}
+
+
+
+	//デバッグカメラ
 	if (Keyboard_IsTrigger(DIK_0)) {
 		DebugCam = true;
 	}
