@@ -48,7 +48,7 @@ void Zako_Init(void)
 		g_ZakoData[i].use = true;
 		g_ZakoData[i].position = { 0.0f,-1.0f,(ZAKO_STRIDE*i) + 30.0f };
 		g_ZakoData[i].bLast = i == ZAKO_MAX - 1;
-		g_ZakoData[i].zSort = i;
+		g_ZakoData[i].zSort = ZAKO_MAX - i;
 	}
 }
 
@@ -92,13 +92,14 @@ void Zako_Update(void)
 		}
 	}
 
-	int rank = 0;
-	g_ZakoData[0].zSort = rank;
+	//É\Å[Ég
 	for (int i = 0; i < ZAKO_MAX; i++) {
-		for (int j=1; j<ZAKO_MAX; j++) {
+		for (int j = 0; j < ZAKO_MAX; j++) {
 			if (g_ZakoData[i].position.z > g_ZakoData[j].position.z) {
-				g_ZakoData[i].zSort = rank;
-				rank++;
+				ZakoData tmp;
+				tmp = g_ZakoData[i];
+				g_ZakoData[i] = g_ZakoData[j];
+				g_ZakoData[j] = tmp;
 			}
 		}
 	}
@@ -107,19 +108,18 @@ void Zako_Update(void)
 		g_SceneFream--;
 	}
 
-	//if (g_SceneFream < 0) {
-	//	Scene_SetNextScene(SCENE_RAID);
-	//}
+	if (g_SceneFream < 0) {
+		Scene_SetNextScene(SCENE_RAID);
+	}
 }
 
 void Zako_Draw(void)
 {
 	LPDIRECT3DDEVICE9 pDevice = MyDirect3D_GetDevice();
-	pDevice->SetRenderState(D3DRS_ZWRITEENABLE, TRUE);
+	pDevice->SetRenderState(D3DRS_ZWRITEENABLE, FALSE);
 
 	for (int i = 0; i < ZAKO_MAX; i++)
 	{
-
 		if (g_ZakoData[i].use)
 		{
 			D3DXMATRIX mtxWorld, mtxRotation, mtxTranslation, mtxTranslation_Center, mtxScaling;
@@ -130,6 +130,8 @@ void Zako_Draw(void)
 			Cube_Draw(&mtxWorld, g_textureID);
 		}
 	}
+
+	pDevice->SetRenderState(D3DRS_ZWRITEENABLE, TRUE);
 }
 
 void Zako_Delete(int Id)
