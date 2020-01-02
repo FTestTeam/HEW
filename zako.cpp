@@ -91,8 +91,8 @@ void Zako_Update(void)
 			}
 		}
 	}
-
-	//ソート
+	
+	//Zソート
 	for (int i = 0; i < ZAKO_MAX; i++) {
 		for (int j = 0; j < ZAKO_MAX; j++) {
 			if (g_ZakoData[i].position.z > g_ZakoData[j].position.z) {

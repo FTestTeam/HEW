@@ -126,7 +126,7 @@ void Camera_Update()
 	//3．プロジェクション変換行列
 	//=================================================
 	D3DXMATRIX mtxProje;
-	D3DXMatrixPerspectiveFovLH(&mtxProje, g_camera.Fov, (float)SCREEN_WIDTH / SCREEN_HEIGHT, 0.1f, 100.f);
+	D3DXMatrixPerspectiveFovLH(&mtxProje, g_camera.Fov, (float)SCREEN_WIDTH / SCREEN_HEIGHT, 0.1f, 10000.f);
 	//引数(2).視野角はラジアン指定 上半分だけ	
 	//引数(3).アスペクト比
 	//引数(4,5).near(>0)とfar

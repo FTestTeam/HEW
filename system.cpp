@@ -4,9 +4,11 @@
 #include"sound.h"
 #include"light.h"
 #include"cube.h"
+#include"background.h"
 
 void System_Init()
 {
+	
 	Texture_Init();
 	Model_Init();
 	Grid_Init();
@@ -15,6 +17,7 @@ void System_Init()
 
 void System_UnInit()
 {
+	
 	Grid_UnInit();
 	Texture_Release();
 	Model_UnInit();
