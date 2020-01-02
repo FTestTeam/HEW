@@ -29,7 +29,7 @@ void Hammer_Update(void)
 {
 	//プレーヤーがハンマーを投げたら進む
 	if (Player_IsFly() && g_bFly) {
-		g_Position.z += 0.3f;
+		g_Position.z += (Mic_GetVolume()/100.0f);
 		g_Position.y += 0.05f;
 		g_Position.y = min(g_Position.y, 3.0f);
 	}

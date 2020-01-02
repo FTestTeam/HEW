@@ -66,7 +66,6 @@ void Scene_Uninit(void)
 	default:
 		break;
 	};
-
 }
 
 void Scene_Update(void)
@@ -91,7 +90,6 @@ void Scene_Update(void)
 	default:
 		break;
 	};
-
 }
 
 void Scene_Draw(void)
@@ -116,7 +114,6 @@ void Scene_Draw(void)
 	default:
 		break;
 	};
-
 }
 
 
