@@ -25,6 +25,8 @@ static D3DXVECTOR3 g_VecDir(0.0f, 0.0f, 0.0f);
 
 static Camera g_camera;
 
+static D3DXMATRIX g_mtxViewInv;
+
 //カメラデバッグモード
 static bool DebugCam;
 
@@ -120,6 +122,10 @@ void Camera_Update()
 	D3DXVECTOR3 eye(g_camera.Pos.x, g_camera.Pos.y, g_camera.Pos.z);	//カメラの座標
 	D3DXVECTOR3 at(g_camera.Pos.x+g_camera.LocalVec.Front.x*AT_L ,g_camera.Pos.y + g_camera.LocalVec.Front.y*AT_L, g_camera.Pos.z + g_camera.LocalVec.Front.z*AT_L);//見る場所
 	D3DXMatrixLookAtLH(&mtxView, &eye, &at, &g_camera.LocalVec.Up);	//左手座標系？でビュー行列を作る
+
+	//ビルボード用逆行列
+	D3DXMatrixInverse(&g_mtxViewInv, NULL, &mtxView);
+
 	pDevice->SetTransform(D3DTS_VIEW, &mtxView);
 
 	//=================================================
@@ -244,4 +250,12 @@ static void camera_donnakimoti(Dir_enum dir)
 	default:
 		break;
 	}
+}
+
+D3DXMATRIX Camera_GetmtxViewInv()
+{
+	g_mtxViewInv._41 = 0.0f;
+	g_mtxViewInv._42 = 0.0f;
+	g_mtxViewInv._43 = 0.0f;
+	return g_mtxViewInv;
 }

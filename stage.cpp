@@ -1,6 +1,9 @@
 #include<d3dx9.h>
 #include"texture.h"
 #include"cube.h"
+#include"model.h"
+
+#define HOUSE_MAX (10)
 
 typedef struct STAGE_Tag {
 	D3DXVECTOR3 Position;
@@ -9,6 +12,7 @@ typedef struct STAGE_Tag {
 
 static STAGE g_Floor;
 static STAGE g_Kannkyaku;
+static STAGE g_House[HOUSE_MAX];
 
 void Stage_Init()
 {
@@ -17,6 +21,10 @@ void Stage_Init()
 
 	g_Kannkyaku.Position = { -15.0f,0.0f,30.0f };
 	g_Kannkyaku.TextureID = Texture_SetLoadFile("Asset/Texture/kannkyaku.jpg", 0, 0);
+
+	for (int i = 0; i < HOUSE_MAX; i++) {
+		g_House[i].TextureID = Model_SetLoadFile("Asset/Model/tatemono.x");
+	}
 }
 
 void Stage_UnInit()
@@ -38,10 +46,10 @@ void Stage_Draw()
 	mtx = mtxR * mtxS * mtxT;
 	Cube_Draw(&mtx, g_Floor.TextureID);
 
-	/*D3DXMatrixTranslation(&mtxST, 0.0f, 0.5f, 0.0f);
-	D3DXMatrixTranslation(&mtxT, g_Kannkyaku.Position.x, g_Kannkyaku.Position.y, g_Kannkyaku.Position.z);
-	D3DXMatrixScaling(&mtxS, 30.0f, 15.0f, 1.0f);
-	D3DXMatrixRotationY(&mtxR, D3DXToRadian(-45));
-	mtx =mtxST * mtxS * mtxR * mtxT;
-	Cube_Draw(&mtx, g_Kannkyaku.TextureID);*/
+	//D3DXMatrixTranslation(&mtxST, 0.0f, 0.5f, 0.0f);
+	//D3DXMatrixTranslation(&mtxT, g_Kannkyaku.Position.x, g_Kannkyaku.Position.y, g_Kannkyaku.Position.z);
+	//D3DXMatrixScaling(&mtxS, 30.0f, 15.0f, 1.0f);
+	//D3DXMatrixRotationY(&mtxR, D3DXToRadian(-45));
+	//mtx =mtxST * mtxS * mtxR * mtxT;
+	//Cube_Draw(&mtx, g_Kannkyaku.TextureID);
 }

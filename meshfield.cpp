@@ -2,6 +2,7 @@
 #include"mydirect3d.h"
 #include"texture.h"
 #include"DebugPrintf.h"
+#include"hammer.h"
 
 typedef struct MESHFIELD_Tag {
 	D3DXVECTOR3 position;

@@ -49,11 +49,11 @@ void Game_Update()
 
 void Game_Draw() 
 {
-	Player_Draw();
-	Hammer_Draw();
 	BackGround_Draw();
 	MeshField_Draw();
 	Stage_Draw();
+	Player_Draw();
+	Hammer_Draw();
 
 	Score_Draw(Score_GetScore() , SCREEN_WIDTH -48, 0, 7, false, true);
 }
