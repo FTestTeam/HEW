@@ -73,7 +73,8 @@ int Model_Load(void)
 			if (pMat[j].pTextureFilename == NULL) {
 				g_ModelData[i].pMaterials[j] = pMat[j].MatD3D;
 				g_ModelData[i].pMaterials[j].Diffuse.a = 1.0f;
-				g_ModelData[i].pMaterials[i].Diffuse = pMat[i].MatD3D.Emissive;	//デフューズにアンビエントやエミッシブを入れなおす作業が必要になる可能性がある
+				g_ModelData[i].pMaterials[j].Ambient = { 0.0f,0.0f,0.0f,0.0f };
+				//g_ModelData[i].pMaterials[i].Diffuse = pMat[i].MatD3D.Emissive;	//デフューズにアンビエントやエミッシブを入れなおす作業が必要になる可能性がある
 				g_ModelData[i].pTextureID[j] = -1;
 			}
 			else {
@@ -112,6 +113,7 @@ void Model_Draw(const D3DXMATRIX *mtx,int ModelID)
 	LPDIRECT3DDEVICE9 pDevice = MyDirect3D_GetDevice();
 	pDevice->SetTransform(D3DTS_WORLD, mtx);
 
+	pDevice->SetRenderState(D3DRS_LIGHTING, FALSE);
 	pDevice->SetRenderState(D3DRS_DIFFUSEMATERIALSOURCE, D3DMCS_MATERIAL);
 	pDevice->SetRenderState(D3DRS_AMBIENTMATERIALSOURCE, D3DMCS_MATERIAL);
 

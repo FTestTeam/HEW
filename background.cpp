@@ -27,6 +27,7 @@ void BackGround_Draw()
 {
 	D3DXMATRIX mtxW, mtxS, mtxT;
 	D3DXMatrixScaling(&mtxS, 400, 400, 400);
-	mtxW = mtxS;
+	D3DXMatrixTranslation(&mtxT, 0.0f, -30.0f, 0.0f);
+	mtxW = mtxS * mtxT;
 	Model_Draw(&mtxW, g_model);
 }

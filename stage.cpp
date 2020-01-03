@@ -25,6 +25,10 @@ void Stage_Init()
 	for (int i = 0; i < HOUSE_MAX; i++) {
 		g_House[i].TextureID = Model_SetLoadFile("Asset/Model/tatemono.x");
 	}
+
+	for (int i = 0; i < HOUSE_MAX; i++) {
+		g_House[i].Position = { -10.0f,0.3f,10.0f + i * 10.0f };
+	}
 }
 
 void Stage_UnInit()
@@ -45,6 +49,12 @@ void Stage_Draw()
 	D3DXMatrixRotationX(&mtxR, D3DXToRadian(90));
 	mtx = mtxR * mtxS * mtxT;
 	Cube_Draw(&mtx, g_Floor.TextureID);
+
+	for (int i = 0; i < HOUSE_MAX; i++) {
+		D3DXMatrixTranslation(&mtxT, g_House[i].Position.x, g_House[i].Position.y, g_House[i].Position.z);
+		mtx = mtxT;
+		Model_Draw(&mtx, g_House[i].TextureID);
+	}
 
 	//D3DXMatrixTranslation(&mtxST, 0.0f, 0.5f, 0.0f);
 	//D3DXMatrixTranslation(&mtxT, g_Kannkyaku.Position.x, g_Kannkyaku.Position.y, g_Kannkyaku.Position.z);

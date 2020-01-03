@@ -100,6 +100,8 @@ void MeshField_Draw()
 	pDevice->SetTexture(0, Texture_GetTexture(g_textureID));
 	//課題用　ワイヤーフレームにした時テクスチャ張らないほうが見やすかった
 	//pDevice->SetTexture(0, NULL);
-
+	D3DXMATRIX mtxW;
+	D3DXMatrixIdentity(&mtxW);
+	pDevice->SetTransform(D3DTS_WORLD, &mtxW);
 	pDevice->DrawIndexedPrimitive(D3DPT_TRIANGLESTRIP, 0, 0, g_MF_VertexNum, 0, g_MF_PRIM);
 }
