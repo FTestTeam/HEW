@@ -8,7 +8,7 @@
 
 static int g_model;
 
-void BackGround_Init(int BG_W, int BG_H, float w, float h)
+void BackGround_Init()
 {
 	g_model = Model_SetLoadFile("Asset/Model/sky3.x");
 }
@@ -25,9 +25,12 @@ void BackGround_Update()
 
 void BackGround_Draw()
 {
+	LPDIRECT3DDEVICE9 pDevice = MyDirect3D_GetDevice();
+
 	D3DXMATRIX mtxW, mtxS, mtxT;
 	D3DXMatrixScaling(&mtxS, 400, 400, 400);
-	D3DXMatrixTranslation(&mtxT, 0.0f, -30.0f, 0.0f);
+	D3DXMatrixTranslation(&mtxT, Hammer_GetPosition().x, -30.0f, Hammer_GetPosition().z);
 	mtxW = mtxS * mtxT;
+	pDevice->SetRenderState(D3DRS_LIGHTING, FALSE);
 	Model_Draw(&mtxW, g_model);
 }

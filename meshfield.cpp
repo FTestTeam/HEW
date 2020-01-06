@@ -86,7 +86,7 @@ void MeshField_Update()
 	
 }
 
-void MeshField_Draw()
+void MeshField_Draw(const D3DXMATRIX *mtx)
 {
 	LPDIRECT3DDEVICE9 pDevice = MyDirect3D_GetDevice();
 	pDevice->SetRenderState(D3DRS_LIGHTING,false);
@@ -100,8 +100,7 @@ void MeshField_Draw()
 	pDevice->SetTexture(0, Texture_GetTexture(g_textureID));
 	//課題用　ワイヤーフレームにした時テクスチャ張らないほうが見やすかった
 	//pDevice->SetTexture(0, NULL);
-	D3DXMATRIX mtxW;
-	D3DXMatrixIdentity(&mtxW);
-	pDevice->SetTransform(D3DTS_WORLD, &mtxW);
+
+	pDevice->SetTransform(D3DTS_WORLD, mtx);
 	pDevice->DrawIndexedPrimitive(D3DPT_TRIANGLESTRIP, 0, 0, g_MF_VertexNum, 0, g_MF_PRIM);
 }
