@@ -9,6 +9,7 @@
 #include "zako.h"
 #include "camera.h"
 #include "wall.h"
+#include "syutyusen.h"
 
 SCENE g_NextScene = SCENE_TITLE;		//ç≈èâÇÃâÊñ  äÆê¨î≈ÇÕÉ^ÉCÉgÉãÇ…Ç∑ÇÈ
 SCENE g_Scene = g_NextScene;
@@ -30,6 +31,7 @@ void Scene_Init(void)
 		Game_Init();
 		Camera_Init();
 		Zako_Init();
+		Syutyusen_Init();
 		break;
 	case SCENE_RESULT:
 		Score_Init();
@@ -58,6 +60,7 @@ void Scene_Uninit(void)
 	case SCENE_ZAKO:
 		Game_UnInit();
 		Zako_UnInit();
+		Syutyusen_UnInit();
 		break;
 	case SCENE_RESULT:
 		Score_Uninit();
@@ -83,6 +86,7 @@ void Scene_Update(void)
 	case SCENE_ZAKO:
 		Game_Update();
 		Zako_Update();
+		Syutyusen_Update();
 		break;
 	case SCENE_RESULT:
 		Result_Update();
@@ -107,6 +111,7 @@ void Scene_Draw(void)
 	case SCENE_ZAKO:
 		Game_Draw();
 		Zako_Draw();
+		Syutyusen_Draw();
 		break;
 	case SCENE_RESULT:
 		Result_Draw();
