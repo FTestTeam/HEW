@@ -30,12 +30,18 @@ void Stage_Init()
 	g_Kannkyaku.TextureID = Texture_SetLoadFile("Asset/Texture/kannkyaku.jpg", 0, 0);
 
 	for (int i = 0; i < HOUSE_MAX; i++) {
-		g_House[i].TextureID = Model_SetLoadFile("Asset/Model/tatemono.x");
+		g_House[i].TextureID = -1;
 	}
 
-	for (int i = 0; i < HOUSE_MAX; i++) {
-		g_House[i].Position = { -10.0f,0.3f,10.0f + i * 10.0f };
-	}
+	g_House[0].TextureID = Model_SetLoadFile("Asset/Model/build3.x");
+	g_House[1].TextureID = Model_SetLoadFile("Asset/Model/build1.x");
+	g_House[2].TextureID = Model_SetLoadFile("Asset/Model/7-11.x");
+	
+
+	g_House[0].Position = { -30.0f,0.3f,100.0f };
+	g_House[1].Position = { 30.0f,0.3f,100.0f };
+	g_House[2].Position = { -30.0f,0.3f,150.0f };
+	
 
 	g_FieldZ[0] = 0.0f;
 	g_FieldZ[1] = 100.0f;
@@ -82,11 +88,13 @@ void Stage_Draw()
 	mtx = mtxT;
 	MeshField_Draw(&mtx);
 
-	/*for (int i = 0; i < HOUSE_MAX; i++) {
+	for (int i = 0; i < HOUSE_MAX; i++) {
+		if (g_House[i].TextureID < 0) continue;
 		D3DXMatrixTranslation(&mtxT, g_House[i].Position.x, g_House[i].Position.y, g_House[i].Position.z);
-		mtx = mtxT;
+		D3DXMatrixScaling(&mtxS, 0.3f, 0.3f, 0.3f);
+		mtx = mtxS * mtxT;
 		Model_Draw(&mtx, g_House[i].TextureID);
-	}*/
+	}
 
 	//D3DXMatrixTranslation(&mtxST, 0.0f, 0.5f, 0.0f);
 	//D3DXMatrixTranslation(&mtxT, g_Kannkyaku.Position.x, g_Kannkyaku.Position.y, g_Kannkyaku.Position.z);
