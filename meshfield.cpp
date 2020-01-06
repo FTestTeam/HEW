@@ -2,6 +2,7 @@
 #include"mydirect3d.h"
 #include"texture.h"
 #include"DebugPrintf.h"
+#include"hammer.h"
 
 typedef struct MESHFIELD_Tag {
 	D3DXVECTOR3 position;
@@ -85,7 +86,7 @@ void MeshField_Update()
 	
 }
 
-void MeshField_Draw()
+void MeshField_Draw(const D3DXMATRIX *mtx)
 {
 	LPDIRECT3DDEVICE9 pDevice = MyDirect3D_GetDevice();
 	pDevice->SetRenderState(D3DRS_LIGHTING,false);
@@ -100,5 +101,6 @@ void MeshField_Draw()
 	//課題用　ワイヤーフレームにした時テクスチャ張らないほうが見やすかった
 	//pDevice->SetTexture(0, NULL);
 
+	pDevice->SetTransform(D3DTS_WORLD, mtx);
 	pDevice->DrawIndexedPrimitive(D3DPT_TRIANGLESTRIP, 0, 0, g_MF_VertexNum, 0, g_MF_PRIM);
 }

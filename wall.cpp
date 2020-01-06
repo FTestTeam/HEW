@@ -58,6 +58,9 @@ void Wall_Update(void)
 
 void Wall_Draw(void)
 {
+	LPDIRECT3DDEVICE9 pDevice = MyDirect3D_GetDevice();
+	pDevice->SetRenderState(D3DRS_LIGHTING, FALSE);
+
 	if (g_WallUse)
 	{
 		LPDIRECT3DDEVICE9 pDevice = MyDirect3D_GetDevice();
@@ -75,6 +78,8 @@ void Wall_Draw(void)
 		pDevice->SetTexture(0, Texture_GetTexture(g_textureID));
 		pDevice->DrawPrimitiveUP(D3DPT_TRIANGLESTRIP,2,g_wall_vertex,sizeof(g_wall_vertex[0]));
 	}
+
+	pDevice->SetRenderState(D3DRS_LIGHTING, TRUE);
 }
 
 void Wall_Delete(void)

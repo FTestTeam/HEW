@@ -73,6 +73,7 @@ int Model_Load(void)
 			if (pMat[j].pTextureFilename == NULL) {
 				g_ModelData[i].pMaterials[j] = pMat[j].MatD3D;
 				g_ModelData[i].pMaterials[j].Diffuse.a = 1.0f;
+				g_ModelData[i].pMaterials[j].Ambient = { 0.0f,0.0f,0.0f,0.0f };
 				//g_ModelData[i].pMaterials[i].Diffuse = pMat[i].MatD3D.Emissive;	//デフューズにアンビエントやエミッシブを入れなおす作業が必要になる可能性がある
 				g_ModelData[i].pTextureID[j] = -1;
 			}

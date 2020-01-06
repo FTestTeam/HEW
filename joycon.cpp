@@ -95,6 +95,11 @@ bool Joycon_Initialize(HINSTANCE hInstance, HWND hWnd)
 	c = 0;
 	g_pJoyconInput->EnumDevices(DI8DEVCLASS_GAMECTRL, (LPDIENUMDEVICESCALLBACK)EnumJoyDeviceCallBack, NULL, DIEDFL_ATTACHEDONLY);
 
+	if (g_pDevJoycon == NULL) {
+		g_bJoy = false;
+		return false;
+	}
+	
 	//データフォーマットを設定
 	HRESULT hr = g_pDevJoycon->SetDataFormat(&c_dfDIJoystick);	// ジョイコン用のデータ・フォーマットを設定
 	if (FAILED(hr)) {
