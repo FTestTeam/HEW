@@ -7,6 +7,7 @@
 #include"cube.h"
 #include"input.h"
 #include"DebugPrintf.h"
+#include"mydirect3d.h"
 
 typedef struct PLAYER_Tag{
 	LocalVecter LocalVec;
@@ -67,11 +68,14 @@ void Player_Update()
 
 void Player_Draw()
 {
+	LPDIRECT3DDEVICE9 pDevice = MyDirect3D_GetDevice();
+
 	D3DXMATRIX mtxW,mtxR,mtxRR,mtxS,mtxT;
 	D3DXMatrixRotationY(&mtxR, g_Ratetion);
 	D3DXMatrixRotationX(&mtxRR, D3DXToRadian(-90));
 	D3DXMatrixScaling(&mtxS, 0.01f, 0.01f, 0.01f);
 	mtxW = mtxS*mtxRR*mtxR;
+	pDevice->SetRenderState(D3DRS_LIGHTING, TRUE);
 	Model_Draw(&mtxW, g_Player.ModelId);
 
 	D3DXMatrixTranslation(&mtxT, 0, 1, 0);

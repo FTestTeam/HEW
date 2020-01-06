@@ -113,7 +113,6 @@ void Model_Draw(const D3DXMATRIX *mtx,int ModelID)
 	LPDIRECT3DDEVICE9 pDevice = MyDirect3D_GetDevice();
 	pDevice->SetTransform(D3DTS_WORLD, mtx);
 
-	pDevice->SetRenderState(D3DRS_LIGHTING, FALSE);
 	pDevice->SetRenderState(D3DRS_DIFFUSEMATERIALSOURCE, D3DMCS_MATERIAL);
 	pDevice->SetRenderState(D3DRS_AMBIENTMATERIALSOURCE, D3DMCS_MATERIAL);
 
