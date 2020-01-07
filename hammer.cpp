@@ -44,6 +44,8 @@ void Hammer_Update(void)
 
 void Hammer_Draw()
 {
+
+
 	D3DXMATRIX mtxW,mtxR,mtxT;
 	D3DXMATRIX mtxS, mtxRR;	//モデルの大きさとかがバグってるから無理やり直す用
 

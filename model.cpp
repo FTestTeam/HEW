@@ -116,6 +116,13 @@ void Model_Draw(const D3DXMATRIX *mtx,int ModelID)
 	pDevice->SetRenderState(D3DRS_DIFFUSEMATERIALSOURCE, D3DMCS_MATERIAL);
 	pDevice->SetRenderState(D3DRS_AMBIENTMATERIALSOURCE, D3DMCS_MATERIAL);
 
+	if (g_ModelData[ModelID].pTextureID[0] < 0) {
+		pDevice->SetRenderState(D3DRS_LIGHTING, TRUE);
+	}
+	else {
+		pDevice->SetRenderState(D3DRS_LIGHTING, FALSE);
+	}
+
 	for (DWORD i = 0; i < g_ModelData[ModelID].Materialcount; i++) {
 		pDevice->SetMaterial(&g_ModelData[ModelID].pMaterials[i]);	//マテリアルセット
 		pDevice->SetTexture(0, g_ModelData[ModelID].pTextureID[i] < 0 ? NULL : Texture_GetTexture(g_ModelData[ModelID].pTextureID[i]));
