@@ -278,7 +278,7 @@ void Draw(void) {
 	System_Draw();
 	Scene_Draw();
 
-	debug_logDraw();
+	DebugLog_Draw();
 	DebugFont_Draw(1, 1, "%.2f", g_FPS);
 
 	g_pDevice->EndScene();

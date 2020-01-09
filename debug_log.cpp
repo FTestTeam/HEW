@@ -5,7 +5,7 @@
 
 static bool log_use = false;
 
-void debug_logDraw(void) {
+void DebugLog_Draw(void) {
 #if defined(_DEBUG) || defined(DEBUG)
 
 	if (Keyboard_IsTrigger(DIK_0)) {

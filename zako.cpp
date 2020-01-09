@@ -41,7 +41,7 @@ void Zako_Init(void)
 	g_SceneFream = ZAKO_SCENE_CHANGE_FREAM;
 
 	//テクスチャの設定
-	g_textureID = Texture_SetLoadFile("Asset/Texture/koku-nn.png", 1024, 1024);
+	g_textureID = Texture_SetLoadFile("Asset/Texture/IMG_0539.PNG", 1024, 1024);
 	//初期化
 	for (int i = 0; i < ZAKO_MAX; i++)
 	{

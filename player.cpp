@@ -8,6 +8,7 @@
 #include"input.h"
 #include"DebugPrintf.h"
 #include"mydirect3d.h"
+#include"debug_log.h"
 
 typedef struct PLAYER_Tag{
 	LocalVecter LocalVec;
