@@ -8,6 +8,8 @@
 #include "raid.h"
 #include "zako.h"
 #include "camera.h"
+#include "wall.h"
+#include "syutyusen.h"
 
 SCENE g_NextScene = SCENE_TITLE;		//最初の画面 完成版はタイトルにする
 SCENE g_Scene = g_NextScene;
@@ -22,12 +24,14 @@ void Scene_Init(void)
 	case SCENE_RAID:
 		Game_Init();
 		Camera_Init();
+		Wall_Init();
 		Raid_Init();
 		break;
 	case SCENE_ZAKO:
 		Game_Init();
 		Camera_Init();
 		Zako_Init();
+		Syutyusen_Init();
 		break;
 	case SCENE_RESULT:
 		Score_Init();
@@ -36,7 +40,7 @@ void Scene_Init(void)
 	default:
 		break;
 	};
- 	if (Texture_Load() < 0 || Model_Load() < 0 ) {
+ 	if (Model_Load() < 0||Texture_Load() < 0) {
 		MessageBox(NULL, "異常が発生したよ(´･ω･`)", "エラーパターン:Texture_Load() < 0", MB_OK);
 	}
 }
@@ -50,11 +54,13 @@ void Scene_Uninit(void)
 		break;
 	case SCENE_RAID:
 		Game_UnInit();
+		Wall_UnInit();
 		Raid_UnInit();
 		break;
 	case SCENE_ZAKO:
 		Game_UnInit();
 		Zako_UnInit();
+		Syutyusen_UnInit();
 		break;
 	case SCENE_RESULT:
 		Score_Uninit();
@@ -63,7 +69,6 @@ void Scene_Uninit(void)
 	default:
 		break;
 	};
-
 }
 
 void Scene_Update(void)
@@ -75,11 +80,13 @@ void Scene_Update(void)
 		break;
 	case SCENE_RAID:
 		Game_Update();
+		Wall_Update();
 		Raid_Update();
 		break;
 	case SCENE_ZAKO:
 		Game_Update();
 		Zako_Update();
+		Syutyusen_Update();
 		break;
 	case SCENE_RESULT:
 		Result_Update();
@@ -87,7 +94,6 @@ void Scene_Update(void)
 	default:
 		break;
 	};
-
 }
 
 void Scene_Draw(void)
@@ -99,11 +105,13 @@ void Scene_Draw(void)
 		break;
 	case SCENE_RAID:
 		Game_Draw();
+		Wall_Draw();
 		Raid_Draw();
 		break;
 	case SCENE_ZAKO:
 		Game_Draw();
 		Zako_Draw();
+		Syutyusen_Draw();
 		break;
 	case SCENE_RESULT:
 		Result_Draw();
@@ -111,7 +119,6 @@ void Scene_Draw(void)
 	default:
 		break;
 	};
-
 }
 
 

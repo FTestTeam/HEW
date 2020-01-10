@@ -62,6 +62,7 @@ int Model_Load(void)
 		if (FAILED(hr)) {
 			MessageBox(NULL, "モデルが読み込めません", "警告", MB_ICONWARNING);
 			error_count++;
+			continue;
 		}
 
 		D3DXMATERIAL *pMat = (D3DXMATERIAL*)pMaterialBuffer->GetBufferPointer();
@@ -72,12 +73,13 @@ int Model_Load(void)
 			if (pMat[j].pTextureFilename == NULL) {
 				g_ModelData[i].pMaterials[j] = pMat[j].MatD3D;
 				g_ModelData[i].pMaterials[j].Diffuse.a = 1.0f;
+				//g_ModelData[i].pMaterials[j].Ambient = { 0.0f,0.0f,0.0f,0.0f };
 				//g_ModelData[i].pMaterials[i].Diffuse = pMat[i].MatD3D.Emissive;	//デフューズにアンビエントやエミッシブを入れなおす作業が必要になる可能性がある
 				g_ModelData[i].pTextureID[j] = -1;
 			}
 			else {
 				//マテリアル	使わないから真っ白に設定
-				g_ModelData[i].pMaterials[j].Diffuse = g_ModelData[i].pMaterials[j].Ambient = { 1.0f,1.0f,1.0f,1.0f };
+				//g_ModelData[i].pMaterials[j].Diffuse = g_ModelData[i].pMaterials[j].Ambient = { 1.0f,1.0f,1.0f,1.0f };
 				g_ModelData[i].pMaterials[j].Emissive = g_ModelData[i].pMaterials[j].Emissive = { 0.0f,0.0f,0.0f,0.0f };
 
 				//テクスチャ
@@ -113,6 +115,13 @@ void Model_Draw(const D3DXMATRIX *mtx,int ModelID)
 
 	pDevice->SetRenderState(D3DRS_DIFFUSEMATERIALSOURCE, D3DMCS_MATERIAL);
 	pDevice->SetRenderState(D3DRS_AMBIENTMATERIALSOURCE, D3DMCS_MATERIAL);
+
+	if (g_ModelData[ModelID].pTextureID[0] < 0) {
+		pDevice->SetRenderState(D3DRS_LIGHTING, TRUE);
+	}
+	else {
+		pDevice->SetRenderState(D3DRS_LIGHTING, FALSE);
+	}
 
 	for (DWORD i = 0; i < g_ModelData[ModelID].Materialcount; i++) {
 		pDevice->SetMaterial(&g_ModelData[ModelID].pMaterials[i]);	//マテリアルセット

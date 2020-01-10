@@ -25,6 +25,8 @@ static D3DXVECTOR3 g_VecDir(0.0f, 0.0f, 0.0f);
 
 static Camera g_camera;
 
+static D3DXMATRIX g_mtxViewInv;
+
 //カメラデバッグモード
 static bool DebugCam;
 
@@ -38,7 +40,7 @@ void Camera_Init()
 	D3DXVec3Normalize(&g_camera.LocalVec.Right, &g_camera.LocalVec.Right);
 	D3DXVec3Normalize(&g_camera.LocalVec.Up, &g_camera.LocalVec.Up);
 	
-	g_camera.Pos = D3DXVECTOR3(Hammer_GetPosition().x, Hammer_GetPosition().y+2.0f, Hammer_GetPosition().z-2.0f);	//カメラをハンマーの位置に初期化
+	g_camera.Pos = D3DXVECTOR3(Hammer_GetPosition().x, Hammer_GetPosition().y+4.0f, Hammer_GetPosition().z-4.0f);	//カメラをハンマーの位置に初期化
 	g_camera.Fov = D3DXToRadian(60);
 	g_camera.MoveSpeed = 0.3f;
 	g_camera.RotationSpeed = 0.05f;
@@ -52,8 +54,8 @@ void Camera_Update()
 	//	ゲーム
 	//======================
 	if (!DebugCam && Player_IsFly()) {		//カメラをハンマーに追従
-		g_camera.Pos.y = Hammer_GetPosition().y + 3.0f;
-		g_camera.Pos.z = Hammer_GetPosition().z - 3.0f;
+		g_camera.Pos.y = Hammer_GetPosition().y + 4.0f;
+		g_camera.Pos.z = Hammer_GetPosition().z - 4.0f;
 	}
 
 
@@ -120,13 +122,17 @@ void Camera_Update()
 	D3DXVECTOR3 eye(g_camera.Pos.x, g_camera.Pos.y, g_camera.Pos.z);	//カメラの座標
 	D3DXVECTOR3 at(g_camera.Pos.x+g_camera.LocalVec.Front.x*AT_L ,g_camera.Pos.y + g_camera.LocalVec.Front.y*AT_L, g_camera.Pos.z + g_camera.LocalVec.Front.z*AT_L);//見る場所
 	D3DXMatrixLookAtLH(&mtxView, &eye, &at, &g_camera.LocalVec.Up);	//左手座標系？でビュー行列を作る
+
+	//ビルボード用逆行列
+	D3DXMatrixInverse(&g_mtxViewInv, NULL, &mtxView);
+
 	pDevice->SetTransform(D3DTS_VIEW, &mtxView);
 
 	//=================================================
 	//3．プロジェクション変換行列
 	//=================================================
 	D3DXMATRIX mtxProje;
-	D3DXMatrixPerspectiveFovLH(&mtxProje, g_camera.Fov, (float)SCREEN_WIDTH / SCREEN_HEIGHT, 0.1f, 100.f);
+	D3DXMatrixPerspectiveFovLH(&mtxProje, g_camera.Fov, (float)SCREEN_WIDTH / SCREEN_HEIGHT, 0.1f, 10000.f);
 	//引数(2).視野角はラジアン指定 上半分だけ	
 	//引数(3).アスペクト比
 	//引数(4,5).near(>0)とfar
@@ -244,4 +250,12 @@ static void camera_donnakimoti(Dir_enum dir)
 	default:
 		break;
 	}
+}
+
+D3DXMATRIX Camera_GetmtxViewInv()
+{
+	g_mtxViewInv._41 = 0.0f;
+	g_mtxViewInv._42 = 0.0f;
+	g_mtxViewInv._43 = 0.0f;
+	return g_mtxViewInv;
 }

@@ -61,7 +61,7 @@ void Mic_UnInit()
 
 void Mic_Update()
 {
-	DebugPrintf("%f\n", g_MaxVol);
+	//DebugPrintf("%f\n", g_MaxVol);
 	g_Vol = fabsf((float)*g_inHdr->lpData);
 	if (g_Vol > g_MaxVol) {
 		g_MaxVol = g_Vol;

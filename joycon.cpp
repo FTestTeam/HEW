@@ -8,6 +8,7 @@
 #define DIRECTINPUT_VERSION (0x0800)
 #include <dinput.h>
 #include"joycon.h"
+#include"DebugPrintf.h"
 
 //*****************************************************************************
 // マクロ定義
@@ -94,6 +95,11 @@ bool Joycon_Initialize(HINSTANCE hInstance, HWND hWnd)
 	c = 0;
 	g_pJoyconInput->EnumDevices(DI8DEVCLASS_GAMECTRL, (LPDIENUMDEVICESCALLBACK)EnumJoyDeviceCallBack, NULL, DIEDFL_ATTACHEDONLY);
 
+	if (g_pDevJoycon == NULL) {
+		g_bJoy = false;
+		return false;
+	}
+	
 	//データフォーマットを設定
 	HRESULT hr = g_pDevJoycon->SetDataFormat(&c_dfDIJoystick);	// ジョイコン用のデータ・フォーマットを設定
 	if (FAILED(hr)) {
@@ -207,6 +213,7 @@ void Joycon_Update(void)
 			g_JoyconAccel[DIJOY_ACCEL_SL0] = (float)wJoyconState.rglSlider[0] - 32767.0f;
 			g_JoyconAccel[DIJOY_ACCEL_SL1] = (float)wJoyconState.rglSlider[1] - 32767.0f;
 
+			//DebugPrintf("%f\n", g_JoyconAccel[DIJOY_ACCEL_SL1]);
 		}
 		else {
 			g_pDevJoycon->Acquire();

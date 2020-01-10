@@ -10,6 +10,8 @@
 #include"input.h"
 #include"score.h"
 #include"common.h"
+#include"background.h"
+#include"syutyusen.h"
 
 void Game_Init()
 {
@@ -18,10 +20,13 @@ void Game_Init()
 	Hammer_Init();
 	Stage_Init();
 	Wall_Init();
+	
+	BackGround_Init();
 }
 
 void Game_UnInit()
 {
+	BackGround_UnInit();
 	Player_UnInit();
 	Hammer_Uninit();
 	Stage_UnInit();
@@ -34,17 +39,17 @@ void Game_Update()
 	Hammer_Update();
 	Stage_Update();
 	Wall_Update();
+	BackGround_Update();
 
-	if(Keyboard_IsTrigger(DIK_RETURN))
-	Scene_SetNextScene(SCENE_RESULT);
+	if(Keyboard_IsTrigger(DIK_RETURN)) Scene_SetNextScene(SCENE_RESULT);
 }
 
 void Game_Draw() 
 {
+	BackGround_Draw();
+	Stage_Draw();
 	Player_Draw();
 	Hammer_Draw();
-	Stage_Draw();
-	Wall_Draw();
 
-	Score_Draw(GetScore() , SCREEN_WIDTH -48, 0, 7, false, true);
+	Score_Draw(Score_GetScore() , SCREEN_WIDTH -48, 0, 7, false, true);
 }

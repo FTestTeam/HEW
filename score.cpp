@@ -46,14 +46,14 @@ void Score_Draw(int score, float x, float y, int digit, bool bZero, bool bLeft)
 	}
 }
 
-int GetScore(void)
+int Score_GetScore(void)
 {
 	return g_Score;
 }
 
-void AddScore(void)
+void Score_AddScore(int n)
 {
-	g_Score += 100;
+	g_Score += n;
 	Result_GetScore(g_Score);
 }
 

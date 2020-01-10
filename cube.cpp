@@ -20,17 +20,7 @@ static Cube_Vertex g_cube_vertex[] = {
 	{D3DXVECTOR3(-0.5f,0.5f,0.1f),D3DXVECTOR3(0.0f,0.0f,-1.0f),D3DCOLOR_RGBA(255,255,255,255),D3DXVECTOR2(0.0f,0.0f)},
 	{D3DXVECTOR3(0.5f,0.5f,0.1f),D3DXVECTOR3(0.0f,0.0f,-1.0f),D3DCOLOR_RGBA(255,255,255,255),D3DXVECTOR2(1.0f,0.0f)},
 	{D3DXVECTOR3(-0.5f,-0.5f,0.1f),D3DXVECTOR3(0.0f,0.0f,-1.0f),D3DCOLOR_RGBA(255,255,255,255),D3DXVECTOR2(0.0f,1.0f)},
-	//{D3DXVECTOR3(0.5f,0.5f,0.1f),D3DXVECTOR3(0.0f,0.0f,-1.0f),D3DCOLOR_RGBA(255,255,255,255),D3DXVECTOR2(1.0f,0.0f)},
 	{D3DXVECTOR3(0.5f,-0.5f,0.1f),D3DXVECTOR3(0.0f,0.0f,-1.0f),D3DCOLOR_RGBA(255,255,255,255),D3DXVECTOR2(1.0f,1.0f)},
-	//{D3DXVECTOR3(-0.5f,-0.5f,0.1f),D3DXVECTOR3(0.0f,0.0f,-1.0f),D3DCOLOR_RGBA(255,255,255,255),D3DXVECTOR2(0.0f,1.0f)},
-
-	//後面
-	{D3DXVECTOR3(0.5f,0.5f,0.0f),D3DXVECTOR3(0.0f,0.0f,1.0f),D3DCOLOR_RGBA(255,255,255,255),D3DXVECTOR2(1.0f,0.0f)},
-	{D3DXVECTOR3(-0.5f,0.5f,0.0f),D3DXVECTOR3(0.0f,0.0f,1.0f),D3DCOLOR_RGBA(255,255,255,255),D3DXVECTOR2(0.0f,0.0f)},
-	{D3DXVECTOR3(0.5f,-0.5f,0.0f),D3DXVECTOR3(0.0f,0.0f,1.0f),D3DCOLOR_RGBA(255,255,255,255),D3DXVECTOR2(1.0f,1.0f)},
-	//{D3DXVECTOR3(-0.5f,0.5f,0.0f),D3DXVECTOR3(0.0f,0.0f,1.0f),D3DCOLOR_RGBA(255,255,255,255),D3DXVECTOR2(0.0f,0.0f)},
-	{D3DXVECTOR3(-0.5f,-0.5f,0.0f),D3DXVECTOR3(0.0f,0.0f,1.0f),D3DCOLOR_RGBA(255,255,255,255),D3DXVECTOR2(0.0f,1.0f)},
-	//{D3DXVECTOR3(0.5f,-0.5f,0.0f),D3DXVECTOR3(0.0f,0.0f,1.0f),D3DCOLOR_RGBA(255,255,255,255),D3DXVECTOR2(1.0f,1.0f)},
 };
 
 static LPDIRECT3DINDEXBUFFER9 g_pIndexBuffer = NULL;
@@ -41,23 +31,14 @@ void Cube_Init(void)
 	LPDIRECT3DDEVICE9 pDevice = MyDirect3D_GetDevice();
 
 	//頂点バッファ
-	pDevice->CreateVertexBuffer(sizeof(Cube_Vertex) * 8, D3DUSAGE_WRITEONLY, FVF_CUBE, D3DPOOL_MANAGED, &g_VertexBuffer, NULL);
+	pDevice->CreateVertexBuffer(sizeof(Cube_Vertex) * 4, D3DUSAGE_WRITEONLY, FVF_CUBE, D3DPOOL_MANAGED, &g_VertexBuffer, NULL);
 	//(Length=借りるメモリの大きさ , usage=D3DUSAGE_WRITEONLYにしておけ , FVF , pool=D3DPOOL_MANAGED , VertexBufferのアドレス,NULL)
 
 	//indexbuffer
-	pDevice->CreateIndexBuffer(sizeof(WORD) * 12, D3DUSAGE_WRITEONLY, D3DFMT_INDEX16, D3DPOOL_MANAGED, &g_pIndexBuffer, NULL);
+	pDevice->CreateIndexBuffer(sizeof(WORD) * 4, D3DUSAGE_WRITEONLY, D3DFMT_INDEX16, D3DPOOL_MANAGED, &g_pIndexBuffer, NULL);
 	WORD *pIndex;
 	g_pIndexBuffer->Lock(0, 0, (void**)&pIndex, D3DLOCK_DISCARD);
-	int j = 0;
-	for (int i = 0 ; i < 12; i += 6 ) {
-		pIndex[0 + i] = 0 + j;
-		pIndex[1 + i] = 1 + j;
-		pIndex[2 + i] = 2 + j;
-		pIndex[3 + i] = 1 + j;
-		pIndex[4 + i] = 3 + j;
-		pIndex[5 + i] = 2 + j;
-		j += 4;
-	}
+	pIndex[0] = 0, pIndex[1] = 1, pIndex[2] = 2, pIndex[3] = 3;
 	g_pIndexBuffer->Unlock();
 
 	Cube_Vertex *pV;	//仮想アドレス　g_VertexBuffer->Unlock()を呼ぶともう使えない
@@ -90,6 +71,5 @@ void Cube_Draw(const D3DXMATRIX *mtx,int textureID)
 
 	pDevice->SetFVF(FVF_CUBE);
 	pDevice->SetTexture(0, Texture_GetTexture(textureID));
-	pDevice->DrawIndexedPrimitive(D3DPT_TRIANGLELIST, 0, 0, 8, 0, 12);
-	//pDevice->DrawPrimitiveUP(D3DPT_TRIANGLELIST, 4, g_cube_vertex, sizeof(Cube_Vertex));
+	pDevice->DrawIndexedPrimitive(D3DPT_TRIANGLESTRIP, 0, 0, 4, 0, 2);
 }
