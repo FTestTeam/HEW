@@ -44,6 +44,7 @@ static const OBJECT g_House[]
 	{D3DXVECTOR3(30.0f,0.3f,100.0f),0.3f,0.0f,MODEL_BUILD1},
 	{D3DXVECTOR3(-30.0f,0.3f,150.0f),0.3f,0.0f,MODEL_BUILD2},
 	{D3DXVECTOR3(30.0f,0.3f,150.0f),0.3f,0.0f,MODEL_BUILD3},
+	{D3DXVECTOR3(50.0f,0.3f,150.0f),0.3f,0.0f,MODEL_711},
 };
 
 void Stage_Init()
@@ -112,9 +113,6 @@ void Stage_Draw()
 	if (Hammer_GetPosition().z > g_FieldZ[0] + 150.0f) {
 		g_FieldZ[0] += 300.0f;
 	}
-	D3DXMatrixTranslation(&mtxT, 0.0f, 0.0f, g_FieldZ[0]);
-	mtx = mtxT;
-	MeshField_Draw(&mtx);
 	for (int i = 0; i < objNum; i++) {
 		D3DXMatrixTranslation(&mtxT, g_House[i].Position.x, g_House[i].Position.y, g_House[i].Position.z + g_FieldZ[0]);
 		D3DXMatrixScaling(&mtxS, g_House[i].scale, g_House[i].scale, g_House[i].scale);
@@ -122,13 +120,13 @@ void Stage_Draw()
 		mtx = mtxS * mtxR * mtxT;
 		Model_Draw(&mtx, Model_SetLoadFile(g_ModelName[g_House[i].Model]));
 	}
+	D3DXMatrixTranslation(&mtxT, 0.0f, 0.0f, g_FieldZ[0]);
+	mtx = mtxT;
+	MeshField_Draw(&mtx);
 
 	if (Hammer_GetPosition().z > g_FieldZ[1] + 150.0f) {
 		g_FieldZ[1] += 300.0f;
 	}
-	D3DXMatrixTranslation(&mtxT, 0.0f, 0.0f, g_FieldZ[1]);
-	mtx = mtxT;
-	MeshField_Draw(&mtx);
 	for (int i = 0; i < objNum; i++) {
 		D3DXMatrixTranslation(&mtxT, g_House[i].Position.x, g_House[i].Position.y, g_House[i].Position.z + g_FieldZ[1]);
 		D3DXMatrixScaling(&mtxS, g_House[i].scale, g_House[i].scale, g_House[i].scale);
@@ -136,13 +134,13 @@ void Stage_Draw()
 		mtx = mtxS * mtxR * mtxT;
 		Model_Draw(&mtx, Model_SetLoadFile(g_ModelName[g_House[i].Model]));
 	}
+	D3DXMatrixTranslation(&mtxT, 0.0f, 0.0f, g_FieldZ[1]);
+	mtx = mtxT;
+	MeshField_Draw(&mtx);
 
 	if (Hammer_GetPosition().z > g_FieldZ[2] + 150.0f) {
 		g_FieldZ[2] += 300.0f;
 	}
-	D3DXMatrixTranslation(&mtxT, 0.0f, 0.0f, g_FieldZ[2]);
-	mtx = mtxT;
-	MeshField_Draw(&mtx);
 	for (int i = 0; i < objNum; i++) {
 		D3DXMatrixTranslation(&mtxT, g_House[i].Position.x, g_House[i].Position.y, g_House[i].Position.z + g_FieldZ[2]);
 		D3DXMatrixScaling(&mtxS, g_House[i].scale, g_House[i].scale, g_House[i].scale);
@@ -150,4 +148,7 @@ void Stage_Draw()
 		mtx = mtxS * mtxR * mtxT;
 		Model_Draw(&mtx, Model_SetLoadFile(g_ModelName[g_House[i].Model]));
 	}
+	D3DXMatrixTranslation(&mtxT, 0.0f, 0.0f, g_FieldZ[2]);
+	mtx = mtxT;
+	MeshField_Draw(&mtx);
 }
