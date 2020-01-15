@@ -32,7 +32,6 @@ struct FBX_VECTOR3
 	float x;
 	float y;
 	float z;
-
 };
 
 struct FBX_VECTOR2
