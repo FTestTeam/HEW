@@ -9,5 +9,8 @@ void Wall_Draw(void);
 
 void Wall_Delete(void);
 D3DXVECTOR3 Wall_GetPosition(void);
+D3DXCOLOR Wall_GetColor();
+void Wall_MinAlpha(float n);
+bool Wall_isUse();
 
 #endif // !WALL_H_

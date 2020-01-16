@@ -1,13 +1,15 @@
 #include "common.h"
 #include "score.h"
 #include "Result.h"
+#include "sprite.h"
+#include "texture.h"
 
 int g_Score_TextureID;
 int g_Score;
 
 void Score_Init()
 {
-	g_Score_TextureID = Texture_SetLoadFile("Texture/number480.tga", 480,48 );
+	g_Score_TextureID = Texture_SetLoadFile("Asset/Texture/number480.tga", 480,48 );
 	g_Score = 0;
 }
 
@@ -44,14 +46,14 @@ void Score_Draw(int score, float x, float y, int digit, bool bZero, bool bLeft)
 	}
 }
 
-int GetScore(void)
+int Score_GetScore(void)
 {
 	return g_Score;
 }
 
-void AddScore(void)
+void Score_AddScore(int n)
 {
-	g_Score += 100;
+	g_Score += n;
 	Result_GetScore(g_Score);
 }
 

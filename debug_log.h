@@ -2,6 +2,6 @@
 #ifndef DEBUG_LOG_
 #define DEBUG_LOG_
 
-void debug_logDraw(void);
+void DebugLog_Draw(void);
 
 #endif // !DEBUG_LOG_
