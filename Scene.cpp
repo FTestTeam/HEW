@@ -26,6 +26,7 @@ void Scene_Init(void)
 		Camera_Init();
 		Wall_Init();
 		Raid_Init();
+		Syutyusen_Init();
 		break;
 	case SCENE_ZAKO:
 		Game_Init();
@@ -56,6 +57,7 @@ void Scene_Uninit(void)
 		Game_UnInit();
 		Wall_UnInit();
 		Raid_UnInit();
+		Syutyusen_UnInit();
 		break;
 	case SCENE_ZAKO:
 		Game_UnInit();
@@ -82,6 +84,7 @@ void Scene_Update(void)
 		Game_Update();
 		Wall_Update();
 		Raid_Update();
+		Syutyusen_Update();
 		break;
 	case SCENE_ZAKO:
 		Game_Update();
@@ -107,6 +110,7 @@ void Scene_Draw(void)
 		Game_Draw();
 		Wall_Draw();
 		Raid_Draw();
+		Syutyusen_Draw();
 		break;
 	case SCENE_ZAKO:
 		Game_Draw();
