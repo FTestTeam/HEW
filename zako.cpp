@@ -14,6 +14,7 @@
 
 #define ZAKO_SCENE_CHANGE_FREAM (120)
 #define ZAKO_STRIDE (5.0f)
+#define ZAKO_BREAK_VOL (40.0f)
 
 typedef struct ZakoData_tag
 {
@@ -75,7 +76,7 @@ void Zako_Update(void)
 			g_ZakoData[Id].use = true;
 		}
 
-		if (Mic_GetVolume() < 10) {
+		if (Mic_GetVolume() < ZAKO_BREAK_VOL) {
 			if (Zako_GetPosition(Id).z-1.0f < Hammer_GetPosition().z && Zako_GetPosition(Id).z + 0.3f > Hammer_GetPosition().z) {
 				Hammer_Stop();
 				g_bScene = true;
