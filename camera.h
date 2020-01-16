@@ -18,5 +18,6 @@ void Camera_Init();
 void Camera_Update();
 
 Camera Camera_GetPosition(void);
+D3DXMATRIX Camera_GetmtxViewInv();
 
 #endif // !CAMERA_H_

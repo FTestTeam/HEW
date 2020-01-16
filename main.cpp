@@ -20,12 +20,12 @@
 #include"light.h"
 #include"system.h"
 #include"input.h"
-#include"mouse_input.h"
 #include"joycon.h"
 #include"Scene.h"
 #include"model.h"
 #include"texture.h"
 #include"grid.h"
+#include"mic.h"
 
 /*----------------------------
 	定数,マクロ定義
@@ -125,10 +125,6 @@ int APIENTRY WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLi
 		MessageBox(NULL, "キーボードが初期化できませんでした", "エラー", MB_OK);
 		return 0;
 	}
-	if (!Mouse_Initialize(hInstance, hWnd)) {
-		MessageBox(NULL, "マウスが初期化できませんでした", "エラー", MB_OK);
-		return 0;
-	}
 	if (!Joycon_Initialize(hInstance, hWnd)) {
 		MessageBox(NULL, "ジョイコンが初期化できませんでした", "エラー", MB_OK);
 	}
@@ -219,6 +215,7 @@ bool Init(HWND hWnd) {
 	g_pDevice->SetSamplerState(0, D3DSAMP_ADDRESSV, D3DTADDRESS_WRAP);
 	g_pDevice->SetSamplerState(0, D3DSAMP_MINFILTER, D3DTEXF_LINEAR);
 
+	Mic_Init(hWnd);
 	System_Init();
 	Scene_Init();
 
@@ -239,7 +236,7 @@ void Uninit(void) {
 
 	Keyboard_Finalize();
 	Joycon_Finalize();
-	Mouse_Finalize();
+	Mic_UnInit();
 	System_UnInit();
 	Scene_Uninit();
 
@@ -251,11 +248,8 @@ void Uninit(void) {
 void Update(void) {
 	Keyboard_Update();
 	Joycon_Update();
-	Mouse_Update();
 
-	if (Joycon_IsPress(DIJOY_L_L)) {
-
-	}
+	Mic_Update();
 	System_Update();
 	Scene_Update();
 
@@ -284,7 +278,7 @@ void Draw(void) {
 	System_Draw();
 	Scene_Draw();
 
-	debug_logDraw();
+	DebugLog_Draw();
 	DebugFont_Draw(1, 1, "%.2f", g_FPS);
 
 	g_pDevice->EndScene();
