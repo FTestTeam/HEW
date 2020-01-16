@@ -11,8 +11,8 @@
 #include "wall.h"
 #include "syutyusen.h"
 
-SCENE g_NextScene = SCENE_TITLE;		//最初の画面 完成版はタイトルにする
-SCENE g_Scene = g_NextScene;
+static SCENE g_NextScene = SCENE_TITLE;		//最初の画面 完成版はタイトルにする
+static SCENE g_Scene = g_NextScene;
 
 void Scene_Init(void)
 {

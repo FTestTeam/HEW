@@ -8,6 +8,7 @@
 #include"texture.h"
 #include"sprite.h"
 #include"common.h"
+#include"Result.h"
 
 #define RAID_HP (10000)
 
@@ -17,6 +18,7 @@ static bool g_bMic = false;	//マイクを使うかどうかのフラグ
 
 static int g_textureID_Gage;
 static float g_RaidHP = RAID_HP;
+static float g_startHP;
 
 void Raid_Init()
 {
@@ -24,12 +26,14 @@ void Raid_Init()
 	g_EndFream = g_MicFream + 120;	//マイクに叫ぶ時間が終わってから120フレーム後にシーンチェンジ
 	g_bMic = false;
 
+	g_startHP = g_RaidHP;
+
 	g_textureID_Gage = Texture_SetLoadFile("Asset/Texture/gage.png", 640, 32);
 }
 
 void Raid_UnInit()
 {
-
+	Result_GetScore(g_startHP - g_RaidHP);
 }
 
 void Raid_Update()
