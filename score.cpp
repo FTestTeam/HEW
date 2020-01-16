@@ -9,7 +9,7 @@ int g_Score;
 
 void Score_Init()
 {
-	g_Score_TextureID = Texture_SetLoadFile("Texture/number480.tga", 480,48 );
+	g_Score_TextureID = Texture_SetLoadFile("Asset/Texture/number480.tga", 480,48 );
 	g_Score = 0;
 }
 
