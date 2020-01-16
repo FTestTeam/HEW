@@ -11,7 +11,9 @@
 #include"Result.h"
 #include"cube.h"
 
-#define RAID_HP (10000)
+#define RAID_ADD_HP (10000)
+
+#define RAID_START_HP (10000)
 #define RAID_SEC (5)
 
 static int	g_MicFream;	//障害に当たってから叫ぶ時間のカウンタ
@@ -19,8 +21,10 @@ static int	g_EndFream;	//叫び終わってからシーンを切り替えるまでの時間
 static bool g_bMic = false;	//マイクを使うかどうかのフラグ
 
 static int g_textureID_Gage;
-static float g_RaidHP = RAID_HP;
+static float g_RaidHP = RAID_START_HP;
+static float g_BufHP;
 static float g_startHP;
+static int g_breakNum = 0;
 
 static int g_textureID_break;
 static float g_scale_break;
@@ -33,6 +37,7 @@ void Raid_Init()
 	g_bMic = false;
 
 	g_startHP = g_RaidHP;
+	g_BufHP = 0;
 
 	g_textureID_Gage = Texture_SetLoadFile("Asset/Texture/gage.png", 640, 32);
 
@@ -58,8 +63,19 @@ void Raid_Update()
 			if (Mic_GetVolume() > 80) {
 				g_scale_break += 0.1f;
 			}
-			g_RaidHP -= (Mic_GetVolume() / 10) * (Zako_GetBreakCount());
+			g_RaidHP -= (Mic_GetVolume() * Zako_GetBreakCount()) / 100;
 		}
+	}
+
+	if (g_RaidHP <= 0) {
+		g_breakNum++;
+
+		g_RaidHP = RAID_START_HP + g_breakNum * RAID_ADD_HP;
+		g_startHP += RAID_START_HP + g_breakNum * RAID_ADD_HP;
+
+		D3DXVECTOR3 w = Wall_GetPosition();
+		w.z += 20;
+		Wall_SetPosition(w);
 	}
 
 	if (g_bMic) {
@@ -75,10 +91,8 @@ void Raid_Update()
 
 void Raid_Draw()
 {
-	Score_Draw(g_MicFream / 60, 100, 100, 4, 0, 0);
-	
 	Sprite_SetColor(D3DCOLOR_RGBA(255, 0, 0, 255));
-	Sprite_Draw(g_textureID_Gage, SCREEN_WIDTH / 2, 16.0f, g_RaidHP / RAID_HP, 1.0f, 0.0f, 16.0f);
+	Sprite_Draw(g_textureID_Gage, SCREEN_WIDTH / 2, 16.0f, g_RaidHP / RAID_START_HP + g_breakNum * RAID_ADD_HP, 1.0f, 0.0f, 16.0f);
 	Sprite_SetColor(D3DCOLOR_RGBA(255, 255, 255, 255));
 
 	if (g_bUse_Break) {
@@ -88,4 +102,10 @@ void Raid_Draw()
 		mtxW = mtxS * mtxT;
 		Cube_Draw(&mtxW, g_textureID_break);
 	}
+
+	DebugFont_Draw(1, 24, "スタート:%f", g_startHP);
+	DebugFont_Draw(1, 24*2, "%f", g_BufHP);
+	DebugFont_Draw(1, 24*3, "現在:%f", g_RaidHP);
+
+	Score_Draw(g_MicFream / 60, 100, 100, 4, 0, 0);
 }

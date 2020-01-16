@@ -3,6 +3,8 @@
 #include"sprite.h"
 #include"common.h"
 #include"mic.h"
+#include"hammer.h"
+#include"player.h"
 
 static int g_textureID;
 static D3DXVECTOR2 g_pos;
@@ -33,7 +35,7 @@ void Syutyusen_Update()
 	}
 
 	g_bUse = false;
-	if (Mic_GetVolume() > 40) {
+	if (Mic_GetVolume() > 40 && Hammer_IsFly() && Player_IsFly()) {
 		g_bUse = true;
 	}
 }
