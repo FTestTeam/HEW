@@ -26,6 +26,7 @@
 #include"texture.h"
 #include"grid.h"
 #include"mic.h"
+#include"fade.h"
 
 /*----------------------------
 	íËêî,É}ÉNÉçíËã`
@@ -218,6 +219,7 @@ bool Init(HWND hWnd) {
 	Mic_Init(hWnd);
 	System_Init();
 	Scene_Init();
+	Fade_Init();
 
 	InitSound(hWnd);
 	Camera_Init();
@@ -238,6 +240,7 @@ void Uninit(void) {
 	Joycon_Finalize();
 	Mic_UnInit();
 	System_UnInit();
+	Fade_Uninit();
 	Scene_Uninit();
 
 	DebugFont_Finalize();
@@ -252,7 +255,7 @@ void Update(void) {
 	Mic_Update();
 	System_Update();
 	Scene_Update();
-
+	Fade_Update();
 	Camera_Update();
 
 	g_FrameCount++;
@@ -277,7 +280,7 @@ void Draw(void) {
 	
 	System_Draw();
 	Scene_Draw();
-
+	Fade_Draw();
 	DebugLog_Draw();
 	DebugFont_Draw(1, 1, "%.2f", g_FPS);
 
