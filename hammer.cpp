@@ -1,14 +1,15 @@
-#include <d3d9.h>
-#include <d3dx9.h>
-#include "common.h"
-#include "mydirect3d.h"
-#include "input.h"
-#include "model.h"
-#include "player.h"
-#include "wall.h"
-#include "score.h"
-#include "mic.h"
-#include "hammer.h"
+#include<d3d9.h>
+#include<d3dx9.h>
+#include"common.h"
+#include"mydirect3d.h"
+#include"input.h"
+#include"model.h"
+#include"player.h"
+#include"wall.h"
+#include"score.h"
+#include"mic.h"
+#include"hammer.h"
+#include"effect.h"
 
 static D3DXVECTOR3 g_Position;
 static bool g_bFly;		//ハンマーが止まったらfalse
@@ -32,6 +33,20 @@ void Hammer_Update(void)
 		g_Position.z += (Mic_GetVolume()/100.0f);
 		g_Position.y += 0.05f;
 		g_Position.y = min(g_Position.y, 3.0f);
+		
+		if (Mic_GetVolume() > 100) {
+			Effect_Create(g_Position, D3DCOLOR_RGBA(255, 100, 100, 1), 60, 5.0f);
+			Effect_Create(g_Position, D3DCOLOR_RGBA(255, 100, 100, 1), 60, 5.0f);
+		}
+		else if (Mic_GetVolume() > 50) {
+			Effect_Create(g_Position, D3DCOLOR_RGBA(100, 255, 100, 1), 60, 5.0f);
+			Effect_Create(g_Position, D3DCOLOR_RGBA(100, 255, 100, 1), 60, 5.0f);
+		}
+		else {
+			Effect_Create(g_Position, D3DCOLOR_RGBA(100, 100, 255, 1), 60, 5.0f);
+			Effect_Create(g_Position, D3DCOLOR_RGBA(100, 100, 255, 1), 60, 5.0f);
+		}
+		
 	}
 
 	//ハンマーが止まったらだんだん落とす
