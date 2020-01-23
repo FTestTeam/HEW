@@ -72,4 +72,31 @@ void Cube_Draw(const D3DXMATRIX *mtx,int textureID)
 	pDevice->SetFVF(FVF_CUBE);
 	pDevice->SetTexture(0, Texture_GetTexture(textureID));
 	pDevice->DrawIndexedPrimitive(D3DPT_TRIANGLESTRIP, 0, 0, 4, 0, 2);
+
+	Cube_Vertex* g_cube_vertex = new Cube_Vertex[4];
+	g_VertexBuffer->Lock(0, 0, (void**)&g_cube_vertex, D3DLOCK_DISCARD);//(ロックする初めのアドレス,どこまでロックするか？　0にすると全部,CPUにVRAMの仮想アドレスを作る (void**)&pV , D3DLOCK_DISCARD)
+	g_cube_vertex[0].uv = D3DXVECTOR2(0.0f, 0.0f);
+	g_cube_vertex[1].uv = D3DXVECTOR2(1.0f, 0.0f);
+	g_cube_vertex[2].uv = D3DXVECTOR2(0.0f, 1.0f);
+	g_cube_vertex[3].uv = D3DXVECTOR2(1.0f, 1.0f);
+	g_VertexBuffer->Unlock();
+}
+
+void Cube_SetUV(float CutX, float CutY, float CutW, float CutH, int TextureID)
+{
+	int w = Texture_GetWidth(TextureID);
+	int h = Texture_GetHeight(TextureID);
+
+	float u0 = CutX / (float)w;
+	float v0 = CutY / (float)h;
+	float u1 = (CutX + CutW) / (float)w;
+	float v1 = (CutY + CutH) / (float)h;
+
+	Cube_Vertex* g_cube_vertex = new Cube_Vertex[4];
+	g_VertexBuffer->Lock(0, 0, (void**)&g_cube_vertex, D3DLOCK_DISCARD);//(ロックする初めのアドレス,どこまでロックするか？　0にすると全部,CPUにVRAMの仮想アドレスを作る (void**)&pV , D3DLOCK_DISCARD)
+	g_cube_vertex[0].uv = D3DXVECTOR2(u0, v0);
+	g_cube_vertex[1].uv = D3DXVECTOR2(u1, v0);
+	g_cube_vertex[2].uv = D3DXVECTOR2(u0, v1);
+	g_cube_vertex[3].uv = D3DXVECTOR2(u1, v1);
+	g_VertexBuffer->Unlock();
 }

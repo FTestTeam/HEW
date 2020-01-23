@@ -18,5 +18,6 @@ void Scene_Update(void);
 void Scene_Draw(void);
 
 void Scene_SetNextScene(SCENE nextScene);
+SCENE Scene_GetScene();
 bool Scene_Change(void);
 #endif // !_SCENE_H_
