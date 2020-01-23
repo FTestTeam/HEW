@@ -26,6 +26,7 @@
 #include"texture.h"
 #include"grid.h"
 #include"mic.h"
+#include"billboard.h"
 
 /*----------------------------
 	’è”,ƒ}ƒNƒ’è‹`
@@ -216,6 +217,7 @@ bool Init(HWND hWnd) {
 	g_pDevice->SetSamplerState(0, D3DSAMP_MINFILTER, D3DTEXF_LINEAR);
 
 	Mic_Init(hWnd);
+	Billboard_Init();
 	System_Init();
 	Scene_Init();
 
@@ -239,6 +241,7 @@ void Uninit(void) {
 	Mic_UnInit();
 	System_UnInit();
 	Scene_Uninit();
+	Billboard_UnInit();
 
 	DebugFont_Finalize();
 	MyDirect3D_UnInit();
@@ -249,6 +252,7 @@ void Update(void) {
 	Keyboard_Update();
 	Joycon_Update();
 
+	Billboard_Update();
 	Mic_Update();
 	System_Update();
 	Scene_Update();
