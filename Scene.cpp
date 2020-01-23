@@ -152,6 +152,11 @@ void Scene_SetNextScene(SCENE nextScene)
 	g_NextScene = nextScene;
 }
 
+SCENE Scene_GetScene()
+{
+	return g_Scene;
+}
+
 bool Scene_Change(void)
 {
 	if(g_NextScene != g_Scene){

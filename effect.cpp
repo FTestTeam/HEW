@@ -3,6 +3,7 @@
 #include"texture.h"
 #include"billboard.h"
 #include"mydirect3d.h"
+#include"Scene.h"
 
 #define EFFECT_TEXTURE_SIZE_W (80)
 #define EFFECT_TEXTURE_SIZE_H (80)
@@ -73,16 +74,18 @@ void Effect_Draw(void)
 
 	D3DXMATRIX mtxW, mtxT, mtxS;
 
-	for (int i = 0; i < EFFECT_MAX; i++) {
-		if (g_effect[i].life == 0) {
-			continue;
-		}
+	if (Scene_GetScene() == SCENE_ZAKO) {
+		for (int i = 0; i < EFFECT_MAX; i++) {
+			if (g_effect[i].life == 0) {
+				continue;
+			}
 
-		D3DXMatrixTranslation(&mtxT, g_effect[i].position.x, g_effect[i].position.y, g_effect[i].position.z);
-		D3DXMatrixScaling(&mtxS, g_effect[i].scale, g_effect[i].scale, g_effect[i].scale);
-		mtxW = mtxS * mtxT;
-		Billboard_SetColor(g_effect[i].color);
-		Billboard_Draw(&mtxW, g_TextureID);
+			D3DXMatrixTranslation(&mtxT, g_effect[i].position.x, g_effect[i].position.y, g_effect[i].position.z);
+			D3DXMatrixScaling(&mtxS, g_effect[i].scale, g_effect[i].scale, g_effect[i].scale);
+			mtxW = mtxS * mtxT;
+			Billboard_SetColor(g_effect[i].color);
+			Billboard_Draw(&mtxW, g_TextureID);
+		}
 	}
 
 	pDevice->SetRenderState(D3DRS_BLENDOP, D3DBLENDOP_ADD);
