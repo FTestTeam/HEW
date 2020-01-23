@@ -22,9 +22,6 @@ static float g_Ratetion;
 static int g_fream;
 static bool g_Fly;
 
-static PLAYER g_Tornado;
-static float g_TornadoScale;
-
 void Player_Init() 
 {
 	g_Player.Position = {0.0f,0.0f,0.0f};
@@ -33,10 +30,6 @@ void Player_Init()
 
 	g_Fly = false;
 	g_Rspeed = 0.0f;
-
-	g_Tornado.ModelId = Model_SetLoadFile("Asset/Model/tornado2.x");
-	g_Tornado.Position = g_Player.Position;
-	g_TornadoScale = 0;
 
 	//ハンマーのポジションをプレイヤーの前に初期化
 	D3DXVECTOR3 w;
@@ -54,15 +47,11 @@ void Player_Update()
 	if (Keyboard_IsPress(DIK_SPACE) || Joycon_IsPress(DIJOY_R_R)) {
 		if (Joycon_GetAccel(DIJOY_ACCEL_SL1) > -30000 || Joycon_GetAccel(DIJOY_ACCEL_SL1) < 30000 || Keyboard_IsPress(DIK_SPACE)) {
 			g_Rspeed += fabsf(Joycon_GetAccel(DIJOY_ACCEL_SL1)/10000000) + 0.01f;
-			g_TornadoScale += 0.01f;
 			//g_Rspeed = min(g_Rspeed, 1.0f);
 		}
 		else {	//	ジョイコン振ってない間回転減少
 			g_Rspeed -= 0.005f;
 			g_Rspeed = max(g_Rspeed, 0.0f);
-
-			g_TornadoScale -= 0.005f;
-			g_TornadoScale = max(g_TornadoScale, 0.0f);
 		}
 		g_Ratetion -= g_Rspeed;
 		g_fream++;
@@ -83,11 +72,6 @@ void Player_Draw()
 	D3DXMatrixScaling(&mtxS, 0.01f, 0.01f, 0.01f);
 	mtxW = mtxS*mtxRR*mtxR;
 	Model_Draw(&mtxW, g_Player.ModelId);
-
-	D3DXMatrixTranslation(&mtxT, 0, 1, 0);
-	D3DXMatrixScaling(&mtxS, g_TornadoScale, g_TornadoScale, g_TornadoScale);
-	mtxW = mtxR * mtxS * mtxT;
-	Model_Draw(&mtxW, g_Tornado.ModelId);
 }
 
 D3DXVECTOR3 Player_GetFront(void)
@@ -98,6 +82,11 @@ D3DXVECTOR3 Player_GetFront(void)
 float Player_GetRotation(void)
 {
 	return g_Ratetion;
+}
+
+D3DXVECTOR3 Player_GetPosition()
+{
+	return g_Player.Position;
 }
 
 bool Player_IsFly(void)
