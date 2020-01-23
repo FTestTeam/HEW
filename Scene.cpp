@@ -10,12 +10,19 @@
 #include "camera.h"
 #include "wall.h"
 #include "syutyusen.h"
+#include "fade.h"
 
-SCENE g_NextScene = SCENE_TITLE;		//最初の画面 完成版はタイトルにする
-SCENE g_Scene = g_NextScene;
+static SCENE g_NextScene = SCENE_TITLE;		//最初の画面 完成版はタイトルにする
+static SCENE g_Scene = g_NextScene;
 
+static int g_Framecount = 0;
+static int g_NowFramecount = 0;
+static D3DCOLOR g_Color = D3DXCOLOR(0,0,0,255);
 void Scene_Init(void)
 {
+	g_Framecount = 0;
+	g_NowFramecount = 0;
+
 	switch (g_NextScene)
 	{
 	case SCENE_TITLE:
@@ -26,6 +33,7 @@ void Scene_Init(void)
 		Camera_Init();
 		Wall_Init();
 		Raid_Init();
+		Syutyusen_Init();
 		break;
 	case SCENE_ZAKO:
 		Game_Init();
@@ -56,6 +64,7 @@ void Scene_Uninit(void)
 		Game_UnInit();
 		Wall_UnInit();
 		Raid_UnInit();
+		Syutyusen_UnInit();
 		break;
 	case SCENE_ZAKO:
 		Game_UnInit();
@@ -82,6 +91,7 @@ void Scene_Update(void)
 		Game_Update();
 		Wall_Update();
 		Raid_Update();
+		Syutyusen_Update();
 		break;
 	case SCENE_ZAKO:
 		Game_Update();
@@ -94,6 +104,7 @@ void Scene_Update(void)
 	default:
 		break;
 	};
+	g_NowFramecount++;
 }
 
 void Scene_Draw(void)
@@ -107,6 +118,7 @@ void Scene_Draw(void)
 		Game_Draw();
 		Wall_Draw();
 		Raid_Draw();
+		Syutyusen_Draw();
 		break;
 	case SCENE_ZAKO:
 		Game_Draw();
@@ -125,14 +137,19 @@ void Scene_Draw(void)
 void Scene_SetNextScene(SCENE nextScene)
 {
 	g_NextScene = nextScene;
+	Fade_Start(30, g_Color, true);
+	g_Framecount = g_NowFramecount;
 }
 
 bool Scene_Change(void)
 {
 	if(g_NextScene != g_Scene){
-		Scene_Uninit();
-		Scene_Init();
-		g_Scene = g_NextScene;
+		if (g_NowFramecount - g_Framecount > 29) {
+			Fade_Start(20, g_Color, false);
+			Scene_Uninit();
+			Scene_Init();
+			g_Scene = g_NextScene;
+		}
 	}
 
 	if (g_NextScene == SCENE_END) {

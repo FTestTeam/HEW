@@ -12,5 +12,6 @@ D3DXVECTOR3 Wall_GetPosition(void);
 D3DXCOLOR Wall_GetColor();
 void Wall_MinAlpha(float n);
 bool Wall_isUse();
+void Wall_SetPosition(D3DXVECTOR3 pos);
 
 #endif // !WALL_H_
