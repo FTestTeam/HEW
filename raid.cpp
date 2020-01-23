@@ -92,7 +92,7 @@ void Raid_Update()
 void Raid_Draw()
 {
 	Sprite_SetColor(D3DCOLOR_RGBA(255, 0, 0, 255));
-	Sprite_Draw(g_textureID_Gage, SCREEN_WIDTH / 2, 16.0f, g_RaidHP / RAID_START_HP + g_breakNum * RAID_ADD_HP, 1.0f, 0.0f, 16.0f);
+	Sprite_Draw(g_textureID_Gage, SCREEN_WIDTH / 2, 16.0f, g_RaidHP / (RAID_START_HP + g_breakNum * RAID_ADD_HP), 1.0f, 0.0f, 16.0f);
 	Sprite_SetColor(D3DCOLOR_RGBA(255, 255, 255, 255));
 
 	if (g_bUse_Break) {
