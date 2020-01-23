@@ -41,8 +41,6 @@ void Game_Update()
 	Stage_Update();
 	Wall_Update();
 	BackGround_Update();
-
-	if(Keyboard_IsTrigger(DIK_RETURN)) Scene_SetNextScene(SCENE_RESULT);
 }
 
 void Game_Draw() 

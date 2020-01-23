@@ -10,6 +10,7 @@
 #include"common.h"
 #include"Result.h"
 #include"cube.h"
+#include"input.h"
 
 #define RAID_ADD_HP (10000)
 
@@ -86,6 +87,10 @@ void Raid_Update()
 	if (g_EndFream < 0) {
 		Scene_SetNextScene(SCENE_RESULT);
 	}
+
+#if defined(_DEBUG) || defined(DEBUG)
+	if (Keyboard_IsTrigger(DIK_RETURN)) Scene_SetNextScene(SCENE_RESULT);
+#endif
 }
 
 void Raid_Draw()
@@ -98,10 +103,9 @@ void Raid_Draw()
 		D3DXMATRIX mtxW, mtxT,mtxS;
 		D3DXMatrixTranslation(&mtxT, Hammer_GetPosition().x, Hammer_GetPosition().y+1.0f, Hammer_GetPosition().z);
 		
-		float Kiretu_size = 1.0f - (g_RaidHP / RAID_MAX_HP);
-		float scale = (1.0f - (g_RaidHP / RAID_MAX_HP)) * 5.0f;
+		float Kiretu_size = (1.0f - (g_RaidHP / RAID_MAX_HP));
 
-		D3DXMatrixScaling(&mtxS, scale, scale, 1.0f);
+		D3DXMatrixScaling(&mtxS, Kiretu_size, Kiretu_size, 1.0f);
 		mtxW = mtxS * mtxT;
 		Cube_SetUV(KIRETU_TEXTURE_SIZE_W / 2 - (KIRETU_TEXTURE_SIZE_W / 2) * Kiretu_size, KIRETU_TEXTURE_SIZE_H / 2 - (KIRETU_TEXTURE_SIZE_H / 2) * Kiretu_size, (KIRETU_TEXTURE_SIZE_W / 2) * Kiretu_size*2, (KIRETU_TEXTURE_SIZE_H / 2) * Kiretu_size*2, g_textureID_break);
 		Cube_Draw(&mtxW, g_textureID_break);
