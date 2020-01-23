@@ -10,6 +10,7 @@
 #include "camera.h"
 #include "wall.h"
 #include "syutyusen.h"
+#include"effect.h"
 
 static SCENE g_NextScene = SCENE_TITLE;		//ç≈èâÇÃâÊñ  äÆê¨î≈ÇÕÉ^ÉCÉgÉãÇ…Ç∑ÇÈ
 static SCENE g_Scene = g_NextScene;
@@ -22,6 +23,7 @@ void Scene_Init(void)
 		Title_Init();
 		break;
 	case SCENE_RAID:
+		Effect_Init();
 		Game_Init();
 		Camera_Init();
 		Wall_Init();
@@ -29,6 +31,7 @@ void Scene_Init(void)
 		Syutyusen_Init();
 		break;
 	case SCENE_ZAKO:
+		Effect_Init();
 		Game_Init();
 		Camera_Init();
 		Zako_Init();
@@ -54,12 +57,14 @@ void Scene_Uninit(void)
 		Title_Uninit();
 		break;
 	case SCENE_RAID:
+		Effect_UnInit();
 		Game_UnInit();
 		Wall_UnInit();
 		Raid_UnInit();
 		Syutyusen_UnInit();
 		break;
 	case SCENE_ZAKO:
+		Effect_UnInit();
 		Game_UnInit();
 		Zako_UnInit();
 		Syutyusen_UnInit();
@@ -81,12 +86,14 @@ void Scene_Update(void)
 		Title_Update();
 		break;
 	case SCENE_RAID:
+		Effect_Update();
 		Game_Update();
 		Wall_Update();
 		Raid_Update();
 		Syutyusen_Update();
 		break;
 	case SCENE_ZAKO:
+		Effect_Update();
 		Game_Update();
 		Zako_Update();
 		Syutyusen_Update();
@@ -109,12 +116,14 @@ void Scene_Draw(void)
 	case SCENE_RAID:
 		Game_Draw();
 		Wall_Draw();
+		Effect_Draw();
 		Raid_Draw();
 		Syutyusen_Draw();
 		break;
 	case SCENE_ZAKO:
 		Game_Draw();
 		Zako_Draw();
+		Effect_Draw();
 		Syutyusen_Draw();
 		break;
 	case SCENE_RESULT:
