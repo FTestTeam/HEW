@@ -12,7 +12,6 @@
 #include"common.h"
 #include"background.h"
 #include"syutyusen.h"
-#include"effect.h"
 
 void Game_Init()
 {
@@ -48,9 +47,9 @@ void Game_Update()
 void Game_Draw() 
 {
 	Stage_Draw();
-	BackGround_Draw();
 	Player_Draw();
 	Hammer_Draw();
+	BackGround_Draw();
 
 	Score_Draw(Score_GetScore() , SCREEN_WIDTH -48, 0, 7, false, true);
 }
