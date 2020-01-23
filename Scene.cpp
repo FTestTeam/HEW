@@ -8,22 +8,15 @@
 #include "raid.h"
 #include "zako.h"
 #include "camera.h"
-#include "wall.h"
 #include "syutyusen.h"
-#include"effect.h"
-#include "fade.h"
+#include "wall.h"
+#include "effect.h"
 
-static SCENE g_NextScene = SCENE_TITLE;		//æœ€åˆã®ç”»é¢ å®Œæˆç‰ˆã¯ã‚¿ã‚¤ãƒˆãƒ«ã«ã™ã‚‹
-static SCENE g_Scene = g_NextScene;
+SCENE g_NextScene = SCENE_TITLE;		//Å‰‚Ì‰æ–Ê Š®¬”Å‚Íƒ^ƒCƒgƒ‹‚É‚·‚é
+SCENE g_Scene = g_NextScene;
 
-static int g_Framecount = 0;
-static int g_NowFramecount = 0;
-static D3DCOLOR g_Color = D3DXCOLOR(0,0,0,255);
 void Scene_Init(void)
 {
-	g_Framecount = 0;
-	g_NowFramecount = 0;
-
 	switch (g_NextScene)
 	{
 	case SCENE_TITLE:
@@ -51,8 +44,8 @@ void Scene_Init(void)
 	default:
 		break;
 	};
- 	if (Model_Load() < 0||Texture_Load() < 0) {
-		MessageBox(NULL, "ç•°å¸¸ãŒç™ºç”Ÿã—ãŸã‚ˆ(Â´ï½¥Ï‰ï½¥`)", "ã‚¨ãƒ©ãƒ¼ãƒ‘ã‚¿ãƒ¼ãƒ³:Texture_Load() < 0", MB_OK);
+ 	if (Model_Load() < 0 || Texture_Load() < 0) {
+		MessageBox(NULL, "ˆÙí‚ª”­¶‚µ‚½‚æ(L¥ƒÖ¥`)", "ƒGƒ‰[ƒpƒ^[ƒ“:Texture_Load() < 0", MB_OK);
 	}
 }
 
@@ -83,6 +76,7 @@ void Scene_Uninit(void)
 	default:
 		break;
 	};
+
 }
 
 void Scene_Update(void)
@@ -111,7 +105,7 @@ void Scene_Update(void)
 	default:
 		break;
 	};
-	g_NowFramecount++;
+
 }
 
 void Scene_Draw(void)
@@ -140,25 +134,21 @@ void Scene_Draw(void)
 	default:
 		break;
 	};
+
 }
 
 
 void Scene_SetNextScene(SCENE nextScene)
 {
 	g_NextScene = nextScene;
-	Fade_Start(30, g_Color, true);
-	g_Framecount = g_NowFramecount;
 }
 
 bool Scene_Change(void)
 {
 	if(g_NextScene != g_Scene){
-		if (g_NowFramecount - g_Framecount > 29) {
-			Fade_Start(20, g_Color, false);
-			Scene_Uninit();
-			Scene_Init();
-			g_Scene = g_NextScene;
-		}
+		Scene_Uninit();
+		Scene_Init();
+		g_Scene = g_NextScene;
 	}
 
 	if (g_NextScene == SCENE_END) {
