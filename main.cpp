@@ -1,6 +1,6 @@
 /*===================================================
 
-	ä½œæˆè€…ï¼šäº”ååµå‡Œ
+	ì¬ŽÒFŒÜ\—’—½
 
 ===================================================*/
 #include<Windows.h>
@@ -28,44 +28,43 @@
 #include"mic.h"
 #include"billboard.h"
 #include"fade.h"
-
 /*----------------------------
-	å®šæ•°,ãƒžã‚¯ãƒ­å®šç¾©
+	’è”,ƒ}ƒNƒ’è‹`
 ----------------------------*/
 #define	CLASS_NAME		"GameWindow"
-#define WINDOW_CAPTION	"ãƒãƒ³ãƒžãƒ¼æŠ•ã’"
+#define WINDOW_CAPTION	"ƒnƒ“ƒ}[“Š‚°"
 #define FPS_MEASUREMENT_TIME 1.0
 #define WINDOW_STYLE	(WS_OVERLAPPEDWINDOW ^ WS_THICKFRAME ^ WS_MAXIMIZEBOX)
 
 /*----------------------------
-	ãƒ—ãƒ­ãƒˆã‚¿ã‚¤ãƒ—å®£è¨€
+	ƒvƒƒgƒ^ƒCƒvéŒ¾
 ----------------------------*/
-//ã‚¦ã‚£ãƒ³ãƒ‰ã‚¦
+//ƒEƒBƒ“ƒhƒE
 LRESULT CALLBACK WndProc(HWND hwnd, UINT uMsg, WPARAM wParam ,LPARAM lParam);
 
-//ã‚²ãƒ¼ãƒ 
+//ƒQ[ƒ€
 static bool Init(HWND hWnd);
 static void Uninit(void);
 static void Update(void);
 static void Draw(void);
 
 /*----------------------------
-	ã‚°ãƒ­ãƒ¼ãƒãƒ«é–¢æ•°
+	ƒOƒ[ƒoƒ‹ŠÖ”
 ----------------------------*/
-//Direct3Dãƒ‡ãƒã‚¤ã‚¹ã®ãƒã‚¤ãƒ³ã‚¿ãƒ¼
+//Direct3DƒfƒoƒCƒX‚Ìƒ|ƒCƒ“ƒ^[
 static LPDIRECT3DDEVICE9 g_pDevice = NULL;
 
-//FPSè¨ˆæ¸¬
+//FPSŒv‘ª
 static int g_FrameCount = 0;
 static int g_FPSBaseFrameCount = 0;
 static double g_FPSBaseTime = 0.0;
 static float g_FPS = 0.0f; 
 static double g_StaticFrameTime = 0.0;
 
-//ã‚²ãƒ¼ãƒ 
+//ƒQ[ƒ€
 
 /*============================
-	ãƒ¡ã‚¤ãƒ³
+	ƒƒCƒ“
 ============================*/
 int APIENTRY WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLine, int nCmdShow)
 {
@@ -73,7 +72,7 @@ int APIENTRY WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLi
 	UNREFERENCED_PARAMETER(lpCmdLine);
 
 	/*-------------------------------------
-		ã‚¦ã‚£ãƒ³ãƒ‰ã‚¦ä½œæˆå‡¦ç†
+		ƒEƒBƒ“ƒhƒEì¬ˆ—
 	-------------------------------------*/
 
 	WNDCLASS wc = {};
@@ -92,11 +91,11 @@ int APIENTRY WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLi
 	int window_width = window_rect.right - window_rect.left;
 	int window_height = window_rect.bottom - window_rect.top;
 
-	//ãƒ¡ã‚¤ãƒ³ãƒ¢ãƒ‹ã‚¿ãƒ¼ã®å¤§ãã•ã®å–å¾—
+	//ƒƒCƒ“ƒ‚ƒjƒ^[‚Ì‘å‚«‚³‚ÌŽæ“¾
 	int desktop_width = GetSystemMetrics(SM_CXSCREEN);
 	int desktop_heigt = GetSystemMetrics(SM_CYSCREEN);
 
-	//ã‚¦ã‚£ãƒ³ãƒ‰ã‚¦ã‚’ç”»é¢ã®çœŸã‚“ä¸­ã«å‡ºã™å‡¦ç†
+	//ƒEƒBƒ“ƒhƒE‚ð‰æ–Ê‚Ì^‚ñ’†‚Éo‚·ˆ—
 	int window_x = (desktop_width - window_width) / 2;
 	int window_y = (desktop_heigt - window_height) / 2;
 
@@ -118,21 +117,21 @@ int APIENTRY WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLi
 	UpdateWindow(hWnd);
 
 	/*---------------------
-		ã‚²ãƒ¼ãƒ å‡¦ç†
+		ƒQ[ƒ€ˆ—
 	---------------------*/
 	MSG msg = {};
 
-	//ã‚­ãƒ¼ãƒœãƒ¼ãƒ‰åˆæœŸåŒ–
+	//ƒL[ƒ{[ƒh‰Šú‰»
 	if (!Keyboard_Initialize(hInstance, hWnd)) {
-		MessageBox(NULL, "ã‚­ãƒ¼ãƒœãƒ¼ãƒ‰ãŒåˆæœŸåŒ–ã§ãã¾ã›ã‚“ã§ã—ãŸ", "ã‚¨ãƒ©ãƒ¼", MB_OK);
+		MessageBox(NULL, "ƒL[ƒ{[ƒh‚ª‰Šú‰»‚Å‚«‚Ü‚¹‚ñ‚Å‚µ‚½", "ƒGƒ‰[", MB_OK);
 		return 0;
 	}
 	if (!Joycon_Initialize(hInstance, hWnd)) {
-		MessageBox(NULL, "ã‚¸ãƒ§ã‚¤ã‚³ãƒ³ãŒåˆæœŸåŒ–ã§ãã¾ã›ã‚“ã§ã—ãŸ", "ã‚¨ãƒ©ãƒ¼", MB_OK);
+		MessageBox(NULL, "ƒWƒ‡ƒCƒRƒ“‚ª‰Šú‰»‚Å‚«‚Ü‚¹‚ñ‚Å‚µ‚½", "ƒGƒ‰[", MB_OK);
 	}
 
 	if (!Init(hWnd)) {
-		MessageBox(NULL, "çµ‚äº†ã—ã¾ã™", "ã‚¨ãƒ©ãƒ¼", MB_OK);
+		MessageBox(NULL, "I—¹‚µ‚Ü‚·", "ƒGƒ‰[", MB_OK);
 		return 0;
 	}
 	while (WM_QUIT != msg.message) {
@@ -172,7 +171,7 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT uMsg, WPARAM wParam, LPARAM lParam)
 		break;
 
 	case WM_CLOSE:
-		if (MessageBox(hWnd, "æœ¬å½“ã«çµ‚äº†ã—ã¦ã‚ˆã‚ã—ã„ã§ã™ã‹ï¼Ÿ", "ç¢ºèª", MB_OKCANCEL | MB_DEFBUTTON2) == IDOK) {
+		if (MessageBox(hWnd, "–{“–‚ÉI—¹‚µ‚Ä‚æ‚ë‚µ‚¢‚Å‚·‚©H", "Šm”F", MB_OKCANCEL | MB_DEFBUTTON2) == IDOK) {
 			DestroyWindow(hWnd);
 		}
 		return 0;
@@ -184,7 +183,7 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT uMsg, WPARAM wParam, LPARAM lParam)
 	return DefWindowProc(hWnd, uMsg, wParam, lParam);
 }
 
-//åˆæœŸåŒ–å‡¦ç†
+//‰Šú‰»ˆ—
 bool Init(HWND hWnd) {
 	if (!MyDirect3D_Init(hWnd)) {
 		return false;
@@ -219,9 +218,9 @@ bool Init(HWND hWnd) {
 
 	Mic_Init(hWnd);
 	Billboard_Init();
+	Fade_Init();
 	System_Init();
 	Scene_Init();
-	Fade_Init();
 
 	InitSound(hWnd);
 	Camera_Init();
@@ -234,7 +233,7 @@ bool Init(HWND hWnd) {
 	return true;
 }
 
-//çµ‚äº†å‡¦ç†
+//I—¹ˆ—
 void Uninit(void) {
 	UninitSound();
 
@@ -242,24 +241,26 @@ void Uninit(void) {
 	Joycon_Finalize();
 	Mic_UnInit();
 	System_UnInit();
-	Fade_Uninit();
 	Scene_Uninit();
 	Billboard_UnInit();
+	Fade_Uninit();
+
 
 	DebugFont_Finalize();
 	MyDirect3D_UnInit();
 }
 
-//æ›´æ–°å‡¦ç†
+//XVˆ—
 void Update(void) {
 	Keyboard_Update();
 	Joycon_Update();
 
-	Billboard_Update();
 	Mic_Update();
+	Billboard_Update();
+	Fade_Update();
 	System_Update();
 	Scene_Update();
-	Fade_Update();
+
 	Camera_Update();
 
 	g_FrameCount++;
@@ -271,7 +272,7 @@ void Update(void) {
 	}
 }
 
-//æç”»å‡¦ç†
+//•`‰æˆ—
 void Draw(void) {
 
 	g_pDevice->Clear(0, NULL, D3DCLEAR_TARGET | D3DCLEAR_ZBUFFER, D3DCOLOR_RGBA(100, 100, 100, 255), 1.0f, 0);
@@ -285,7 +286,6 @@ void Draw(void) {
 	System_Draw();
 	Scene_Draw();
 	Fade_Draw();
-	DebugLog_Draw();
 	DebugFont_Draw(1, 1, "%.2f", g_FPS);
 
 	g_pDevice->EndScene();
