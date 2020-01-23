@@ -61,8 +61,8 @@ void Stage_Init()
 	}
 	
 	
-	g_SekiPos[0] = { -20.0f,4.0f,20.0f };
-	g_SekiPos[1] = { 20.0f,4.0f,20.0f };
+	g_SekiPos[0] = { -20.0f,4.0f,30.0f };
+	g_SekiPos[1] = { 20.0f,4.0f,30.0f };
 	g_ModelID_Seki = Model_SetLoadFile("Asset/Model/seki.x");
 	
 	

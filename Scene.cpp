@@ -11,6 +11,7 @@
 #include "syutyusen.h"
 #include "wall.h"
 #include "effect.h"
+#include "tornado.h"
 
 SCENE g_NextScene = SCENE_TITLE;		//ç≈èâÇÃâÊñ  äÆê¨î≈ÇÕÉ^ÉCÉgÉãÇ…Ç∑ÇÈ
 SCENE g_Scene = g_NextScene;
@@ -29,6 +30,7 @@ void Scene_Init(void)
 		Wall_Init();
 		Raid_Init();
 		Syutyusen_Init();
+		Tornado_Init();
 		break;
 	case SCENE_ZAKO:
 		Effect_Init();
@@ -36,6 +38,7 @@ void Scene_Init(void)
 		Camera_Init();
 		Zako_Init();
 		Syutyusen_Init();
+		Tornado_Init();
 		break;
 	case SCENE_RESULT:
 		Score_Init();
@@ -62,12 +65,14 @@ void Scene_Uninit(void)
 		Wall_UnInit();
 		Raid_UnInit();
 		Syutyusen_UnInit();
+		Tornado_UnInit();
 		break;
 	case SCENE_ZAKO:
 		Effect_UnInit();
 		Game_UnInit();
 		Zako_UnInit();
 		Syutyusen_UnInit();
+		Tornado_UnInit();
 		break;
 	case SCENE_RESULT:
 		Score_Uninit();
@@ -92,12 +97,14 @@ void Scene_Update(void)
 		Wall_Update();
 		Raid_Update();
 		Syutyusen_Update();
+		Tornado_Update();
 		break;
 	case SCENE_ZAKO:
 		Effect_Update();
 		Game_Update();
 		Zako_Update();
 		Syutyusen_Update();
+		Tornado_Update();
 		break;
 	case SCENE_RESULT:
 		Result_Update();
@@ -120,11 +127,13 @@ void Scene_Draw(void)
 		Wall_Draw();
 		Effect_Draw();
 		Raid_Draw();
+		Tornado_Draw();
 		Syutyusen_Draw();
 		break;
 	case SCENE_ZAKO:
 		Game_Draw();
 		Zako_Draw();
+		Tornado_Draw();
 		Effect_Draw();
 		Syutyusen_Draw();
 		break;
