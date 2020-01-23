@@ -10,9 +10,10 @@
 #include "camera.h"
 #include "wall.h"
 #include "syutyusen.h"
+#include"effect.h"
 #include "fade.h"
 
-static SCENE g_NextScene = SCENE_TITLE;		//Å‰‚Ì‰æ–Ê Š®¬”Å‚Íƒ^ƒCƒgƒ‹‚É‚·‚é
+static SCENE g_NextScene = SCENE_TITLE;		//æœ€åˆã®ç”»é¢ å®Œæˆç‰ˆã¯ã‚¿ã‚¤ãƒˆãƒ«ã«ã™ã‚‹
 static SCENE g_Scene = g_NextScene;
 
 static int g_Framecount = 0;
@@ -29,6 +30,7 @@ void Scene_Init(void)
 		Title_Init();
 		break;
 	case SCENE_RAID:
+		Effect_Init();
 		Game_Init();
 		Camera_Init();
 		Wall_Init();
@@ -36,6 +38,7 @@ void Scene_Init(void)
 		Syutyusen_Init();
 		break;
 	case SCENE_ZAKO:
+		Effect_Init();
 		Game_Init();
 		Camera_Init();
 		Zako_Init();
@@ -49,7 +52,7 @@ void Scene_Init(void)
 		break;
 	};
  	if (Model_Load() < 0||Texture_Load() < 0) {
-		MessageBox(NULL, "ˆÙí‚ª”­¶‚µ‚½‚æ(L¥ƒÖ¥`)", "ƒGƒ‰[ƒpƒ^[ƒ“:Texture_Load() < 0", MB_OK);
+		MessageBox(NULL, "ç•°å¸¸ãŒç™ºç”Ÿã—ãŸã‚ˆ(Â´ï½¥Ï‰ï½¥`)", "ã‚¨ãƒ©ãƒ¼ãƒ‘ã‚¿ãƒ¼ãƒ³:Texture_Load() < 0", MB_OK);
 	}
 }
 
@@ -61,12 +64,14 @@ void Scene_Uninit(void)
 		Title_Uninit();
 		break;
 	case SCENE_RAID:
+		Effect_UnInit();
 		Game_UnInit();
 		Wall_UnInit();
 		Raid_UnInit();
 		Syutyusen_UnInit();
 		break;
 	case SCENE_ZAKO:
+		Effect_UnInit();
 		Game_UnInit();
 		Zako_UnInit();
 		Syutyusen_UnInit();
@@ -88,12 +93,14 @@ void Scene_Update(void)
 		Title_Update();
 		break;
 	case SCENE_RAID:
+		Effect_Update();
 		Game_Update();
 		Wall_Update();
 		Raid_Update();
 		Syutyusen_Update();
 		break;
 	case SCENE_ZAKO:
+		Effect_Update();
 		Game_Update();
 		Zako_Update();
 		Syutyusen_Update();
@@ -117,12 +124,14 @@ void Scene_Draw(void)
 	case SCENE_RAID:
 		Game_Draw();
 		Wall_Draw();
+		Effect_Draw();
 		Raid_Draw();
 		Syutyusen_Draw();
 		break;
 	case SCENE_ZAKO:
 		Game_Draw();
 		Zako_Draw();
+		Effect_Draw();
 		Syutyusen_Draw();
 		break;
 	case SCENE_RESULT:
