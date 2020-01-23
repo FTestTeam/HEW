@@ -112,6 +112,10 @@ void Zako_Update(void)
 	if (g_SceneFream < 0) {
 		Scene_SetNextScene(SCENE_RAID);
 	}
+
+#if defined(_DEBUG) || defined(DEBUG)
+	if (Keyboard_IsTrigger(DIK_RETURN)) Scene_SetNextScene(SCENE_RAID);
+#endif
 }
 
 void Zako_Draw(void)
