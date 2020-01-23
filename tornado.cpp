@@ -15,7 +15,7 @@ void Tornado_Init()
 
 	g_pos = Player_GetPosition();
 	g_angle = Player_GetRotation();
-	g_scale = 3;
+	g_scale = 0;
 }
 
 void Tornado_UnInit()

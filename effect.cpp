@@ -69,7 +69,7 @@ void Effect_Draw(void)
 	pDevice->SetRenderState(D3DRS_SRCBLEND, D3DBLEND_SRCALPHA);
 	pDevice->SetRenderState(D3DRS_DESTBLEND, D3DBLEND_ONE);	
 
-	pDevice->SetRenderState(D3DRS_ZWRITEENABLE, FALSE);
+	pDevice->SetRenderState(D3DRS_ZENABLE, FALSE);
 
 	D3DXMATRIX mtxW, mtxT, mtxS;
 
@@ -89,7 +89,7 @@ void Effect_Draw(void)
 	pDevice->SetRenderState(D3DRS_SRCBLEND, D3DBLEND_SRCALPHA);
 	pDevice->SetRenderState(D3DRS_DESTBLEND, D3DBLEND_INVSRCALPHA);
 
-	pDevice->SetRenderState(D3DRS_ZWRITEENABLE, true);
+	pDevice->SetRenderState(D3DRS_ZENABLE, true);
 }
 
 void Effect_Create(D3DXVECTOR3 pos, D3DCOLOR color, int life,float size)
