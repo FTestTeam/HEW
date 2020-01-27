@@ -11,6 +11,7 @@
 #include"mic.h"
 #include"Scene.h"
 #include"score.h"
+#include"collect_data.h"
 
 #define ZAKO_SCENE_CHANGE_FREAM (120)
 #define ZAKO_STRIDE (5.0f)
@@ -60,57 +61,113 @@ void Zako_UnInit(void)
 
 void Zako_Update(void)
 {
-	for (int Id = 0; Id < ZAKO_MAX; Id++)
-	{
-		if (!g_ZakoData[Id].use) {
+	if (Scene_GetScene() == SCENE_REPLAY_ZAKO) {
+		for (int Id = 0; Id < ZAKO_MAX; Id++)
+		{
+			if (!g_ZakoData[Id].use) {
+				for (int j = 0; j < ZAKO_MAX; j++) {
+					if (!g_ZakoData[j].bLast) {
+						continue;
+					}
+					g_ZakoData[Id].position = g_ZakoData[j].position;
+					g_ZakoData[Id].position.z += ZAKO_STRIDE;
+					g_ZakoData[Id].bLast = true;
+					g_ZakoData[j].bLast = false;
+					break;
+				}
+				g_ZakoData[Id].use = true;
+			}
+
+			if (Collect_Data_GetData().vol < ZAKO_BREAK_VOL) {
+				if (Zako_GetPosition(Id).z - 1.0f < Hammer_GetPosition().z && Zako_GetPosition(Id).z + 0.3f > Hammer_GetPosition().z) {
+					Hammer_Stop();
+					g_bScene = true;
+				}
+			}
+			else if (Hammer_IsFly()) {
+				if (Zako_GetPosition(Id).z < Hammer_GetPosition().z) {
+					if (g_ZakoData[Id].use) {
+						g_BreakCount++;
+						Score_AddScore(1);
+					}
+					g_ZakoData[Id].use = false;
+				}
+			}
+		}
+
+		//Zソート
+		for (int i = 0; i < ZAKO_MAX; i++) {
 			for (int j = 0; j < ZAKO_MAX; j++) {
-				if (!g_ZakoData[j].bLast) {
-					continue;
+				if (g_ZakoData[i].position.z > g_ZakoData[j].position.z) {
+					ZakoData tmp;
+					tmp = g_ZakoData[i];
+					g_ZakoData[i] = g_ZakoData[j];
+					g_ZakoData[j] = tmp;
 				}
-				g_ZakoData[Id].position = g_ZakoData[j].position;
-				g_ZakoData[Id].position.z += ZAKO_STRIDE;
-				g_ZakoData[Id].bLast = true;
-				g_ZakoData[j].bLast = false;
-				break;
 			}
-			g_ZakoData[Id].use = true;
 		}
 
-		if (Mic_GetVolume() < ZAKO_BREAK_VOL) {
-			if (Zako_GetPosition(Id).z-1.0f < Hammer_GetPosition().z && Zako_GetPosition(Id).z + 0.3f > Hammer_GetPosition().z) {
-				Hammer_Stop();
-				g_bScene = true;
-			}
+		if (g_bScene) {
+			g_SceneFream--;
 		}
-		else if (Hammer_IsFly()) {
-			if (Zako_GetPosition(Id).z < Hammer_GetPosition().z) {
-				if (g_ZakoData[Id].use) {
-					g_BreakCount++;
-					Score_AddScore(1);
+
+		if (g_SceneFream < 0) {
+			Scene_SetNextScene(SCENE_REPLAY_RAID);
+		}
+	}
+	else {
+		for (int Id = 0; Id < ZAKO_MAX; Id++)
+		{
+			if (!g_ZakoData[Id].use) {
+				for (int j = 0; j < ZAKO_MAX; j++) {
+					if (!g_ZakoData[j].bLast) {
+						continue;
+					}
+					g_ZakoData[Id].position = g_ZakoData[j].position;
+					g_ZakoData[Id].position.z += ZAKO_STRIDE;
+					g_ZakoData[Id].bLast = true;
+					g_ZakoData[j].bLast = false;
+					break;
 				}
-				g_ZakoData[Id].use = false;
+				g_ZakoData[Id].use = true;
+			}
+
+			if (Mic_GetVolume() < ZAKO_BREAK_VOL) {
+				if (Zako_GetPosition(Id).z - 1.0f < Hammer_GetPosition().z && Zako_GetPosition(Id).z + 0.3f > Hammer_GetPosition().z) {
+					Hammer_Stop();
+					g_bScene = true;
+				}
+			}
+			else if (Hammer_IsFly()) {
+				if (Zako_GetPosition(Id).z < Hammer_GetPosition().z) {
+					if (g_ZakoData[Id].use) {
+						g_BreakCount++;
+						Score_AddScore(1);
+					}
+					g_ZakoData[Id].use = false;
+				}
 			}
 		}
-	}
-	
-	//Zソート
-	for (int i = 0; i < ZAKO_MAX; i++) {
-		for (int j = 0; j < ZAKO_MAX; j++) {
-			if (g_ZakoData[i].position.z > g_ZakoData[j].position.z) {
-				ZakoData tmp;
-				tmp = g_ZakoData[i];
-				g_ZakoData[i] = g_ZakoData[j];
-				g_ZakoData[j] = tmp;
+
+		//Zソート
+		for (int i = 0; i < ZAKO_MAX; i++) {
+			for (int j = 0; j < ZAKO_MAX; j++) {
+				if (g_ZakoData[i].position.z > g_ZakoData[j].position.z) {
+					ZakoData tmp;
+					tmp = g_ZakoData[i];
+					g_ZakoData[i] = g_ZakoData[j];
+					g_ZakoData[j] = tmp;
+				}
 			}
 		}
-	}
 
-	if (g_bScene) {
-		g_SceneFream--;
-	}
+		if (g_bScene) {
+			g_SceneFream--;
+		}
 
-	if (g_SceneFream < 0) {
-		Scene_SetNextScene(SCENE_RAID);
+		if (g_SceneFream < 0) {
+			Scene_SetNextScene(SCENE_RAID);
+		}
 	}
 
 #if defined(_DEBUG) || defined(DEBUG)
