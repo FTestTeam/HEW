@@ -8,7 +8,8 @@
 #include"input.h"
 #include"DebugPrintf.h"
 #include"mydirect3d.h"
-#include"debug_log.h"
+#include"Scene.h"
+#include"collect_data.h"
 
 typedef struct PLAYER_Tag{
 	LocalVecter LocalVec;
@@ -44,20 +45,39 @@ void Player_UnInit()
 
 void Player_Update()
 {
-	if (Keyboard_IsPress(DIK_SPACE) || Joycon_IsPress(DIJOY_R_R)) {
-		if (Joycon_GetAccel(DIJOY_ACCEL_SL1) > -30000 || Joycon_GetAccel(DIJOY_ACCEL_SL1) < 30000 || Keyboard_IsPress(DIK_SPACE)) {
-			g_Rspeed += fabsf(Joycon_GetAccel(DIJOY_ACCEL_SL1)/10000000) + 0.01f;
-			//g_Rspeed = min(g_Rspeed, 1.0f);
+	if (Scene_GetScene() == SCENE_REPLAY_ZAKO || Scene_GetScene() == SCENE_REPLAY_RAID) {
+		if (Collect_Data_GetData().bJoy_R_Press) {
+			if (Collect_Data_GetData().accel > -30000 || Collect_Data_GetData().accel < 30000) {
+				g_Rspeed += fabsf(Collect_Data_GetData().accel / 10000000) + 0.01f;
+				//g_Rspeed = min(g_Rspeed, 1.0f);
+			}
+			else {	//	ジョイコン振ってない間回転減少
+				g_Rspeed -= 0.005f;
+				g_Rspeed = max(g_Rspeed, 0.0f);
+			}
+			g_Ratetion -= g_Rspeed;
+			g_fream++;
 		}
-		else {	//	ジョイコン振ってない間回転減少
-			g_Rspeed -= 0.005f;
-			g_Rspeed = max(g_Rspeed, 0.0f);
+		if (Collect_Data_GetData().bJoy_R_Release) {	//ボタン離したら投げる
+			g_Fly = true;
 		}
-		g_Ratetion -= g_Rspeed;
-		g_fream++;
 	}
-	if (Keyboard_IsRelease(DIK_SPACE) || Joycon_IsRelease(DIJOY_R_R)) {	//ボタン離したら投げる
-		g_Fly = true;
+	else {
+		if (Keyboard_IsPress(DIK_SPACE) || Joycon_IsPress(DIJOY_R_R)) {
+			if (Joycon_GetAccel(DIJOY_ACCEL_SL1) > -30000 || Joycon_GetAccel(DIJOY_ACCEL_SL1) < 30000 || Keyboard_IsPress(DIK_SPACE)) {
+				g_Rspeed += fabsf(Joycon_GetAccel(DIJOY_ACCEL_SL1) / 10000000) + 0.01f;
+				//g_Rspeed = min(g_Rspeed, 1.0f);
+			}
+			else {	//	ジョイコン振ってない間回転減少
+				g_Rspeed -= 0.005f;
+				g_Rspeed = max(g_Rspeed, 0.0f);
+			}
+			g_Ratetion -= g_Rspeed;
+			g_fream++;
+		}
+		if (Keyboard_IsRelease(DIK_SPACE) || Joycon_IsRelease(DIJOY_R_R)) {	//ボタン離したら投げる
+			g_Fly = true;
+		}
 	}
 	//DebugPrintf("%f\n", Joycon_GetAccel(DIJOY_ACCEL_SL1));
 }

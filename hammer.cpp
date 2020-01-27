@@ -10,6 +10,8 @@
 #include"mic.h"
 #include"hammer.h"
 #include"effect.h"
+#include"Scene.h"
+#include"collect_data.h"
 
 static D3DXVECTOR3 g_Position;
 static bool g_bFly;		//ハンマーが止まったらfalse
@@ -28,32 +30,63 @@ void Hammer_Uninit(void)
 
 void Hammer_Update(void)
 {
-	//プレーヤーがハンマーを投げたら進む
-	if (Player_IsFly() && g_bFly) {
-		g_Position.z += (Mic_GetVolume()/100.0f);
-		g_Position.y += 0.05f;
-		g_Position.y = min(g_Position.y, 3.0f);
-		
-		if (Mic_GetVolume() > 100) {
-			Effect_Create(g_Position, D3DCOLOR_RGBA(255, 100, 100, 1), 60, 5.0f);
-			Effect_Create(g_Position, D3DCOLOR_RGBA(255, 100, 100, 1), 60, 5.0f);
-		}
-		else if (Mic_GetVolume() > 50) {
-			Effect_Create(g_Position, D3DCOLOR_RGBA(100, 255, 100, 1), 60, 5.0f);
-			Effect_Create(g_Position, D3DCOLOR_RGBA(100, 255, 100, 1), 60, 5.0f);
-		}
-		else {
-			Effect_Create(g_Position, D3DCOLOR_RGBA(100, 100, 255, 1), 60, 5.0f);
-			Effect_Create(g_Position, D3DCOLOR_RGBA(100, 100, 255, 1), 60, 5.0f);
-		}
-		
-	}
+	if (Scene_GetScene() == SCENE_REPLAY_ZAKO || Scene_GetScene() == SCENE_REPLAY_RAID) {
+		//プレーヤーがハンマーを投げたら進む
+		if (Player_IsFly() && g_bFly) {
+			g_Position.z += (Collect_Data_GetData().vol / 100.0f);
+			g_Position.y += 0.05f;
+			g_Position.y = min(g_Position.y, 3.0f);
 
-	//ハンマーが止まったらだんだん落とす
-	if (!g_bFly) {
-		g_Position.z += 0;
-		g_Position.y -= 0.05f;
-		g_Position.y = max(g_Position.y, -0.5f);
+			if (Collect_Data_GetData().vol > 100) {
+				Effect_Create(g_Position, D3DCOLOR_RGBA(255, 100, 100, 1), 60, 5.0f);
+				Effect_Create(g_Position, D3DCOLOR_RGBA(255, 100, 100, 1), 60, 5.0f);
+			}
+			else if (Collect_Data_GetData().vol > 50) {
+				Effect_Create(g_Position, D3DCOLOR_RGBA(100, 255, 100, 1), 60, 5.0f);
+				Effect_Create(g_Position, D3DCOLOR_RGBA(100, 255, 100, 1), 60, 5.0f);
+			}
+			else {
+				Effect_Create(g_Position, D3DCOLOR_RGBA(100, 100, 255, 1), 60, 5.0f);
+				Effect_Create(g_Position, D3DCOLOR_RGBA(100, 100, 255, 1), 60, 5.0f);
+			}
+
+		}
+
+		//ハンマーが止まったらだんだん落とす
+		if (!g_bFly) {
+			g_Position.z += 0;
+			g_Position.y -= 0.05f;
+			g_Position.y = max(g_Position.y, -0.5f);
+		}
+	}
+	else {
+		//プレーヤーがハンマーを投げたら進む
+		if (Player_IsFly() && g_bFly) {
+			g_Position.z += (Mic_GetVolume() / 100.0f);
+			g_Position.y += 0.05f;
+			g_Position.y = min(g_Position.y, 3.0f);
+
+			if (Mic_GetVolume() > 100) {
+				Effect_Create(g_Position, D3DCOLOR_RGBA(255, 100, 100, 1), 60, 5.0f);
+				Effect_Create(g_Position, D3DCOLOR_RGBA(255, 100, 100, 1), 60, 5.0f);
+			}
+			else if (Mic_GetVolume() > 50) {
+				Effect_Create(g_Position, D3DCOLOR_RGBA(100, 255, 100, 1), 60, 5.0f);
+				Effect_Create(g_Position, D3DCOLOR_RGBA(100, 255, 100, 1), 60, 5.0f);
+			}
+			else {
+				Effect_Create(g_Position, D3DCOLOR_RGBA(100, 100, 255, 1), 60, 5.0f);
+				Effect_Create(g_Position, D3DCOLOR_RGBA(100, 100, 255, 1), 60, 5.0f);
+			}
+
+		}
+
+		//ハンマーが止まったらだんだん落とす
+		if (!g_bFly) {
+			g_Position.z += 0;
+			g_Position.y -= 0.05f;
+			g_Position.y = max(g_Position.y, -0.5f);
+		}
 	}
 }
 

@@ -28,6 +28,7 @@
 #include"mic.h"
 #include"billboard.h"
 #include"fade.h"
+
 /*----------------------------
 	’è”,ƒ}ƒNƒ’è‹`
 ----------------------------*/
@@ -244,7 +245,6 @@ void Uninit(void) {
 	Scene_Uninit();
 	Billboard_UnInit();
 	Fade_Uninit();
-
 
 	DebugFont_Finalize();
 	MyDirect3D_UnInit();

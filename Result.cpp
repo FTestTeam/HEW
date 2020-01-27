@@ -6,6 +6,8 @@
 #include "score.h"
 #include "input.h"
 #include "common.h"
+#include "joycon.h"
+
 #define  SCORE_MAX (3)
 
 static int g_Result_TextureID;
@@ -25,7 +27,7 @@ void Result_Uninit(void)
 
 void Result_Update(void)
 {
-	if (Keyboard_IsTrigger(DIK_RETURN))
+	if (Keyboard_IsTrigger(DIK_RETURN) || Joycon_IsTrigger(DIJOY_R_A))
 	{
 		Scene_SetNextScene(SCENE_TITLE);
 	}

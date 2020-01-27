@@ -31,7 +31,7 @@ static D3DXVECTOR3 g_pos = { 0.0f,0.0f,40.0f };
 
 void Wall_Init(void)
 {
-	g_textureID=Texture_SetLoadFile("Asset/Texture/koku-nn.png", 1024, 1024);
+	g_textureID=Texture_SetLoadFile("Asset/Texture/koku-nn2.png", 1024, 1024);
 
 	g_WallUse = true;
 

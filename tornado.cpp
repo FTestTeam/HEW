@@ -3,6 +3,8 @@
 #include"model.h"
 #include"input.h"
 #include"joycon.h"
+#include"Scene.h"
+#include"collect_data.h"
 
 static D3DXVECTOR3 g_pos;
 static int g_ModelID;
@@ -25,12 +27,22 @@ void Tornado_UnInit()
 
 void Tornado_Update()
 {
-	if (Keyboard_IsPress(DIK_SPACE) || Joycon_IsPress(DIJOY_R_R)) {
-		if (Joycon_GetAccel(DIJOY_ACCEL_SL1) > -30000 || Joycon_GetAccel(DIJOY_ACCEL_SL1) < 30000 || Keyboard_IsPress(DIK_SPACE)) {
-			g_scale += fabsf(Joycon_GetAccel(DIJOY_ACCEL_SL1) / 10000000) + 0.01f;
+	if (Scene_GetScene() == SCENE_REPLAY_ZAKO || Scene_GetScene() == SCENE_REPLAY_RAID) {
+		if (Collect_Data_GetData().bJoy_R_Press) {
+			if (Collect_Data_GetData().accel > -30000 || Collect_Data_GetData().accel < 30000) {
+				g_scale += fabsf(Collect_Data_GetData().accel / 10000000) + 0.01f;
+			}
 		}
+		g_angle = Player_GetRotation();
 	}
-	g_angle = Player_GetRotation();
+	else {
+		if (Keyboard_IsPress(DIK_SPACE) || Joycon_IsPress(DIJOY_R_R)) {
+			if (Joycon_GetAccel(DIJOY_ACCEL_SL1) > -30000 || Joycon_GetAccel(DIJOY_ACCEL_SL1) < 30000 || Keyboard_IsPress(DIK_SPACE)) {
+				g_scale += fabsf(Joycon_GetAccel(DIJOY_ACCEL_SL1) / 10000000) + 0.01f;
+			}
+		}
+		g_angle = Player_GetRotation();
+	}
 }
 
 void Tornado_Draw()

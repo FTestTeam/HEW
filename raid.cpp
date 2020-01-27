@@ -11,6 +11,7 @@
 #include"Result.h"
 #include"cube.h"
 #include"input.h"
+#include"collect_data.h"
 
 #define RAID_ADD_HP (10000)
 
@@ -56,36 +57,71 @@ void Raid_UnInit()
 
 void Raid_Update()
 {
-	if (Wall_GetPosition().z - 1.0f < Hammer_GetPosition().z && Wall_isUse()) {	//áŠQ‚É“–‚½‚Á‚½‚ç
-		D3DXVECTOR3 w(Wall_GetPosition().x, Hammer_GetPosition().y, Wall_GetPosition().z-0.5f);
-		Hammer_SetPosition(w);
-		
-		g_bMic = true;
-		g_bUse_Break = true;
+	if (Scene_GetScene() == SCENE_REPLAY_RAID) {
+		if (Wall_GetPosition().z - 1.0f < Hammer_GetPosition().z && Wall_isUse()) {	//áŠQ‚É“–‚½‚Á‚½‚ç
+			D3DXVECTOR3 w(Wall_GetPosition().x, Hammer_GetPosition().y, Wall_GetPosition().z - 0.5f);
+			Hammer_SetPosition(w);
+
+			g_bMic = true;
+			g_bUse_Break = true;
+			if (g_bMic) {
+				g_RaidHP -= (Collect_Data_GetData().vol * Zako_GetBreakCount()) / 100;
+			}
+		}
+
+		if (g_RaidHP <= 0) {
+			g_breakNum++;
+
+			g_RaidHP = RAID_MAX_HP;
+			g_startHP += RAID_MAX_HP;
+
+			D3DXVECTOR3 w = Wall_GetPosition();
+			w.z += 20;
+			Wall_SetPosition(w);
+		}
+
 		if (g_bMic) {
-			g_RaidHP -= (Mic_GetVolume() * Zako_GetBreakCount()) / 100;
+			g_MicFream--;
+			g_MicFream = max(g_MicFream, 0);
+			g_EndFream--;
+		}
+
+		if (g_EndFream < 0) {
+			Scene_SetNextScene(SCENE_TITLE);
 		}
 	}
+	else {
+		if (Wall_GetPosition().z - 1.0f < Hammer_GetPosition().z && Wall_isUse()) {	//áŠQ‚É“–‚½‚Á‚½‚ç
+			D3DXVECTOR3 w(Wall_GetPosition().x, Hammer_GetPosition().y, Wall_GetPosition().z - 0.5f);
+			Hammer_SetPosition(w);
 
-	if (g_RaidHP <= 0) {
-		g_breakNum++;
+			g_bMic = true;
+			g_bUse_Break = true;
+			if (g_bMic) {
+				g_RaidHP -= (Mic_GetVolume() * Zako_GetBreakCount()) / 100;
+			}
+		}
 
-		g_RaidHP = RAID_MAX_HP;
-		g_startHP += RAID_MAX_HP;
+		if (g_RaidHP <= 0) {
+			g_breakNum++;
 
-		D3DXVECTOR3 w = Wall_GetPosition();
-		w.z += 20;
-		Wall_SetPosition(w);
-	}
+			g_RaidHP = RAID_MAX_HP;
+			g_startHP += RAID_MAX_HP;
 
-	if (g_bMic) {
-		g_MicFream--;
-		g_MicFream = max(g_MicFream, 0);
-		g_EndFream--;
-	}
+			D3DXVECTOR3 w = Wall_GetPosition();
+			w.z += 20;
+			Wall_SetPosition(w);
+		}
 
-	if (g_EndFream < 0) {
-		Scene_SetNextScene(SCENE_RESULT);
+		if (g_bMic) {
+			g_MicFream--;
+			g_MicFream = max(g_MicFream, 0);
+			g_EndFream--;
+		}
+
+		if (g_EndFream < 0) {
+			Scene_SetNextScene(SCENE_RESULT);
+		}
 	}
 
 #if defined(_DEBUG) || defined(DEBUG)
