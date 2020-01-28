@@ -3,12 +3,14 @@
 #include"mic.h"
 #include"joycon.h"
 #include"DebugPrintf.h"
+#include"Scene.h"
 
 using namespace std;
 
 static COLLECT_DATA g_data;
 static ofstream g_fpW;
 static ifstream g_fpR;
+static float g_RaidStartHP;
 
 void Collect_Data_Init(FILE_MODE mode)
 {
@@ -46,10 +48,9 @@ void Collect_Data_Save()
 	data.bJoy_R_Press = Joycon_IsPress(DIJOY_R_R);
 	data.bJoy_R_Release = Joycon_IsRelease(DIJOY_R_R);
 	data.vol = Mic_GetVolume();
+	data.raidHP = g_RaidStartHP;
 
 	g_fpW.write((char *)&data, sizeof(COLLECT_DATA));
-
-	DebugPrintf("%.1f:%.1f\n", data.vol, data.accel);
 }
 
 void Collect_Data_Load()
@@ -60,4 +61,9 @@ void Collect_Data_Load()
 COLLECT_DATA Collect_Data_GetData()
 {
 	return g_data;
+}
+
+void Collect_Data_SetRaidStartHP(float startHP) 
+{
+	g_RaidStartHP = startHP;
 }

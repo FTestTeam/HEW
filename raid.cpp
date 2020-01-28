@@ -48,6 +48,12 @@ void Raid_Init()
 
 	g_textureID_break = Texture_SetLoadFile("Asset/Texture/kiretu.png", KIRETU_TEXTURE_SIZE_W, KIRETU_TEXTURE_SIZE_H);
 	g_bUse_Break = false;
+
+	Collect_Data_SetRaidStartHP(g_RaidHP);
+
+	if (Scene_GetScene() == SCENE_RAID) {
+		g_startHP = Collect_Data_GetData().raidHP;
+	}
 }
 
 void Raid_UnInit()
@@ -153,4 +159,9 @@ void Raid_Draw()
 	DebugFont_Draw(1, 24*3, "åªç›:%f", g_RaidHP);
 
 	Score_Draw(g_MicFream / 60, 100, 100, 4, 0, 0);
+}
+
+bool Raid_IsBreak()
+{
+	return g_bUse_Break;
 }

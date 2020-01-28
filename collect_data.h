@@ -14,6 +14,7 @@ struct COLLECT_DATA {
 	float accel;
 	bool bJoy_R_Press;
 	bool bJoy_R_Release;
+	float raidHP;
 };
 
 void Collect_Data_Init(FILE_MODE mode);
@@ -23,5 +24,6 @@ void Collect_Data_Save();
 
 void Collect_Data_Load();
 COLLECT_DATA Collect_Data_GetData();
+void Collect_Data_SetRaidStartHP(float startHP);
 
 #endif // !COLLECT_DATA_H_
