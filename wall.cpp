@@ -4,6 +4,7 @@
 #include"common.h"
 #include"input.h"
 #include"texture.h"
+#include"raid.h"
 
 typedef struct WallVertex_tag
 {
@@ -28,6 +29,7 @@ static bool g_WallUse = true;
 static LPDIRECT3DINDEXBUFFER9 g_pIndexBuffer = NULL;
 static LPDIRECT3DVERTEXBUFFER9 g_VertexBuffer = NULL;
 static D3DXVECTOR3 g_pos = { 0.0f,0.0f,40.0f };
+static float g_fream;
 
 void Wall_Init(void)
 {
@@ -38,6 +40,8 @@ void Wall_Init(void)
 	for (int i = 0; i < 4; i++) {
 		g_wall_vertex[i].color = D3DCOLOR_RGBA(255, 255, 255, 255);
 	}
+
+	g_fream = 0;
 }
 
 void Wall_UnInit(void)
@@ -47,12 +51,18 @@ void Wall_UnInit(void)
 
 void Wall_Update(void) 
 {
+	if(Raid_IsBreak()){
+		g_pos.x += sinf(g_fream) * 0.05f;
+	}
+
 	for (int i = 0; i < 4; i++) {
 		D3DXCOLOR color = g_wall_vertex[i].color;
 		if (color.a <= 0) {
 			g_WallUse = false;
 		}
 	}
+
+	g_fream += 0.5f;
 }
 
 void Wall_Draw(void)
