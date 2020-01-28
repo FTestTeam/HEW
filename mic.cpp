@@ -1,6 +1,7 @@
 #include<Windows.h>
 #include<mmsystem.h>
 #include<math.h>
+#include<fstream>
 #include"common.h"
 #include"DebugPrintf.h"
 
