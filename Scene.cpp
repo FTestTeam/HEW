@@ -15,6 +15,7 @@
 #include "collect_data.h"
 #include "replay.h"
 #include "fade.h"
+#include "input_name.h"
 
 SCENE g_NextScene = SCENE_TITLE;		//ç≈èâÇÃâÊñ  äÆê¨î≈ÇÕÉ^ÉCÉgÉãÇ…Ç∑ÇÈ
 SCENE g_Scene = g_NextScene;
@@ -52,6 +53,7 @@ void Scene_Init(void)
 	case SCENE_RESULT:
 		Score_Init();
 		Result_Init();
+		iName_Init();
 		break;
 
 	case SCENE_REPLAY_ZAKO:
@@ -111,6 +113,7 @@ void Scene_Uninit(void)
 	case SCENE_RESULT:
 		Score_Uninit();
 		Result_Uninit();
+		iName_Uninit();
 
 		Collect_Data_UnInit();
 		break;
@@ -131,8 +134,6 @@ void Scene_Uninit(void)
 		Syutyusen_UnInit();
 		Tornado_UnInit();
 		Replay_UnInit();
-
-		Collect_Data_UnInit();
 		break;
 	default:
 		break;
@@ -169,6 +170,7 @@ void Scene_Update(void)
 		break;
 	case SCENE_RESULT:
 		Result_Update();
+		iName_Update();
 		break;
 
 	case SCENE_REPLAY_ZAKO:
@@ -222,6 +224,7 @@ void Scene_Draw(void)
 		break;
 	case SCENE_RESULT:
 		Result_Draw();
+		iName_Draw();
 		break;
 
 	case SCENE_REPLAY_ZAKO:
