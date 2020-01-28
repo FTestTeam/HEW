@@ -131,6 +131,8 @@ void Scene_Uninit(void)
 		Syutyusen_UnInit();
 		Tornado_UnInit();
 		Replay_UnInit();
+
+		Collect_Data_UnInit();
 		break;
 	default:
 		break;
