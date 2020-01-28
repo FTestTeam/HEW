@@ -33,7 +33,7 @@ static float g_fream;
 
 void Wall_Init(void)
 {
-	g_textureID=Texture_SetLoadFile("Asset/Texture/koku-nn2.png", 1024, 1024);
+	g_textureID=Texture_SetLoadFile("Asset/Texture/koku-nn2.tga", 1024, 1024);
 
 	g_WallUse = true;
 

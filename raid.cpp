@@ -46,7 +46,7 @@ void Raid_Init()
 
 	g_textureID_Gage = Texture_SetLoadFile("Asset/Texture/gage.png", 640, 32);
 
-	g_textureID_break = Texture_SetLoadFile("Asset/Texture/kiretu.png", KIRETU_TEXTURE_SIZE_W, KIRETU_TEXTURE_SIZE_H);
+	g_textureID_break = Texture_SetLoadFile("Asset/Texture/kiretu.tga", KIRETU_TEXTURE_SIZE_W, KIRETU_TEXTURE_SIZE_H);
 	g_bUse_Break = false;
 
 	Collect_Data_SetRaidStartHP(g_RaidHP);

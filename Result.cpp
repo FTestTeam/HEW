@@ -16,7 +16,7 @@ static int g_Score[SCORE_MAX] = { 0 };
 
 void Result_Init(void)
 {
-	g_Result_TextureID = Texture_SetLoadFile("Asset/Texture/Score.png", 1280, 720);
+	g_Result_TextureID = Texture_SetLoadFile("Asset/Texture/Score.tga", 1280, 720);
 	Result_Sort();
 }
 
