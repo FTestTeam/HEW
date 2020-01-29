@@ -25,7 +25,7 @@ void Title_Init(void)
 {
 	g_Title_TextureID = Texture_SetLoadFile("Asset/Texture/title.png", 1280, 720);
 
-	g_Titleback_TextureID = Texture_SetLoadFile("Asset/Texture/titleback.png", 2560, 1440);
+	g_Titleback_TextureID = Texture_SetLoadFile("Asset/Texture/titleback.png", SCREEN_WIDTH, SCREEN_HEIGHT);
 	g_Startbutton_TextureID = Texture_SetLoadFile("Asset/Texture/startbutton.png", 1482, 560);
 
 
@@ -53,7 +53,7 @@ void Title_Update(void)
 	scale = sinf(radius)/20 + 0.8f;
 
 
-	if (Keyboard_IsTrigger(DIK_R) || g_fream >= 300)
+	if (Keyboard_IsTrigger(DIK_R) || g_fream >= 600)
 	{
 		Scene_SetNextScene(SCENE_REPLAY_ZAKO);
 	}
@@ -69,4 +69,3 @@ void Title_Draw(void)
 	Sprite_Draw(g_Title_TextureID, center_x, center_y, scale, scale, center_x, center_y - 50.0f);
 
 }
-
