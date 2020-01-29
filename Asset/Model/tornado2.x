@@ -420,7 +420,7 @@ Frame Root {
            96.078431;
            0.500000; 0.500000; 0.500000;;
            0.000000; 0.000000; 0.000000;;
-          TextureFilename {"tornado_ura.png";}
+          TextureFilename {"tornado_ura.tga";}
         }
       } // End of Cone material list
     } // End of Cone mesh
