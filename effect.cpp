@@ -3,6 +3,7 @@
 #include"texture.h"
 #include"billboard.h"
 #include"mydirect3d.h"
+#include"Scene.h"
 
 #define EFFECT_TEXTURE_SIZE_W (80)
 #define EFFECT_TEXTURE_SIZE_H (80)
@@ -69,27 +70,29 @@ void Effect_Draw(void)
 	pDevice->SetRenderState(D3DRS_SRCBLEND, D3DBLEND_SRCALPHA);
 	pDevice->SetRenderState(D3DRS_DESTBLEND, D3DBLEND_ONE);	
 
-	pDevice->SetRenderState(D3DRS_ZWRITEENABLE, FALSE);
+	pDevice->SetRenderState(D3DRS_ZENABLE, FALSE);
 
 	D3DXMATRIX mtxW, mtxT, mtxS;
 
-	for (int i = 0; i < EFFECT_MAX; i++) {
-		if (g_effect[i].life == 0) {
-			continue;
-		}
+	if (Scene_GetScene() == SCENE_ZAKO || Scene_GetScene() == SCENE_REPLAY_ZAKO) {
+		for (int i = 0; i < EFFECT_MAX; i++) {
+			if (g_effect[i].life == 0) {
+				continue;
+			}
 
-		D3DXMatrixTranslation(&mtxT, g_effect[i].position.x, g_effect[i].position.y, g_effect[i].position.z);
-		D3DXMatrixScaling(&mtxS, g_effect[i].scale, g_effect[i].scale, g_effect[i].scale);
-		mtxW = mtxS * mtxT;
-		Billboard_SetColor(g_effect[i].color);
-		Billboard_Draw(&mtxW, g_TextureID);
+			D3DXMatrixTranslation(&mtxT, g_effect[i].position.x, g_effect[i].position.y, g_effect[i].position.z);
+			D3DXMatrixScaling(&mtxS, g_effect[i].scale, g_effect[i].scale, g_effect[i].scale);
+			mtxW = mtxS * mtxT;
+			Billboard_SetColor(g_effect[i].color);
+			Billboard_Draw(&mtxW, g_TextureID);
+		}
 	}
 
 	pDevice->SetRenderState(D3DRS_BLENDOP, D3DBLENDOP_ADD);
 	pDevice->SetRenderState(D3DRS_SRCBLEND, D3DBLEND_SRCALPHA);
 	pDevice->SetRenderState(D3DRS_DESTBLEND, D3DBLEND_INVSRCALPHA);
 
-	pDevice->SetRenderState(D3DRS_ZWRITEENABLE, true);
+	pDevice->SetRenderState(D3DRS_ZENABLE, true);
 }
 
 void Effect_Create(D3DXVECTOR3 pos, D3DCOLOR color, int life,float size)

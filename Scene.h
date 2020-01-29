@@ -8,6 +8,8 @@ enum SCENE
 	SCENE_RAID,
 	SCENE_ZAKO,
 	SCENE_RESULT,
+	SCENE_REPLAY_ZAKO,
+	SCENE_REPLAY_RAID,
 	SCENE_MAX,			//enumÇÃêî 
 	SCENE_END = SCENE_MAX,
 };
@@ -18,5 +20,6 @@ void Scene_Update(void);
 void Scene_Draw(void);
 
 void Scene_SetNextScene(SCENE nextScene);
+SCENE Scene_GetScene();
 bool Scene_Change(void);
 #endif // !_SCENE_H_

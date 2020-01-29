@@ -45,6 +45,13 @@ static const OBJECT g_House[]
 	{D3DXVECTOR3(-30.0f,0.3f,150.0f),0.3f,0.0f,MODEL_BUILD2},
 	{D3DXVECTOR3(30.0f,0.3f,150.0f),0.3f,0.0f,MODEL_BUILD3},
 	{D3DXVECTOR3(50.0f,0.3f,150.0f),0.3f,0.0f,MODEL_711},
+	{D3DXVECTOR3(-50.0f,0.3f,130.0f),0.3f,0.0f,MODEL_BUILD1},
+	{D3DXVECTOR3(-40.0f,0.3f,90.0f),0.3f,0.0f,MODEL_BUILD2},
+	{D3DXVECTOR3(-70.0f,0.3f,120.0f),0.3f,0.0f,MODEL_BUILD3},
+	{D3DXVECTOR3(60.0f,0.3f,110.0f),0.3f,0.0f,MODEL_711},
+	{D3DXVECTOR3(60.0f,0.3f,50.0f),0.3f,0.0f,MODEL_BUILD3},
+	{D3DXVECTOR3(-60.0f,0.3f,40.0f),0.3f,0.0f,MODEL_BUILD2},
+	{D3DXVECTOR3(90.0f,0.3f,80.0f),0.3f,0.0f,MODEL_BUILD3},
 };
 
 void Stage_Init()
@@ -61,8 +68,8 @@ void Stage_Init()
 	}
 	
 	
-	g_SekiPos[0] = { -20.0f,4.0f,20.0f };
-	g_SekiPos[1] = { 20.0f,4.0f,20.0f };
+	g_SekiPos[0] = { -20.0f,4.0f,30.0f };
+	g_SekiPos[1] = { 20.0f,4.0f,30.0f };
 	g_ModelID_Seki = Model_SetLoadFile("Asset/Model/seki.x");
 	
 	

@@ -41,8 +41,6 @@ void Game_Update()
 	Stage_Update();
 	Wall_Update();
 	BackGround_Update();
-
-	if(Keyboard_IsTrigger(DIK_RETURN)) Scene_SetNextScene(SCENE_RESULT);
 }
 
 void Game_Draw() 
@@ -52,5 +50,5 @@ void Game_Draw()
 	Player_Draw();
 	Hammer_Draw();
 
-	Score_Draw(Score_GetScore() , SCREEN_WIDTH -48, 0, 7, false, true);
+	//Score_Draw(Score_GetScore() , SCREEN_WIDTH -48, 0, 7, false, true);
 }
