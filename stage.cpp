@@ -35,6 +35,7 @@ static int g_TextureID_Floor;
 
 static D3DXVECTOR3 g_SekiPos[2];
 static int g_ModelID_Seki;
+static int g_textureID_audience;
 
 static float g_FieldZ[3];
 
@@ -71,6 +72,7 @@ void Stage_Init()
 	g_SekiPos[0] = { -20.0f,4.0f,30.0f };
 	g_SekiPos[1] = { 20.0f,4.0f,30.0f };
 	g_ModelID_Seki = Model_SetLoadFile("Asset/Model/seki.x");
+	g_textureID_audience = Texture_SetLoadFile("Asset/Texture/audience.png", 1000, 1000);
 	
 	
 	g_FieldZ[0] = 0.0f;
@@ -108,11 +110,27 @@ void Stage_Draw()
 	mtx = mtxS * mtxR * mtxT;
 	Model_Draw(&mtx,g_ModelID_Seki);
 
+	pDevice->SetRenderState(D3DRS_ZENABLE, false);
+	D3DXMatrixTranslation(&mtxT, g_SekiPos[0].x, g_SekiPos[0].y + 1, g_SekiPos[0].z);
+	D3DXMatrixScaling(&mtxS, 15.0f, 15.0f, 15.0f);
+	D3DXMatrixRotationY(&mtxR, D3DXToRadian(-45));
+	mtx = mtxS * mtxR * mtxT;
+	Cube_Draw(&mtx, g_textureID_audience);
+	pDevice->SetRenderState(D3DRS_ZENABLE, true);
+
 	D3DXMatrixTranslation(&mtxT, g_SekiPos[1].x, g_SekiPos[1].y, g_SekiPos[1].z);
 	D3DXMatrixScaling(&mtxS, 5.0f, 5.0f, 5.0f);
 	D3DXMatrixRotationY(&mtxR, D3DXToRadian(135));
 	mtx = mtxS * mtxR * mtxT;
 	Model_Draw(&mtx, g_ModelID_Seki);
+
+	pDevice->SetRenderState(D3DRS_ZENABLE, false);
+	D3DXMatrixTranslation(&mtxT, g_SekiPos[1].x, g_SekiPos[1].y + 1, g_SekiPos[1].z);
+	D3DXMatrixScaling(&mtxS, 15.0f, 15.0f, 15.0f);
+	D3DXMatrixRotationY(&mtxR, D3DXToRadian(45));
+	mtx = mtxS * mtxR * mtxT;
+	Cube_Draw(&mtx, g_textureID_audience);
+	pDevice->SetRenderState(D3DRS_ZENABLE, true);
 	
 	
 	int objNum = sizeof(g_House) / sizeof(g_House[0]);

@@ -45,7 +45,7 @@ void Player_UnInit()
 
 void Player_Update()
 {
-	if (Scene_GetScene() == SCENE_REPLAY_ZAKO || Scene_GetScene() == SCENE_REPLAY_RAID) {
+	if (Scene_GetScene() == SCENE_REPLAY_ZAKO || Scene_GetScene() == SCENE_RESULT || Scene_GetScene() == SCENE_REPLAY_RAID) {
 		if (Collect_Data_GetData().bJoy_R_Press) {
 			if (Collect_Data_GetData().accel > -30000 || Collect_Data_GetData().accel < 30000) {
 				g_Rspeed += fabsf(Collect_Data_GetData().accel / 10000000) + 0.01f;

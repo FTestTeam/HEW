@@ -57,6 +57,12 @@ void Scene_Init(void)
 		break;
 
 	case SCENE_REPLAY_ZAKO:
+		Collect_Data_UnInit();
+
+		Score_Init();
+		Result_Init();
+		iName_Init();
+
 		Collect_Data_Init(READ);
 
 		Effect_Init();
@@ -119,6 +125,10 @@ void Scene_Uninit(void)
 		break;
 
 	case SCENE_REPLAY_ZAKO:
+		Score_Uninit();
+		Result_Uninit();
+		iName_Uninit();
+
 		Effect_UnInit();
 		Game_UnInit();
 		Zako_UnInit();
@@ -175,6 +185,9 @@ void Scene_Update(void)
 
 	case SCENE_REPLAY_ZAKO:
 		Collect_Data_Load();
+
+		Result_Update();
+		iName_Update();
 
 		Effect_Update();
 		Game_Update();
@@ -234,6 +247,9 @@ void Scene_Draw(void)
 		Effect_Draw();
 		Syutyusen_Draw();
 		Replay_Draw();
+
+		Result_Draw();
+		iName_Draw();
 		break;
 	case SCENE_REPLAY_RAID:
 		Game_Draw();
