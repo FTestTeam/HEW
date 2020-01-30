@@ -9,7 +9,7 @@ int g_Score;
 
 void Score_Init()
 {
-	g_Score_TextureID = Texture_SetLoadFile("Asset/Texture/number480.tga", 480,48 );
+	g_Score_TextureID = Texture_SetLoadFile("Asset/Font/number2.png", 1280,128 );
 	g_Score = 0;
 }
 
@@ -28,8 +28,8 @@ static void number_Draw(int n, float x, float y)
 	{
 		MessageBox(NULL, "数値に異常が発生したよ(´･ω･`)", "エラーパターン:n > 9", MB_OK);
 	}
-
-	Sprite_Draw(g_Score_TextureID, x, y,48*n,0,48,48);
+	Sprite_SetColor(D3DCOLOR_RGBA(0, 0, 0, 255));
+	Sprite_Draw(g_Score_TextureID, x, y,128*n,0, 128, 128,0.5f,0.5f,0,0);
 }
 
 void Score_Draw(int score, float x, float y, int digit, bool bZero, bool bLeft)
@@ -37,7 +37,7 @@ void Score_Draw(int score, float x, float y, int digit, bool bZero, bool bLeft)
 	for (int i = 0; i < digit; i++)
 	{
 		int n = score % 10;
-		number_Draw(n, x - (i * 48) , y);
+		number_Draw(n, x - (i * 32) , y);
 		score /= 10;
 		if ((bZero == false)&&(score / 1 == 0))
 		{

@@ -39,6 +39,8 @@ void Sprite_Draw(int textureId,float dx, float dy) {
 	pDevice->SetTexture(0,Texture_GetTexture(textureId));
 	pDevice->DrawPrimitiveUP(D3DPT_TRIANGLESTRIP,2,v, sizeof(Vertex2d));
 
+	Sprite_SetColor(D3DCOLOR_RGBA(255, 255, 255, 255));
+
 	return;
 }
 
@@ -81,6 +83,8 @@ void Sprite_Draw(int textureId,float dx, float dy, float center_x, float center_
 	pDevice->SetTexture(0, Texture_GetTexture(textureId));
 	pDevice->DrawPrimitiveUP(D3DPT_TRIANGLESTRIP, 2, v, sizeof(Vertex2d));
 
+	Sprite_SetColor(D3DCOLOR_RGBA(255, 255, 255, 255));
+
 	return;
 }
 
@@ -121,6 +125,8 @@ void Sprite_Draw(int textureId,float dx, float dy, float scale_x, float scale_y 
 	pDevice->SetFVF(FVF_VERTEX2D);
 	pDevice->SetTexture(0, Texture_GetTexture(textureId));
 	pDevice->DrawPrimitiveUP(D3DPT_TRIANGLESTRIP, 2, v, sizeof(Vertex2d));
+
+	Sprite_SetColor(D3DCOLOR_RGBA(255, 255, 255, 255));
 
 	return;
 }
@@ -166,6 +172,8 @@ void Sprite_Draw(int textureId,float dx, float dy, float scale_x, float scale_y,
 	pDevice->SetTexture(0, Texture_GetTexture(textureId));
 	pDevice->DrawPrimitiveUP(D3DPT_TRIANGLESTRIP, 2, v, sizeof(Vertex2d));
 
+	Sprite_SetColor(D3DCOLOR_RGBA(255, 255, 255, 255));
+
 	return;
 }
 
@@ -209,6 +217,8 @@ void Sprite_Mirror_Draw(int textureId,float dx, float dy, float scale_x, float s
 	pDevice->SetTexture(0, Texture_GetTexture(textureId));
 	pDevice->DrawPrimitiveUP(D3DPT_TRIANGLESTRIP, 2, v, sizeof(Vertex2d));
 
+	Sprite_SetColor(D3DCOLOR_RGBA(255, 255, 255, 255));
+
 	return;
 }
 
@@ -239,6 +249,8 @@ void Sprite_Draw(int textureId,float dx, float dy,int cut_x, int cut_y, int cut_
 	pDevice->SetFVF(FVF_VERTEX2D);
 	pDevice->SetTexture(0, Texture_GetTexture(textureId));
 	pDevice->DrawPrimitiveUP(D3DPT_TRIANGLESTRIP, 2, v, sizeof(Vertex2d));
+
+	Sprite_SetColor(D3DCOLOR_RGBA(255, 255, 255, 255));
 
 	return;
 }
@@ -286,6 +298,8 @@ void Sprite_Draw(int textureId,float dx, float dy, int cut_x, int cut_y, int cut
 	pDevice->SetTexture(0, Texture_GetTexture(textureId));
 	pDevice->DrawPrimitiveUP(D3DPT_TRIANGLESTRIP, 2, v, sizeof(Vertex2d));
 
+	Sprite_SetColor(D3DCOLOR_RGBA(255, 255, 255, 255));
+
 	return;
 }
 
@@ -331,6 +345,8 @@ void Sprite_Draw(int textureId,float dx, float dy, int cut_x, int cut_y, int cut
 	pDevice->SetFVF(FVF_VERTEX2D);
 	pDevice->SetTexture(0, Texture_GetTexture(textureId));
 	pDevice->DrawPrimitiveUP(D3DPT_TRIANGLESTRIP, 2, v, sizeof(Vertex2d));
+
+	Sprite_SetColor(D3DCOLOR_RGBA(255, 255, 255, 255));
 
 	return;
 }
@@ -382,6 +398,8 @@ void Sprite_Draw(int textureId,float dx, float dy, int cut_x, int cut_y, int cut
 	pDevice->SetTexture(0, Texture_GetTexture(textureId));
 	pDevice->DrawPrimitiveUP(D3DPT_TRIANGLESTRIP, 2, v, sizeof(Vertex2d));
 
+	Sprite_SetColor(D3DCOLOR_RGBA(255, 255, 255, 255));
+
 	return;
 }
 
@@ -430,6 +448,8 @@ void Sprite_Mirror_Draw(int textureId,float dx, float dy, int cut_x, int cut_y, 
 	pDevice->SetFVF(FVF_VERTEX2D);
 	pDevice->SetTexture(0, Texture_GetTexture(textureId));
 	pDevice->DrawPrimitiveUP(D3DPT_TRIANGLESTRIP, 2, v, sizeof(Vertex2d));
+
+	//Sprite_SetColor(D3DCOLOR_RGBA(255, 255, 255, 255));
 
 	return;
 }

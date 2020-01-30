@@ -6,11 +6,12 @@
 #include "Result.h"
 
 #define NAME_MAX (5)     //最大文字数
-#define NAME_WIDTH (2400) //画像の横幅
-#define NAME_HIGH (1360)  //画像の高さ
-#define NAME_YOKOLINE (10)  //何列に分けられているか
-#define NAME_TATELINE (3)  //何行に分けられているか
-#define SCALE (1.0f)      //標準が１
+#define NAME_WIDTH (3456) //画像の横幅
+#define NAME_HIGH (128)  //画像の高さ
+#define NAME_YOKOLINE (27)  //何列に分けられているか
+#define NAME_TATELINE (1)  //何行に分けられているか
+#define NAME_START_POS_X (336)
+#define SCALE (0.5f)      //標準が１
 
 static int g_iName_TextureID;
 static int nAlphabet[NAME_MAX];  //アルファベット何文字目か
@@ -21,7 +22,7 @@ static char name3[NAME_MAX];
 
 void iName_Init(void)
 {
-	g_iName_TextureID = Texture_SetLoadFile("Asset/Font/alphabet.png", NAME_WIDTH, NAME_HIGH);
+	g_iName_TextureID = Texture_SetLoadFile("Asset/Font/alphabet2.png", NAME_WIDTH, NAME_HIGH);
 	Select = 0;
 	for (int i = 0; i < NAME_MAX; i++)
 	{
@@ -95,7 +96,7 @@ void alphabet_Draw(int n, float x, float y)
 	}
 
 	//画像描写
-	Sprite_Draw(g_iName_TextureID, 0, 0,
+	Sprite_Draw(g_iName_TextureID, x, y,
 		(NAME_WIDTH / NAME_YOKOLINE) * (n % NAME_YOKOLINE), (NAME_HIGH / NAME_TATELINE) * (n / NAME_YOKOLINE),
 		(NAME_WIDTH / NAME_YOKOLINE), (NAME_HIGH / NAME_TATELINE),
 		SCALE, SCALE,
@@ -106,19 +107,24 @@ void iName_Draw(void)
 {
 	for (int i = 0; i < NAME_MAX; i++)
 	{
-		alphabet_Draw(nAlphabet[i], 50 + (i * ((NAME_WIDTH * SCALE) / NAME_YOKOLINE)), SCORE_POS_NOW);
+		i == Select ? Sprite_SetColor(D3DCOLOR_RGBA(255, 0, 0, 255)) : Sprite_SetColor(D3DCOLOR_RGBA(0, 0, 0, 255));
+		alphabet_Draw(nAlphabet[i], NAME_START_POS_X + (i * ((NAME_WIDTH * SCALE) / NAME_YOKOLINE)), SCORE_POS_NOW);
 	}
 	//保存した名前表示
 	for (int i = 0; i < NAME_MAX; i++)
 	{
-		alphabet_Draw(name1[i], 50 + (i * ((NAME_WIDTH * SCALE) / NAME_YOKOLINE)), SCORE_POS_1);
+		Sprite_SetColor(D3DCOLOR_RGBA(0, 0, 0, 255));
+		alphabet_Draw(name1[i], NAME_START_POS_X + (i * ((NAME_WIDTH * SCALE) / NAME_YOKOLINE)), SCORE_POS_1);
 	}
 	for (int i = 0; i < NAME_MAX; i++)
 	{
-		alphabet_Draw(name2[i], 50 + (i * ((NAME_WIDTH * SCALE) / NAME_YOKOLINE)), SCORE_POS_2);
+		Sprite_SetColor(D3DCOLOR_RGBA(0, 0, 0, 255));
+		alphabet_Draw(name2[i], NAME_START_POS_X + (i * ((NAME_WIDTH * SCALE) / NAME_YOKOLINE)), SCORE_POS_2);
 	}
 	for (int i = 0; i < NAME_MAX; i++)
 	{
-		alphabet_Draw(name3[i], 50 + (i * ((NAME_WIDTH * SCALE) / NAME_YOKOLINE)), SCORE_POS_3);
+		Sprite_SetColor(D3DCOLOR_RGBA(0, 0, 0, 255));
+		alphabet_Draw(name3[i], NAME_START_POS_X + (i * ((NAME_WIDTH * SCALE) / NAME_YOKOLINE)), SCORE_POS_3);
 	}
+	Sprite_SetColor(D3DCOLOR_RGBA(255, 255, 255, 255));
 }
