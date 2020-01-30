@@ -3,11 +3,14 @@
 #include "sprite.h"
 #include "Scene.h"
 #include "input.h"
+#include "Result.h"
 
 #define NAME_MAX (5)     //最大文字数
-#define NAME_WIDTH (660) //画像の横幅
-#define NAME_HIGH (467)  //画像の高さ
-#define SCALE (0.6f)
+#define NAME_WIDTH (2400) //画像の横幅
+#define NAME_HIGH (1360)  //画像の高さ
+#define NAME_YOKOLINE (10)  //何列に分けられているか
+#define NAME_TATELINE (3)  //何行に分けられているか
+#define SCALE (1.0f)      //標準が１
 
 static int g_iName_TextureID;
 static int nAlphabet[NAME_MAX];  //アルファベット何文字目か
@@ -18,7 +21,7 @@ static char name3[NAME_MAX];
 
 void iName_Init(void)
 {
-	g_iName_TextureID = Texture_SetLoadFile("Asset/Texture/Name.jpg", NAME_WIDTH, NAME_HIGH);
+	g_iName_TextureID = Texture_SetLoadFile("Asset/Font/alphabet.png", NAME_WIDTH, NAME_HIGH);
 	Select = 0;
 	for (int i = 0; i < NAME_MAX; i++)
 	{
@@ -26,10 +29,10 @@ void iName_Init(void)
 	}
 	for (int i = 0; i < NAME_MAX; i++)
 	{
-		//空白で初期化
-		name1[i] = 26;
-		name2[i] = 26;
-		name3[i] = 26;
+		////空白で初期化
+		//name1[i] = 26;
+		//name2[i] = 26;
+		//name3[i] = 26;
 	}
 }
 
@@ -80,7 +83,7 @@ void iName_Update(void)
 	}
 }
 
-static void alphabet_Draw(int n, float x, float y)
+void alphabet_Draw(int n, float x, float y)
 {
 	if (n < 0)
 	{
@@ -91,27 +94,31 @@ static void alphabet_Draw(int n, float x, float y)
 		MessageBox(NULL, "数値に異常が発生したよ", "エラーパターン:n > 26", MB_OK);
 	}
 
-	//画像660*467 文字 横6縦5
-	Sprite_Draw(g_iName_TextureID, x, y, (NAME_WIDTH / 6) * (n % 6), (NAME_HIGH / 5) * (n / 6), (NAME_WIDTH / 6), (NAME_HIGH / 5), SCALE, SCALE, (NAME_WIDTH*0.5f), (NAME_HIGH * 0.5f));
+	//画像描写
+	Sprite_Draw(g_iName_TextureID, 0, 0,
+		(NAME_WIDTH / NAME_YOKOLINE) * (n % NAME_YOKOLINE), (NAME_HIGH / NAME_TATELINE) * (n / NAME_YOKOLINE),
+		(NAME_WIDTH / NAME_YOKOLINE), (NAME_HIGH / NAME_TATELINE),
+		SCALE, SCALE,
+		0, 0);
 }
 
 void iName_Draw(void)
 {
 	for (int i = 0; i < NAME_MAX; i++)
 	{
-		alphabet_Draw(nAlphabet[i], 50 + (i * ((NAME_WIDTH * SCALE) / 6)), 80);
+		alphabet_Draw(nAlphabet[i], 50 + (i * ((NAME_WIDTH * SCALE) / NAME_YOKOLINE)), SCORE_POS_NOW);
 	}
 	//保存した名前表示
 	for (int i = 0; i < NAME_MAX; i++)
 	{
-		alphabet_Draw(name1[i], 50 + (i * ((NAME_WIDTH * SCALE) / 6)), 200);
+		alphabet_Draw(name1[i], 50 + (i * ((NAME_WIDTH * SCALE) / NAME_YOKOLINE)), SCORE_POS_1);
 	}
 	for (int i = 0; i < NAME_MAX; i++)
 	{
-		alphabet_Draw(name2[i], 50 + (i * ((NAME_WIDTH * SCALE) / 6)), 260);
+		alphabet_Draw(name2[i], 50 + (i * ((NAME_WIDTH * SCALE) / NAME_YOKOLINE)), SCORE_POS_2);
 	}
 	for (int i = 0; i < NAME_MAX; i++)
 	{
-		alphabet_Draw(name3[i], 50 + (i * ((NAME_WIDTH * SCALE) / 6)), 320);
+		alphabet_Draw(name3[i], 50 + (i * ((NAME_WIDTH * SCALE) / NAME_YOKOLINE)), SCORE_POS_3);
 	}
 }
