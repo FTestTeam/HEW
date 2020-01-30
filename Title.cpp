@@ -53,7 +53,7 @@ void Title_Update(void)
 	scale = sinf(radius)/20 + 0.8f;
 
 
-	if (Keyboard_IsTrigger(DIK_R) || g_fream >= 600)
+	if (Keyboard_IsTrigger(DIK_R))
 	{
 		Scene_SetNextScene(SCENE_REPLAY_ZAKO);
 	}

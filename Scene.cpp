@@ -16,6 +16,8 @@
 #include "replay.h"
 #include "fade.h"
 #include "input_name.h"
+#include "sound.h"
+#include "input.h"
 
 SCENE g_NextScene = SCENE_TITLE;		//ç≈èâÇÃâÊñ  äÆê¨î≈ÇÕÉ^ÉCÉgÉãÇ…Ç∑ÇÈ
 SCENE g_Scene = g_NextScene;
@@ -58,6 +60,8 @@ void Scene_Init(void)
 
 	case SCENE_REPLAY_ZAKO:
 		Collect_Data_UnInit();
+
+		PlaySound(SOUND_LABEL_BGM_RESULT);
 
 		Score_Init();
 		Result_Init();
@@ -124,11 +128,7 @@ void Scene_Uninit(void)
 		Collect_Data_UnInit();
 		break;
 
-	case SCENE_REPLAY_ZAKO:
-		Score_Uninit();
-		Result_Uninit();
-		iName_Uninit();
-
+	case SCENE_REPLAY_ZAKO:		
 		Effect_UnInit();
 		Game_UnInit();
 		Zako_UnInit();
@@ -137,6 +137,12 @@ void Scene_Uninit(void)
 		Replay_UnInit();
 		break;
 	case SCENE_REPLAY_RAID:
+		StopSound();
+
+		Score_Uninit();
+		Result_Uninit();
+		iName_Uninit();
+
 		Effect_UnInit();
 		Game_UnInit();
 		Wall_UnInit();
@@ -199,6 +205,9 @@ void Scene_Update(void)
 	case SCENE_REPLAY_RAID:
 		Collect_Data_Load();
 
+		Result_Update();
+		iName_Update();
+
 		Effect_Update();
 		Game_Update();
 		Wall_Update();
@@ -246,7 +255,7 @@ void Scene_Draw(void)
 		Tornado_Draw();
 		Effect_Draw();
 		Syutyusen_Draw();
-		Replay_Draw();
+		//Replay_Draw();
 
 		Result_Draw();
 		iName_Draw();
@@ -258,7 +267,10 @@ void Scene_Draw(void)
 		Raid_Draw();
 		Tornado_Draw();
 		Syutyusen_Draw();
-		Replay_Draw();
+		//Replay_Draw();
+
+		Result_Draw();
+		iName_Draw();
 		break;
 	default:
 		break;

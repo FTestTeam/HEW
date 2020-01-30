@@ -33,9 +33,9 @@ DWORD g_aSizeAudio[SOUND_LABEL_MAX] = {};					// オーディオデータサイズ
 // 各音素材のパラメータ
 SOUNDPARAM g_aParam[SOUND_LABEL_MAX] =
 {
-	{"Asset/Sound/parade.wav", -1},		// BGM0
-	{"Asset/Sound/shot000.wav", 0},			// 弾発射音
-	{"Asset/Sound/explosion000.wav", 0},	// 爆発音
+	{"Asset/Sound/result.wav", -1},		// BGM_RESULT
+	{"Asset/Sound/kaze.wav", 0},
+	{"Asset/Sound/break.wav", 0},
 };
 
 //=============================================================================
@@ -44,7 +44,7 @@ SOUNDPARAM g_aParam[SOUND_LABEL_MAX] =
 HRESULT InitSound(HWND hWnd)
 {
 	HRESULT hr;
-
+	
 	// COMライブラリの初期化
 	CoInitializeEx(NULL, COINIT_MULTITHREADED);
 
@@ -372,3 +372,6 @@ HRESULT ReadChunkData(HANDLE hFile, void *pBuffer, DWORD dwBuffersize, DWORD dwB
 	return S_OK;
 }
 
+void Sound_SetVol(float vol) {
+	g_pMasteringVoice->SetVolume(vol);
+}

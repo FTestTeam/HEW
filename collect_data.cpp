@@ -23,7 +23,7 @@ void Collect_Data_Init(FILE_MODE mode)
 		}
 		break;
 	case READ:
-		g_fpR.open("Asset/data/replay.dat", ios::in | ios::binary);
+		g_fpR.open("Asset/data/replay_sample.dat", ios::in | ios::binary);
 		if (!g_fpR) {
 			MessageBox(NULL, "replay.dat‚ğŠJ‚¯‚Ü‚¹‚ñ", "ƒGƒ‰[", MB_ICONERROR);
 		}

@@ -103,7 +103,7 @@ void Sprite_Draw(int textureId,float dx, float dy, float scale_x, float scale_y 
 	D3DXMatrixTranslation(&mtxIT, center_x + dx - w / 2, center_y + dy - h / 2, 0.0f);
 
 	D3DXMATRIX mtxS;
-	D3DXMatrixScaling(&mtxS, scale_x, scale_y, 1.0f);	//(&mtxT, x, y, z)
+	D3DXMatrixScaling(&mtxS, scale_x, scale_y, 0.0f);	//(&mtxT, x, y, z)
 
 	
 	D3DXMATRIX mtxW = mtxT * mtxS * mtxIT;	//平行移動ー＞回転ー＞平行移動
@@ -147,7 +147,7 @@ void Sprite_Draw(int textureId,float dx, float dy, float scale_x, float scale_y,
 	D3DXMatrixTranslation(&mtxIT, center_x + dx - w / 2, center_y + dy - h, 0.0f);
 
 	D3DXMATRIX mtxS;
-	D3DXMatrixScaling(&mtxS, scale_x, scale_y, 1.0f);	//(&mtxT, x, y, z)
+	D3DXMatrixScaling(&mtxS, scale_x, scale_y, 0.0f);	//(&mtxT, x, y, z)
 
 	
 	D3DXMATRIX mtxW = mtxT * mtxR * mtxS * mtxIT ;	//平行移動ー＞回転ー＞平行移動
@@ -190,7 +190,7 @@ void Sprite_Mirror_Draw(int textureId,float dx, float dy, float scale_x, float s
 	D3DXMatrixTranslation(&mtxIT, center_x + dx - w / 2, center_y + dy - h, 0.0f);
 
 	D3DXMATRIX mtxS;
-	D3DXMatrixScaling(&mtxS, scale_x, scale_y, 1.0f);	//(&mtxT, x, y, z)
+	D3DXMatrixScaling(&mtxS, scale_x, scale_y, 0.0f);	//(&mtxT, x, y, z)
 
 	
 	D3DXMATRIX mtxW = mtxT * mtxR * mtxS * mtxIT;	//平行移動ー＞回転ー＞平行移動
@@ -313,7 +313,7 @@ void Sprite_Draw(int textureId,float dx, float dy, int cut_x, int cut_y, int cut
 	D3DXMatrixTranslation(&mtxIT, center_x + dx, center_y + dy, 0.0f);
 
 	D3DXMATRIX mtxS;
-	D3DXMatrixScaling(&mtxS, scale_x, scale_y, 1.0f);	//(&mtxT, x, y, z)
+	D3DXMatrixScaling(&mtxS, scale_x, scale_y, 0.0f);	//(&mtxT, x, y, z)
 
 	
 	D3DXMATRIX mtxW = mtxT * mtxS * mtxIT;	//平行移動ー＞回転ー＞平行移動
@@ -363,7 +363,7 @@ void Sprite_Draw(int textureId,float dx, float dy, int cut_x, int cut_y, int cut
 	D3DXMatrixTranslation(&mtxIT, center_x + dx, center_y + dy, 0.0f);
 
 	D3DXMATRIX mtxS;
-	D3DXMatrixScaling(&mtxS, scale_x, scale_y, 1.0f);	//(&mtxT, x, y, z)
+	D3DXMatrixScaling(&mtxS, scale_x, scale_y, 0.0f);	//(&mtxT, x, y, z)
 
 	
 	D3DXMATRIX mtxW = mtxT * mtxR * mtxS * mtxIT ;	//平行移動ー＞回転ー＞平行移動
@@ -412,7 +412,7 @@ void Sprite_Mirror_Draw(int textureId,float dx, float dy, int cut_x, int cut_y, 
 	D3DXMatrixTranslation(&mtxIT, center_x + dx, center_y + dy, 0.0f);
 
 	D3DXMATRIX mtxS;
-	D3DXMatrixScaling(&mtxS, scale_x, scale_y, 1.0f);	//(&mtxT, x, y, z)
+	D3DXMatrixScaling(&mtxS, scale_x, scale_y, 0.0f);	//(&mtxT, x, y, z)
 
 	
 	D3DXMATRIX mtxW = mtxT * mtxR * mtxS * mtxIT;	//平行移動ー＞回転ー＞平行移動

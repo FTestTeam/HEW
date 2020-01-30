@@ -29,7 +29,7 @@ static void number_Draw(int n, float x, float y)
 		MessageBox(NULL, "数値に異常が発生したよ(´･ω･`)", "エラーパターン:n > 9", MB_OK);
 	}
 
-	Sprite_Draw(g_Score_TextureID, x, y,48*n,48,48,48);
+	Sprite_Draw(g_Score_TextureID, x, y,48*n,0,48,48);
 }
 
 void Score_Draw(int score, float x, float y, int digit, bool bZero, bool bLeft)
