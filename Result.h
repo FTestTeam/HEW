@@ -1,10 +1,10 @@
 #ifndef _RESULT_H_
 #define _RESULT_H_
 
-#define	SCORE_POS_NOW (255)
+#define	SCORE_POS_NOW (200)
 #define SCORE_POS_1 (335)
-#define SCORE_POS_2 (415)
-#define SCORE_POS_3 (490)
+#define SCORE_POS_2 (440)
+#define SCORE_POS_3 (555)
 
 void Result_Init(void);
 void Result_Uninit(void);
