@@ -66,7 +66,7 @@ void Player_Update()
 	else {
 		if (Keyboard_IsPress(DIK_SPACE) || Joycon_IsPress(DIJOY_R_R)) {
 			if (Joycon_GetAccel(DIJOY_ACCEL_SL1) > -30000 || Joycon_GetAccel(DIJOY_ACCEL_SL1) < 30000 || Keyboard_IsPress(DIK_SPACE)) {
-				g_Rspeed += fabsf(Joycon_GetAccel(DIJOY_ACCEL_SL1) / 10000000);
+				g_Rspeed += fabsf(Joycon_GetAccel(DIJOY_ACCEL_SL1) / 10000000) + 0.01f;
 				PlaySound(SOUND_LABEL_SE_KAZE);
 				//g_Rspeed = min(g_Rspeed, 1.0f);
 			}
