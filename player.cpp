@@ -10,6 +10,7 @@
 #include"mydirect3d.h"
 #include"Scene.h"
 #include"collect_data.h"
+#include"sound.h"
 
 typedef struct PLAYER_Tag{
 	LocalVecter LocalVec;
@@ -45,7 +46,7 @@ void Player_UnInit()
 
 void Player_Update()
 {
-	if (Scene_GetScene() == SCENE_REPLAY_ZAKO || Scene_GetScene() == SCENE_REPLAY_RAID) {
+	if (Scene_GetScene() == SCENE_REPLAY_ZAKO || Scene_GetScene() == SCENE_RESULT || Scene_GetScene() == SCENE_REPLAY_RAID) {
 		if (Collect_Data_GetData().bJoy_R_Press) {
 			if (Collect_Data_GetData().accel > -30000 || Collect_Data_GetData().accel < 30000) {
 				g_Rspeed += fabsf(Collect_Data_GetData().accel / 10000000) + 0.01f;
@@ -66,6 +67,7 @@ void Player_Update()
 		if (Keyboard_IsPress(DIK_SPACE) || Joycon_IsPress(DIJOY_R_R)) {
 			if (Joycon_GetAccel(DIJOY_ACCEL_SL1) > -30000 || Joycon_GetAccel(DIJOY_ACCEL_SL1) < 30000 || Keyboard_IsPress(DIK_SPACE)) {
 				g_Rspeed += fabsf(Joycon_GetAccel(DIJOY_ACCEL_SL1) / 10000000);
+				PlaySound(SOUND_LABEL_SE_KAZE);
 				//g_Rspeed = min(g_Rspeed, 1.0f);
 			}
 			else {	//	ƒWƒ‡ƒCƒRƒ“U‚Á‚Ä‚È‚¢ŠÔ‰ñ“]Œ¸­

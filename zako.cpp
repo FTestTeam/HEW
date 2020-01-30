@@ -12,6 +12,7 @@
 #include"Scene.h"
 #include"score.h"
 #include"collect_data.h"
+#include"sound.h"
 
 #define ZAKO_SCENE_CHANGE_FREAM (120)
 #define ZAKO_STRIDE (5.0f)
@@ -61,7 +62,7 @@ void Zako_UnInit(void)
 
 void Zako_Update(void)
 {
-	if (Scene_GetScene() == SCENE_REPLAY_ZAKO) {
+	if (Scene_GetScene() == SCENE_REPLAY_ZAKO || Scene_GetScene() == SCENE_RESULT) {
 		for (int Id = 0; Id < ZAKO_MAX; Id++)
 		{
 			if (!g_ZakoData[Id].use) {
@@ -88,7 +89,6 @@ void Zako_Update(void)
 				if (Zako_GetPosition(Id).z < Hammer_GetPosition().z) {
 					if (g_ZakoData[Id].use) {
 						g_BreakCount++;
-						Score_AddScore(1);
 					}
 					g_ZakoData[Id].use = false;
 				}
@@ -142,7 +142,7 @@ void Zako_Update(void)
 				if (Zako_GetPosition(Id).z < Hammer_GetPosition().z) {
 					if (g_ZakoData[Id].use) {
 						g_BreakCount++;
-						Score_AddScore(1);
+						PlaySound(SOUND_LABEL_SE_BREAK);
 					}
 					g_ZakoData[Id].use = false;
 				}

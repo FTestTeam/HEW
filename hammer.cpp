@@ -30,7 +30,7 @@ void Hammer_Uninit(void)
 
 void Hammer_Update(void)
 {
-	if (Scene_GetScene() == SCENE_REPLAY_ZAKO || Scene_GetScene() == SCENE_REPLAY_RAID) {
+	if (Scene_GetScene() == SCENE_REPLAY_ZAKO || Scene_GetScene() == SCENE_RESULT || Scene_GetScene() == SCENE_REPLAY_RAID) {
 		//プレーヤーがハンマーを投げたら進む
 		if (Player_IsFly() && g_bFly) {
 			g_Position.z += (Collect_Data_GetData().vol / 100.0f);
