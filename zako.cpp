@@ -61,7 +61,7 @@ void Zako_UnInit(void)
 
 void Zako_Update(void)
 {
-	if (Scene_GetScene() == SCENE_REPLAY_ZAKO) {
+	if (Scene_GetScene() == SCENE_REPLAY_ZAKO || Scene_GetScene() == SCENE_RESULT) {
 		for (int Id = 0; Id < ZAKO_MAX; Id++)
 		{
 			if (!g_ZakoData[Id].use) {
@@ -88,7 +88,6 @@ void Zako_Update(void)
 				if (Zako_GetPosition(Id).z < Hammer_GetPosition().z) {
 					if (g_ZakoData[Id].use) {
 						g_BreakCount++;
-						Score_AddScore(1);
 					}
 					g_ZakoData[Id].use = false;
 				}
@@ -112,7 +111,7 @@ void Zako_Update(void)
 		}
 
 		if (g_SceneFream < 0) {
-			Scene_SetNextScene(SCENE_REPLAY_RAID);
+			//Scene_SetNextScene(SCENE_REPLAY_RAID);
 		}
 	}
 	else {

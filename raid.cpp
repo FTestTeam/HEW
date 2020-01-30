@@ -126,7 +126,7 @@ void Raid_Update()
 		}
 
 		if (g_EndFream < 0) {
-			Scene_SetNextScene(SCENE_RESULT);
+			Scene_SetNextScene(SCENE_REPLAY_ZAKO);
 		}
 	}
 

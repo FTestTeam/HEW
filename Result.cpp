@@ -5,10 +5,10 @@
 #include "common.h"
 #include "score.h"
 #include "input.h"
-#include "common.h"
 #include "joycon.h"
 
 #define  SCORE_MAX (3)
+
 
 static int g_Result_TextureID;
 static int g_ResultScore = 0;
@@ -16,7 +16,7 @@ static int g_Score[SCORE_MAX] = { 0 };
 
 void Result_Init(void)
 {
-	g_Result_TextureID = Texture_SetLoadFile("Asset/Texture/Score.png", 1280, 720);
+	g_Result_TextureID = Texture_SetLoadFile("Asset/Texture/ranking.png", 1280, 720);
 	Result_Sort();
 }
 
@@ -35,13 +35,14 @@ void Result_Update(void)
 
 void Result_Draw(void)
 {
+	Sprite_SetColor(D3DCOLOR_RGBA(255, 255, 255, 100));
+	Sprite_Draw(g_Result_TextureID, 0 + SCREEN_WIDTH / 2, 0 + SCREEN_HEIGHT / 2, 0.5f, 0.5f, 1280.0f / 2, 720.0f / 2);
 
-	Sprite_Draw(g_Result_TextureID, 0 + SCREEN_WIDTH / 2, 0 + SCREEN_HEIGHT / 2);
-
-	Score_Draw(g_ResultScore, 652, 180 , 7, false, true);
-	Score_Draw(g_Score[0], 652, 300, 7, false, true);
-	Score_Draw(g_Score[1], 652 , 360, 7, false, true);
-	Score_Draw(g_Score[2], 652 , 420 , 7, false, true);
+	Sprite_SetColor(D3DCOLOR_RGBA(255, 255, 255, 255));
+	Score_Draw(g_ResultScore, 652, SCORE_POS_NOW, 7, false, true);
+	Score_Draw(g_Score[0], 652 , SCORE_POS_1, 7, false, true);
+	Score_Draw(g_Score[1], 652 , SCORE_POS_2, 7, false, true);
+	Score_Draw(g_Score[2], 652 , SCORE_POS_3, 7, false, true);
 }
 
 void Result_GetScore(int x)

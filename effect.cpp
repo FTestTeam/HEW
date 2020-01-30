@@ -74,7 +74,7 @@ void Effect_Draw(void)
 
 	D3DXMATRIX mtxW, mtxT, mtxS;
 
-	if (Scene_GetScene() == SCENE_ZAKO || Scene_GetScene() == SCENE_REPLAY_ZAKO) {
+	if (Scene_GetScene() == SCENE_ZAKO || Scene_GetScene() == SCENE_REPLAY_ZAKO || Scene_GetScene() == SCENE_RESULT) {
 		for (int i = 0; i < EFFECT_MAX; i++) {
 			if (g_effect[i].life == 0) {
 				continue;
