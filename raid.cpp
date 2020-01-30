@@ -11,6 +11,7 @@
 #include"Result.h"
 #include"cube.h"
 #include"input.h"
+#include"joycon.h"
 #include"collect_data.h"
 
 #define RAID_ADD_HP (10000)
@@ -64,6 +65,7 @@ void Raid_UnInit()
 void Raid_Update()
 {
 	if (Scene_GetScene() == SCENE_REPLAY_RAID) {
+
 		if (Wall_GetPosition().z - 1.0f < Hammer_GetPosition().z && Wall_isUse()) {	//áŠQ‚É“–‚½‚Á‚½‚ç
 			D3DXVECTOR3 w(Wall_GetPosition().x, Hammer_GetPosition().y, Wall_GetPosition().z - 0.5f);
 			Hammer_SetPosition(w);
@@ -92,7 +94,7 @@ void Raid_Update()
 			g_EndFream--;
 		}
 
-		if (g_EndFream < 0) {
+		if (Joycon_IsTrigger(DIJOY_R_A) || Keyboard_IsTrigger(DIK_RETURN) || g_EndFream < 0) {
 			Scene_SetNextScene(SCENE_TITLE);
 		}
 	}
