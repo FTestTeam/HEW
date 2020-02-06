@@ -7,14 +7,23 @@
 /*------------------------------------------------------------------------------
    定数定義
 ------------------------------------------------------------------------------*/
-#define DEBUG_PRINTF_BUFFER_MAX (256) //文字列用バッファ量（少ないときは増やすこと）
+#define DEBUG_PRINTF_BUFFER_MAX (256) // 文字列用バッファ量（少ないときは増やすこと）
+#define PARAM_MAX (256)
 
+struct DEBUG_PARAM {
+	int x;
+	int y;
+	const char * pFormat;
+	char buf[DEBUG_PRINTF_BUFFER_MAX];
+	bool bUse;
+};
 
 /*------------------------------------------------------------------------------
    グローバル変数宣言
 ------------------------------------------------------------------------------*/
 #if defined(_DEBUG) || defined(DEBUG)
 static LPD3DXFONT g_pD3DXFont = NULL;
+static DEBUG_PARAM g_param[PARAM_MAX];
 #endif // _DEBUG || DEBUG
 
 
@@ -38,6 +47,13 @@ void DebugFont_Initialize(void)
 		DEFAULT_PITCH, 
 		"HGP創英角ﾎﾟｯﾌﾟ体", 
 		&g_pD3DXFont);
+
+	for (int i = 0; i < PARAM_MAX; i++) {
+		g_param[i].x = -1.0f;
+		g_param[i].y = -1.0f;
+		g_param[i].bUse = false;
+	}
+
 #endif // _DEBUG || DEBUG
 }
 
@@ -55,26 +71,45 @@ void DebugFont_Finalize(void)
 
 
 // デバックフォントの描画
-void DebugFont_Draw(int x, int y, const char* pFormat, ...)
+void DebugFont_Draw()
 {
 #if defined(_DEBUG) || defined(DEBUG)
-	RECT rect = { x, y, SCREEN_WIDTH, SCREEN_HEIGHT 
-	};
-	
-	va_list argp;
-	va_start(argp, pFormat);
-	// 文字列用バッファ
-	char buf[DEBUG_PRINTF_BUFFER_MAX];
-	vsprintf_s(buf, DEBUG_PRINTF_BUFFER_MAX, pFormat, argp);
-	va_end(argp);
+	for (int i = 0; i < PARAM_MAX; i++) {
+		if (g_param[i].x < 0) continue;
 
-	g_pD3DXFont->DrawText(NULL,
-		buf,
-		-1, &rect, DT_LEFT,
-		D3DCOLOR_RGBA(0, 255, 0, 255));
+		RECT rect = { g_param[i].x, g_param[i].y, SCREEN_WIDTH, SCREEN_HEIGHT
+		};
+
+		g_pD3DXFont->DrawText(NULL,
+			g_param[i].buf,
+			-1, &rect, DT_LEFT,
+			D3DCOLOR_RGBA(0, 255, 0, 255));
+	}
+#endif // _DEBUG || DEBUG
+}
+
+void DebugFont_SetParam(int slot,const char *pFormat, ...)
+{
+#if defined(_DEBUG) || defined(DEBUG)
+	for (int i = 0; i < PARAM_MAX; i++) {
+		if (g_param[i].bUse && g_param[i].y != slot * 24) continue;
+
+		if (!g_param[i].bUse) {
+			g_param[i].x = 1;
+			g_param[i].y = slot * 24;
+			g_param[i].pFormat = pFormat;
+			g_param[i].bUse = true;
+		}
+
+		va_list argp;
+		va_start(argp, pFormat);
+		vsprintf_s(g_param[i].buf, DEBUG_PRINTF_BUFFER_MAX, pFormat, argp);
+		va_end(argp);
+		break;
+	}
 #else
 	UNREFERENCED_PARAMETER(pFormat);
 	UNREFERENCED_PARAMETER(x);
 	UNREFERENCED_PARAMETER(y);
-#endif // _DEBUG || DEBUG
+#endif
 }

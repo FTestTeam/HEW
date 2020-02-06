@@ -286,7 +286,9 @@ void Draw(void) {
 	System_Draw();
 	Scene_Draw();
 	Fade_Draw();
-	DebugFont_Draw(1, 1, "%.2f", g_FPS);
+
+	DebugFont_SetParam(0, "%.2f", g_FPS);
+	DebugFont_Draw();
 
 	g_pDevice->EndScene();
 
