@@ -153,12 +153,12 @@ void Raid_Draw()
 		mtxW = mtxS * mtxT;
 		Cube_SetUV(KIRETU_TEXTURE_SIZE_W / 2 - (KIRETU_TEXTURE_SIZE_W / 2) * Kiretu_size, KIRETU_TEXTURE_SIZE_H / 2 - (KIRETU_TEXTURE_SIZE_H / 2) * Kiretu_size, (KIRETU_TEXTURE_SIZE_W / 2) * Kiretu_size*2, (KIRETU_TEXTURE_SIZE_H / 2) * Kiretu_size*2, g_textureID_break);
 		Cube_Draw(&mtxW, g_textureID_break);
-		DebugFont_Draw(1, 24 * 2, "%f", Kiretu_size);
+		DebugFont_SetParam(1, "%f", Kiretu_size);
 	}
 
-	DebugFont_Draw(1, 24, "スタート:%f", g_startHP);
+	DebugFont_SetParam(2, "スタート:%f", g_startHP);
 	
-	DebugFont_Draw(1, 24*3, "現在:%f", g_RaidHP);
+	DebugFont_SetParam(3, "現在:%f", g_RaidHP);
 
 	Score_Draw(g_MicFream / 60, 100, 100, 4, 0, 0);
 }

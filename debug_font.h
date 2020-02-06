@@ -25,7 +25,8 @@ void DebugFont_Finalize(void);
 // 引数:x       ... 描画座標x
 //      y       ... 描画座標y
 //      pFormat ... printfの引数とほぼ同じ仕様
-void DebugFont_Draw(int x, int y, const char* pFormat, ...);
+void DebugFont_Draw();
+void DebugFont_SetParam(int slot, const char *pFormat, ...);
 
 
 #endif // DEBUG_FONT_H_
