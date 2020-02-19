@@ -242,7 +242,6 @@ void Uninit(void) {
 	Joycon_Finalize();
 	Mic_UnInit();
 	System_UnInit();
-	Scene_Uninit();
 	Billboard_UnInit();
 	Fade_Uninit();
 

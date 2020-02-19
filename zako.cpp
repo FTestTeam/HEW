@@ -54,7 +54,7 @@ void Zako_Init(void)
 		g_ZakoData[i].position = { 0.0f,-1.0f,(ZAKO_STRIDE*i) + 30.0f };
 		g_ZakoData[i].bLast = i == ZAKO_MAX - 1;
 		g_ZakoData[i].zSort = ZAKO_MAX - i;
-	}
+	}	
 }
 
 void Zako_UnInit(void)

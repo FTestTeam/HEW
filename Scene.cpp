@@ -33,6 +33,7 @@ void Scene_Init(void)
 
 	case SCENE_ZAKO:
 		Collect_Data_Init(WRITE);
+		PlaySound(SOUND_LABEL_BGM_ZAKO);
 
 		Effect_Init();
 		Game_Init();
@@ -43,6 +44,8 @@ void Scene_Init(void)
 		break;
 
 	case SCENE_RAID:
+		PlaySound(SOUND_LABEL_BGM_RAID);
+
 		Effect_Init();
 		Game_Init();
 		Camera_Init();
@@ -106,6 +109,8 @@ void Scene_Uninit(void)
 
 		break;
 	case SCENE_ZAKO:
+		StopSound(SOUND_LABEL_BGM_ZAKO);
+
 		Effect_UnInit();
 		Game_UnInit();
 		Zako_UnInit();
@@ -113,6 +118,8 @@ void Scene_Uninit(void)
 		Tornado_UnInit();
 		break;
 	case SCENE_RAID:
+		StopSound(SOUND_LABEL_BGM_RAID);
+
 		Effect_UnInit();
 		Game_UnInit();
 		Wall_UnInit();
