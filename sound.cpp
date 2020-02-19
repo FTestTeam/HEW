@@ -34,8 +34,10 @@ DWORD g_aSizeAudio[SOUND_LABEL_MAX] = {};					// オーディオデータサイズ
 SOUNDPARAM g_aParam[SOUND_LABEL_MAX] =
 {
 	{"Asset/Sound/result.wav", -1},		// BGM_RESULT
-	{"Asset/Sound/kaze.wav", 0},
+	{"Asset/Sound/kaze.wav", -1},
 	{"Asset/Sound/break.wav", 0},
+	{"Asset/Sound/phenomenon_BGM.wav",-1},
+	{"Asset/Sound/raid_BGM.wav",-1},
 };
 
 //=============================================================================

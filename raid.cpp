@@ -13,6 +13,7 @@
 #include"input.h"
 #include"joycon.h"
 #include"collect_data.h"
+#include"sound.h"
 
 #define RAID_ADD_HP (10000)
 
@@ -57,6 +58,7 @@ void Raid_Init()
 		g_ReplayStartHP = g_startHP;
 		g_ReplayRaidHP = g_RaidHP;
 	}
+
 }
 
 void Raid_UnInit()
