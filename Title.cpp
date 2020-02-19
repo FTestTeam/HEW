@@ -6,6 +6,7 @@
 #include "input.h"
 #include "common.h"
 #include "joycon.h"
+#include "collect_data.h"
 
 static int g_Title_TextureID;
 
@@ -36,6 +37,7 @@ void Title_Init(void)
 
 	g_fream = 0;
 
+	Collect_Data_UnInit();
 }
 
 void Title_Uninit(void)

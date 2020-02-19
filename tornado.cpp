@@ -36,7 +36,7 @@ void Tornado_Update()
 		g_angle = Player_GetRotation();
 	}
 	else {
-		if (Keyboard_IsPress(DIK_SPACE) || Joycon_IsPress(DIJOY_R_R)) {
+		if (Keyboard_IsPress(DIK_SPACE) || Joycon_IsPress(DIJOY_R_SR)) {
 			if (Joycon_GetAccel(DIJOY_ACCEL_SL1) > -30000 || Joycon_GetAccel(DIJOY_ACCEL_SL1) < 30000 || Keyboard_IsPress(DIK_SPACE)) {
 				g_scale += fabsf(Joycon_GetAccel(DIJOY_ACCEL_SL1) / 10000000) + 0.01f;
 			}

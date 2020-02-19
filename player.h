@@ -17,5 +17,6 @@ float Player_GetRotation(void);
 D3DXVECTOR3 Player_GetPosition();
 //プレイヤーがハンマー飛ばしたか？
 bool Player_IsFly(void);
+float Player_GetForce();
 
 #endif // !PLAYER_H_

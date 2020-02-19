@@ -23,6 +23,7 @@ static float g_Rspeed;
 static float g_Ratetion;
 static int g_fream;
 static bool g_Fly;
+static float g_Force;
 
 void Player_Init() 
 {
@@ -32,6 +33,7 @@ void Player_Init()
 
 	g_Fly = false;
 	g_Rspeed = 0.0f;
+	g_Force = 0;
 
 	//ハンマーのポジションをプレイヤーの前に初期化
 	D3DXVECTOR3 w;
@@ -49,7 +51,7 @@ void Player_Update()
 	if (Scene_GetScene() == SCENE_REPLAY_ZAKO || Scene_GetScene() == SCENE_RESULT || Scene_GetScene() == SCENE_REPLAY_RAID) {
 		if (Collect_Data_GetData().bJoy_R_Press) {
 			if (Collect_Data_GetData().accel > -30000 || Collect_Data_GetData().accel < 30000) {
-				g_Rspeed += fabsf(Collect_Data_GetData().accel / 10000000) + 0.01f;
+				g_Rspeed = fabsf(Collect_Data_GetData().accel / 100000);
 				//g_Rspeed = min(g_Rspeed, 1.0f);
 			}
 			else {	//	ジョイコン振ってない間回転減少
@@ -64,10 +66,11 @@ void Player_Update()
 		}
 	}
 	else {
-		if (Keyboard_IsPress(DIK_SPACE) || Joycon_IsPress(DIJOY_R_R)) {
+		if (Keyboard_IsPress(DIK_SPACE) || Joycon_IsPress(DIJOY_R_SR)) {
 			if (Joycon_GetAccel(DIJOY_ACCEL_SL1) > -30000 || Joycon_GetAccel(DIJOY_ACCEL_SL1) < 30000 || Keyboard_IsPress(DIK_SPACE)) {
 				if (Joycon_IsUsed()) {
-					g_Rspeed = fabsf(Joycon_GetAccel(DIJOY_ACCEL_SL1) / 100000);
+					g_Rspeed = fabsf(Joycon_GetAccel(DIJOY_ACCEL_SL1) / 50000);
+					g_Force += g_Rspeed;
 				}
 				else {
 					g_Rspeed += 0.01f;
@@ -82,7 +85,7 @@ void Player_Update()
 			g_Ratetion -= g_Rspeed;
 			g_fream++;
 		}
-		if (Keyboard_IsRelease(DIK_SPACE) || Joycon_IsRelease(DIJOY_R_R)) {	//ボタン離したら投げる
+		if (Keyboard_IsRelease(DIK_SPACE) || Joycon_IsRelease(DIJOY_R_SR)) {	//ボタン離したら投げる
 			g_Fly = true;
 		}
 	}
@@ -119,4 +122,9 @@ D3DXVECTOR3 Player_GetPosition()
 bool Player_IsFly(void)
 {
 	return g_Fly;
+}
+
+float Player_GetForce()
+{
+	return g_Force;
 }
