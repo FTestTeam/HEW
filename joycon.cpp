@@ -253,3 +253,8 @@ float Joycon_GetAccel(int vec)
 {
 	return g_JoyconAccel[vec];
 }
+
+bool Joycon_IsUsed()
+{
+	return g_bJoy;
+}

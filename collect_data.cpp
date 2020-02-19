@@ -23,7 +23,7 @@ void Collect_Data_Init(FILE_MODE mode)
 		}
 		break;
 	case READ:
-		g_fpR.open("Asset/data/replay_sample.dat", ios::in | ios::binary);
+		g_fpR.open("Asset/data/replay.dat", ios::in | ios::binary);
 		if (!g_fpR) {
 			MessageBox(NULL, "replay.datÇäJÇØÇ‹ÇπÇÒ", "ÉGÉâÅ[", MB_ICONERROR);
 		}
@@ -37,7 +37,7 @@ void Collect_Data_Init(FILE_MODE mode)
 void Collect_Data_UnInit()
 {
 	if(g_fpW) g_fpW.close();
-	if (g_fpR) g_fpR.close();
+	if(g_fpR) g_fpR.close();
 }
 
 void Collect_Data_Save()
@@ -45,8 +45,8 @@ void Collect_Data_Save()
 	COLLECT_DATA data;
 
 	data.accel = Joycon_GetAccel(DIJOY_ACCEL_SL1);
-	data.bJoy_R_Press = Joycon_IsPress(DIJOY_R_R);
-	data.bJoy_R_Release = Joycon_IsRelease(DIJOY_R_R);
+	data.bJoy_R_Press = Joycon_IsPress(DIJOY_R_SR);
+	data.bJoy_R_Release = Joycon_IsRelease(DIJOY_R_SR);
 	data.vol = Mic_GetVolume();
 	data.raidHP = g_RaidStartHP;
 

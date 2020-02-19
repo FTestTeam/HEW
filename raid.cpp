@@ -31,6 +31,8 @@ static int g_textureID_Gage;
 static float g_RaidHP = RAID_START_HP;
 static float g_BufHP;
 static float g_startHP;
+static float g_ReplayStartHP;
+static float g_ReplayRaidHP;
 static int g_breakNum = 0;
 
 static int g_textureID_break;
@@ -42,7 +44,6 @@ void Raid_Init()
 	g_EndFream = g_MicFream + 120;	//マイクに叫ぶ時間が終わってから120フレーム後にシーンチェンジ
 	g_bMic = false;
 
-	g_startHP = g_RaidHP;
 	g_BufHP = 0;
 
 	g_textureID_Gage = Texture_SetLoadFile("Asset/Texture/gage.png", 640, 32);
@@ -50,16 +51,19 @@ void Raid_Init()
 	g_textureID_break = Texture_SetLoadFile("Asset/Texture/kiretu.png", KIRETU_TEXTURE_SIZE_W, KIRETU_TEXTURE_SIZE_H);
 	g_bUse_Break = false;
 
-	Collect_Data_SetRaidStartHP(g_RaidHP);
-
-	if (Scene_GetScene() == SCENE_RAID) {
-		g_startHP = Collect_Data_GetData().raidHP;
+	if (Scene_GetScene() == SCENE_ZAKO) {
+		g_startHP = g_RaidHP;
+		Collect_Data_SetRaidStartHP(g_RaidHP);
+		g_ReplayStartHP = g_startHP;
+		g_ReplayRaidHP = g_RaidHP;
 	}
 }
 
 void Raid_UnInit()
 {
 	Result_GetScore(g_startHP - g_RaidHP);
+
+	Collect_Data_UnInit();
 }
 
 void Raid_Update()
@@ -73,15 +77,15 @@ void Raid_Update()
 			g_bMic = true;
 			g_bUse_Break = true;
 			if (g_bMic) {
-				g_RaidHP -= (Collect_Data_GetData().vol * Zako_GetBreakCount()) / 100;
+				g_ReplayRaidHP -= (Collect_Data_GetData().vol * Zako_GetBreakCount()) / 100;
 			}
 		}
 
-		if (g_RaidHP <= 0) {
+		if (g_ReplayRaidHP <= 0) {
 			g_breakNum++;
 
-			g_RaidHP = RAID_MAX_HP;
-			g_startHP += RAID_MAX_HP;
+			g_ReplayRaidHP = RAID_MAX_HP;
+			g_ReplayStartHP += RAID_MAX_HP;
 
 			D3DXVECTOR3 w = Wall_GetPosition();
 			w.z += 20;
@@ -133,14 +137,19 @@ void Raid_Update()
 	}
 
 #if defined(_DEBUG) || defined(DEBUG)
-	if (Keyboard_IsTrigger(DIK_RETURN)) Scene_SetNextScene(SCENE_RESULT);
+	if (Keyboard_IsTrigger(DIK_RETURN)) Scene_SetNextScene(SCENE_REPLAY_ZAKO);
 #endif
 }
 
 void Raid_Draw()
 {
 	Sprite_SetColor(D3DCOLOR_RGBA(255, 0, 0, 255));
-	Sprite_Draw(g_textureID_Gage, SCREEN_WIDTH / 2, 16.0f, g_RaidHP / (RAID_MAX_HP), 1.0f, 0.0f, 16.0f);
+	if (Scene_GetScene() == SCENE_REPLAY_RAID) {
+		Sprite_Draw(g_textureID_Gage, SCREEN_WIDTH / 2, 16.0f, g_ReplayRaidHP / (RAID_MAX_HP), 1.0f, 0.0f, 16.0f);
+	}
+	else {
+		Sprite_Draw(g_textureID_Gage, SCREEN_WIDTH / 2, 16.0f, g_RaidHP / (RAID_MAX_HP), 1.0f, 0.0f, 16.0f);
+	}
 	Sprite_SetColor(D3DCOLOR_RGBA(255, 255, 255, 255));
 
 	if (g_bUse_Break) {
@@ -156,9 +165,11 @@ void Raid_Draw()
 		DebugFont_SetParam(1, "%f", Kiretu_size);
 	}
 
-	DebugFont_SetParam(2, "スタート:%f", g_startHP);
+	DebugFont_SetParam(2, "スタート:%f", g_ReplayStartHP);
 	
-	DebugFont_SetParam(3, "現在:%f", g_RaidHP);
+	DebugFont_SetParam(3, "現在:%f", g_ReplayRaidHP);
+
+	DebugFont_SetParam(4, "シーン：%d", Scene_GetScene());
 
 	Score_Draw(g_MicFream / 60, 100, 100, 4, 0, 0);
 }
