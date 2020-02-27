@@ -23,6 +23,6 @@ void Replay_Update()
 void Replay_Draw()
 {
 	Sprite_SetColor(D3DCOLOR_RGBA(255, 255, 255, 100));
-	Sprite_Draw(g_textureID, 0 + SCREEN_WIDTH / 2, 0 + SCREEN_HEIGHT / 2);
+	Sprite_Draw(g_textureID, 0 + Window_GetWidth() / 2, 0 + Window_GetHeight() / 2);
 	Sprite_SetColor(D3DCOLOR_RGBA(255, 255, 255, 255));
 }

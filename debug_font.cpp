@@ -77,7 +77,7 @@ void DebugFont_Draw()
 	for (int i = 0; i < PARAM_MAX; i++) {
 		if (g_param[i].x < 0) continue;
 
-		RECT rect = { g_param[i].x, g_param[i].y, SCREEN_WIDTH, SCREEN_HEIGHT
+		RECT rect = { g_param[i].x, g_param[i].y, Window_GetWidth(), Window_GetHeight()
 		};
 
 		g_pD3DXFont->DrawText(NULL,
@@ -109,7 +109,5 @@ void DebugFont_SetParam(int slot,const char *pFormat, ...)
 	}
 #else
 	UNREFERENCED_PARAMETER(pFormat);
-	UNREFERENCED_PARAMETER(x);
-	UNREFERENCED_PARAMETER(y);
 #endif
 }

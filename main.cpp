@@ -35,7 +35,7 @@
 #define	CLASS_NAME		"GameWindow"
 #define WINDOW_CAPTION	"ハンマー投げ"
 #define FPS_MEASUREMENT_TIME 1.0
-#define WINDOW_STYLE	(WS_OVERLAPPEDWINDOW ^ WS_THICKFRAME ^ WS_MAXIMIZEBOX)
+#define WINDOW_STYLE	(WS_POPUPWINDOW)
 
 /*----------------------------
 	プロトタイプ宣言
@@ -62,7 +62,9 @@ static double g_FPSBaseTime = 0.0;
 static float g_FPS = 0.0f; 
 static double g_StaticFrameTime = 0.0;
 
-//ゲーム
+//ウィンドウサイズ
+static int g_SCREEN_WIDTH;
+static int g_SCREEN_HEIGHT;
 
 /*============================
 	メイン
@@ -85,8 +87,10 @@ int APIENTRY WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLi
 
 	RegisterClass(&wc);
 
+	g_SCREEN_WIDTH = GetSystemMetrics(SM_CXSCREEN);
+	g_SCREEN_HEIGHT = GetSystemMetrics(SM_CYSCREEN);
 
-	RECT window_rect = { 0,0,SCREEN_WIDTH,SCREEN_HEIGHT };
+	RECT window_rect = { 0,0,g_SCREEN_WIDTH,g_SCREEN_HEIGHT };
 	AdjustWindowRect(&window_rect, WINDOW_STYLE, FALSE);
 
 	int window_width = window_rect.right - window_rect.left;
@@ -293,4 +297,14 @@ void Draw(void) {
 
 
 	g_pDevice->Present(NULL, NULL, NULL, NULL);
+}
+
+int Window_GetWidth()
+{
+	return g_SCREEN_WIDTH;
+}
+
+int Window_GetHeight()
+{
+	return g_SCREEN_HEIGHT;
 }

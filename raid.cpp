@@ -17,7 +17,7 @@
 
 #define RAID_ADD_HP (10000)
 
-#define RAID_START_HP (10000)
+#define RAID_START_HP (10000.0f)
 #define RAID_MAX_HP (RAID_START_HP + g_breakNum * RAID_ADD_HP)
 #define RAID_SEC (5)
 
@@ -147,10 +147,10 @@ void Raid_Draw()
 {
 	Sprite_SetColor(D3DCOLOR_RGBA(255, 0, 0, 255));
 	if (Scene_GetScene() == SCENE_REPLAY_RAID) {
-		Sprite_Draw(g_textureID_Gage, SCREEN_WIDTH / 2, 16.0f, g_ReplayRaidHP / (RAID_MAX_HP), 1.0f, 0.0f, 16.0f);
+		Sprite_Draw(g_textureID_Gage, Window_GetWidth() / 2, 16.0f, g_ReplayRaidHP / (RAID_MAX_HP), 1.0f, 0.0f, 16.0f);
 	}
 	else {
-		Sprite_Draw(g_textureID_Gage, SCREEN_WIDTH / 2, 16.0f, g_RaidHP / (RAID_MAX_HP), 1.0f, 0.0f, 16.0f);
+		Sprite_Draw(g_textureID_Gage, Window_GetWidth() / 2, 16.0f, g_RaidHP / (RAID_MAX_HP), 1.0f, 0.0f, 16.0f);
 	}
 	Sprite_SetColor(D3DCOLOR_RGBA(255, 255, 255, 255));
 
