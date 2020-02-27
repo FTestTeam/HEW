@@ -27,8 +27,10 @@ static Camera g_camera;
 
 static D3DXMATRIX g_mtxViewInv;
 
+#if defined(_DEBUG) || defined(DEBUG)
 //カメラデバッグモード
 static bool DebugCam;
+#endif
 
 void Camera_Init()
 {
@@ -45,7 +47,9 @@ void Camera_Init()
 	g_camera.MoveSpeed = 0.3f;
 	g_camera.RotationSpeed = 0.05f;
 
+#if defined(_DEBUG) || defined(DEBUG)
 	DebugCam = false;
+#endif
 }
 
 void Camera_Update()
@@ -53,14 +57,23 @@ void Camera_Update()
 	//======================
 	//	ゲーム
 	//======================
-	if (!DebugCam && Player_IsFly()) {		//カメラをハンマーに追従
+
+	if (Player_IsFly()) {		//カメラをハンマーに追従
 		g_camera.Pos.y = Hammer_GetPosition().y + 4.0f;
 		g_camera.Pos.z = Hammer_GetPosition().z - 4.0f;
 	}
 
+#if defined(_DEBUG) || defined(DEBUG)
+	if (!DebugCam && Player_IsFly()) {		//カメラをハンマーに追従
+		g_camera.Pos.y = Hammer_GetPosition().y + 4.0f;
+		g_camera.Pos.z = Hammer_GetPosition().z - 4.0f;
+	}
+#endif
+
 
 
 	//デバッグカメラ
+#if defined(_DEBUG) || defined(DEBUG)
 	if (Keyboard_IsTrigger(DIK_0)) {
 		DebugCam = true;
 	}
@@ -114,6 +127,8 @@ void Camera_Update()
 		D3DXVec3Normalize(&g_VecDir, &g_VecDir);
 		g_camera.Pos += g_VecDir * g_camera.MoveSpeed;
 	}
+#endif
+
 	LPDIRECT3DDEVICE9 pDevice = MyDirect3D_GetDevice();
 	//=================================================
 	//2．ビュー変換行列
@@ -132,7 +147,7 @@ void Camera_Update()
 	//3．プロジェクション変換行列
 	//=================================================
 	D3DXMATRIX mtxProje;
-	D3DXMatrixPerspectiveFovLH(&mtxProje, g_camera.Fov, (float)SCREEN_WIDTH / SCREEN_HEIGHT, 0.1f, 10000.f);
+	D3DXMatrixPerspectiveFovLH(&mtxProje, g_camera.Fov, (float)Window_GetWidth() / Window_GetHeight(), 0.1f, 10000.f);
 	//引数(2).視野角はラジアン指定 上半分だけ	
 	//引数(3).アスペクト比
 	//引数(4,5).near(>0)とfar
