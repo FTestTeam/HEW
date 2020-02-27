@@ -77,4 +77,6 @@ bool Joycon_IsRelease(int nKey);
 //	DIJOY_ACCEL_...
 float Joycon_GetAccel(int vec);
 
+bool Joycon_IsUsed();
+
 #endif

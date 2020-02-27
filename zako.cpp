@@ -34,6 +34,7 @@ static int g_BreakCount;
 
 static bool g_bScene;
 static int g_SceneFream;
+static float g_PlayerForce;
 
 void Zako_Init(void)
 {
@@ -42,6 +43,7 @@ void Zako_Init(void)
 
 	g_bScene = false;
 	g_SceneFream = ZAKO_SCENE_CHANGE_FREAM;
+	g_PlayerForce = 0;
 
 	//テクスチャの設定
 	g_textureID = Texture_SetLoadFile("Asset/Texture/IMG_0539.PNG", 1024, 1024);
@@ -52,7 +54,7 @@ void Zako_Init(void)
 		g_ZakoData[i].position = { 0.0f,-1.0f,(ZAKO_STRIDE*i) + 30.0f };
 		g_ZakoData[i].bLast = i == ZAKO_MAX - 1;
 		g_ZakoData[i].zSort = ZAKO_MAX - i;
-	}
+	}	
 }
 
 void Zako_UnInit(void)
@@ -144,6 +146,7 @@ void Zako_Update(void)
 						g_BreakCount++;
 						PlaySound(SOUND_LABEL_SE_BREAK);
 					}
+					
 					g_ZakoData[Id].use = false;
 				}
 			}
