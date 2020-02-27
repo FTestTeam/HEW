@@ -18,6 +18,7 @@
 #include "input_name.h"
 #include "sound.h"
 #include "input.h"
+#include "info.h"
 
 SCENE g_NextScene = SCENE_TITLE;		//ç≈èâÇÃâÊñ  äÆê¨î≈ÇÕÉ^ÉCÉgÉãÇ…Ç∑ÇÈ
 SCENE g_Scene = g_NextScene;
@@ -41,6 +42,7 @@ void Scene_Init(void)
 		Zako_Init();
 		Syutyusen_Init();
 		Tornado_Init();
+		Info_Init();
 		break;
 
 	case SCENE_RAID:
@@ -53,6 +55,7 @@ void Scene_Init(void)
 		Raid_Init();
 		Syutyusen_Init();
 		Tornado_Init();
+		Info_Init();
 		break;
 
 	case SCENE_RESULT:
@@ -116,6 +119,7 @@ void Scene_Uninit(void)
 		Zako_UnInit();
 		Syutyusen_UnInit();
 		Tornado_UnInit();
+		Info_UnInit();
 		break;
 	case SCENE_RAID:
 		StopSound(SOUND_LABEL_BGM_RAID);
@@ -126,6 +130,7 @@ void Scene_Uninit(void)
 		Raid_UnInit();
 		Syutyusen_UnInit();
 		Tornado_UnInit();
+		Info_UnInit();
 		break;
 	case SCENE_RESULT:
 		Score_Uninit();
@@ -178,6 +183,7 @@ void Scene_Update(void)
 		Zako_Update();
 		Syutyusen_Update();
 		Tornado_Update();
+		Info_Update();
 
 		Collect_Data_Save();
 		break;
@@ -188,6 +194,7 @@ void Scene_Update(void)
 		Raid_Update();
 		Syutyusen_Update();
 		Tornado_Update();
+		Info_Update();
 
 		Collect_Data_Save();
 		break;
@@ -241,6 +248,7 @@ void Scene_Draw(void)
 		Zako_Draw();
 		Tornado_Draw();
 		Effect_Draw();
+		Info_Draw();
 		Syutyusen_Draw();
 		break;
 	case SCENE_RAID:
@@ -249,6 +257,7 @@ void Scene_Draw(void)
 		Effect_Draw();
 		Raid_Draw();
 		Tornado_Draw();
+		Info_Draw();
 		Syutyusen_Draw();
 		break;
 	case SCENE_RESULT:

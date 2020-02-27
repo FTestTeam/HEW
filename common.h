@@ -5,8 +5,6 @@
 /*----------------------------
 	íËêî
 ----------------------------*/
-#define SCREEN_WIDTH	(1280)
-#define SCREEN_HEIGHT	(720)
 
 /*----------------------------
 	É}ÉNÉçíËã`
@@ -20,5 +18,8 @@ typedef struct LocalVecter_Tag {
 	D3DXVECTOR3 Right;
 	D3DXVECTOR3 Up;
 }LocalVecter;
+
+int Window_GetWidth();
+int Window_GetHeight();
 
 #endif

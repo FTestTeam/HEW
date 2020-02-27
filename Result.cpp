@@ -36,7 +36,7 @@ void Result_Update(void)
 void Result_Draw(void)
 {
 	Sprite_SetColor(D3DCOLOR_RGBA(255, 255, 255, 150));
-	Sprite_Draw(g_Result_TextureID, 0 + SCREEN_WIDTH / 2, 0 + SCREEN_HEIGHT / 2, 0.75f, 0.75f, 1280.0f / 2, 720.0f / 2);
+	Sprite_Draw(g_Result_TextureID, 0 + Window_GetWidth() / 2, 0 + Window_GetHeight() / 2, 0.75f, 0.75f, 1280.0f / 2, 720.0f / 2);
 
 	Sprite_SetColor(D3DCOLOR_RGBA(0, 0, 0, 255));
 	Score_Draw(g_ResultScore, 1000, SCORE_POS_NOW, 7, false, true);

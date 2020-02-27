@@ -16,8 +16,8 @@ bool MyDirect3D_Init(HWND hWnd) {
 
 	D3DPRESENT_PARAMETERS d3dpp = {};
 	//バックバッファ
-	d3dpp.BackBufferWidth = SCREEN_WIDTH;		//バックバッファの幅
-	d3dpp.BackBufferHeight = SCREEN_HEIGHT;		//バックバッファの高さ
+	d3dpp.BackBufferWidth = Window_GetWidth();		//バックバッファの幅
+	d3dpp.BackBufferHeight = Window_GetHeight();		//バックバッファの高さ
 	d3dpp.BackBufferFormat = D3DFMT_UNKNOWN;	//バックバッファの種類
 	d3dpp.BackBufferCount = 1;					//バックバッファの数
 
