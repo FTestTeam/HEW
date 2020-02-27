@@ -6,6 +6,7 @@
 #include "score.h"
 #include "input.h"
 #include "joycon.h"
+#include "input_name.h"
 
 #define  SCORE_MAX (3)
 
@@ -60,12 +61,19 @@ void Result_Sort(void)
 		g_Score[2] = g_Score[1];
 		g_Score[1] = g_Score[0];
 		g_Score[0] = g_ResultScore;
+		SetRankName(1);
 	}else if (g_ResultScore > g_Score[1])
 	{
 		g_Score[2] = g_Score[1];
 		g_Score[1] = g_ResultScore;
+		SetRankName(2);
 	}else if (g_ResultScore > g_Score[2])
 	{
 		g_Score[2] = g_ResultScore;
+		SetRankName(3);
+	}
+	else
+	{
+		SetRankName(-1);
 	}
 }
