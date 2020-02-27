@@ -20,6 +20,12 @@ static char name1[NAME_MAX];     //名前保存用
 static char name2[NAME_MAX];
 static char name3[NAME_MAX];
 
+static int g_Rank = 0;
+
+//プロトタイプ宣言
+void NameSort(void);
+void NameLink(int i);
+
 void iName_Init(void)
 {
 	g_iName_TextureID = Texture_SetLoadFile("Asset/Font/alphabet2.png", NAME_WIDTH, NAME_HIGH);
@@ -35,6 +41,7 @@ void iName_Init(void)
 		//name2[i] = 26;
 		//name3[i] = 26;
 	}
+	NameSort();
 }
 
 void iName_Uninit(void)
@@ -50,10 +57,6 @@ void iName_Update(void)
 		Select += 1;
 		if (Select >= NAME_MAX)
 		{//名前入力終了
-			for (int i = 0; i < NAME_MAX; i++)
-			{
-				name1[i] = nAlphabet[i];
-			}
 			Scene_SetNextScene(SCENE_TITLE);
 		}
 	}
@@ -73,6 +76,7 @@ void iName_Update(void)
 		{
 			nAlphabet[Select] = 0;
 		}
+		NameLink(Select);
 	}
 	if (Keyboard_IsTrigger(DIK_UPARROW))
 	{
@@ -81,6 +85,7 @@ void iName_Update(void)
 		{
 			nAlphabet[Select] = 26;
 		}
+		NameLink(Select);
 	}
 }
 
@@ -127,4 +132,70 @@ void iName_Draw(void)
 		alphabet_Draw(name3[i], NAME_START_POS_X + (i * ((NAME_WIDTH * SCALE) / NAME_YOKOLINE)), SCORE_POS_3);
 	}
 	Sprite_SetColor(D3DCOLOR_RGBA(255, 255, 255, 255));
+}
+
+void SetRankName(int no)//順位参照
+{
+	g_Rank = no;
+}
+
+void NameSort(void)//順位変更
+{
+	if (g_Rank == 1)
+	{
+		for (int i = 0; i < NAME_MAX; i++)
+		{
+			name3[i] = name2[i];
+		}
+		for (int i = 0; i < NAME_MAX; i++)
+		{
+			name2[i] = name1[i];
+		}
+		for (int i = 0; i < NAME_MAX; i++)
+		{
+			name1[i] = nAlphabet[i];
+		}
+	}
+	else if (g_Rank == 2)
+	{
+		for (int i = 0; i < NAME_MAX; i++)
+		{
+			name3[i] = name2[i];
+		}
+		for (int i = 0; i < NAME_MAX; i++)
+		{
+			name2[i] = nAlphabet[i];
+		}
+	}
+	else if (g_Rank == 3)
+	{
+		for (int i = 0; i < NAME_MAX; i++)
+		{
+			name3[i] = nAlphabet[i];
+		}
+	}
+	else
+	{
+
+	}
+}
+
+void NameLink(int i)//関連付け
+{
+	if (g_Rank == 1)
+	{
+		name1[i] = nAlphabet[i];
+	}
+	else if (g_Rank == 2)
+	{
+		name2[i] = nAlphabet[i];
+	}
+	else if (g_Rank == 3)
+	{
+		name3[i] = nAlphabet[i];
+	}
+	else
+	{
+
+	}
 }
