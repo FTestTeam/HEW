@@ -11,6 +11,7 @@
 #include"Scene.h"
 #include"collect_data.h"
 #include"sound.h"
+#include"debug_font.h"
 
 typedef struct PLAYER_Tag{
 	LocalVecter LocalVec;
@@ -24,6 +25,7 @@ static float g_Ratetion;
 static int g_fream;
 static bool g_Fly;
 static float g_Force;
+static bool g_bSound;
 
 void Player_Init() 
 {
@@ -34,6 +36,7 @@ void Player_Init()
 	g_Fly = false;
 	g_Rspeed = 0.0f;
 	g_Force = 0;
+	g_bSound = false;
 
 	//ハンマーのポジションをプレイヤーの前に初期化
 	D3DXVECTOR3 w;
@@ -71,12 +74,14 @@ void Player_Update()
 				if (Joycon_IsUsed()) {
 					g_Rspeed = fabsf(Joycon_GetAccel(DIJOY_ACCEL_SL1) / 50000);
 					g_Force += g_Rspeed;
+					if (!g_bSound) {
+						PlaySound(SOUND_LABEL_BGM_KAZE);
+						g_bSound = true;
+					}
 				}
 				else {
 					g_Rspeed += 0.01f;
 				}
-				PlaySound(SOUND_LABEL_SE_KAZE);
-				//g_Rspeed = min(g_Rspeed, 1.0f);
 			}
 			else {	//	ジョイコン振ってない間回転減少
 				g_Rspeed -= 0.005f;
@@ -85,9 +90,19 @@ void Player_Update()
 			g_Ratetion -= g_Rspeed;
 			g_fream++;
 		}
+
+		if(g_bSound) DebugFont_SetParam(5, "SoundOn");
+
+		if (!g_bSound) {
+			StopSound(SOUND_LABEL_BGM_KAZE);
+		}
+
 		if (Keyboard_IsRelease(DIK_SPACE) || Joycon_IsRelease(DIJOY_R_SR)) {	//ボタン離したら投げる
 			g_Fly = true;
+			g_bSound = false;
 		}
+
+
 	}
 	//DebugPrintf("%f\n", Joycon_GetAccel(DIJOY_ACCEL_SL1));
 }

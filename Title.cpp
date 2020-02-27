@@ -26,14 +26,14 @@ void Title_Init(void)
 {
 	g_Title_TextureID = Texture_SetLoadFile("Asset/Texture/title.png", 1280, 720);
 
-	g_Titleback_TextureID = Texture_SetLoadFile("Asset/Texture/titleback.png", SCREEN_WIDTH, SCREEN_HEIGHT);
+	g_Titleback_TextureID = Texture_SetLoadFile("Asset/Texture/titleback.png", Window_GetWidth(), Window_GetHeight());
 	g_Startbutton_TextureID = Texture_SetLoadFile("Asset/Texture/startbutton.png", 1482, 560);
 
 
 	scale = 1.0f;
 	radius = 0.0f;
-	center_x = (float)SCREEN_WIDTH / 2;
-	center_y = (float)SCREEN_HEIGHT / 2;
+	center_x = (float)Window_GetWidth() / 2;
+	center_y = (float)Window_GetHeight() / 2;
 
 	g_fream = 0;
 
