@@ -13,6 +13,7 @@
 #include"background.h"
 #include"syutyusen.h"
 #include"effect.h"
+#include"fade.h"
 
 void Game_Init()
 {
@@ -41,6 +42,10 @@ void Game_Update()
 	Stage_Update();
 	Wall_Update();
 	BackGround_Update();
+
+	if (Keyboard_IsTrigger(DIK_1)) {
+		Fade_Stert(120, D3DCOLOR_RGBA(255, 255, 255, 255), true);
+	}
 }
 
 void Game_Draw() 

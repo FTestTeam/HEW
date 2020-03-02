@@ -25,11 +25,13 @@ SCENE g_Scene = g_NextScene;
 
 void Scene_Init(void)
 {
+	Fade_Stert(60, D3DCOLOR_RGBA(255, 255, 255, 255), false);
+
 	switch (g_NextScene)
 	{
 	case SCENE_TITLE:
 		Title_Init();
-
+		StopSound();
 		break;
 
 	case SCENE_ZAKO:
@@ -100,11 +102,13 @@ void Scene_Init(void)
 		MessageBox(NULL, "異常が発生したよ(´･ω･`)", "エラーパターン:Texture_Load() < 0", MB_OK);
 	}
 
-	Fade_Stert(60, D3DCOLOR_RGBA(255, 255, 255, 255), false);
+	
 }
 
 void Scene_Uninit(void)
 {
+	Fade_Stert(60, D3DCOLOR_RGBA(255, 255, 255, 255), true);
+
 	switch (g_Scene)
 	{
 	case SCENE_TITLE:
@@ -147,6 +151,7 @@ void Scene_Uninit(void)
 		Syutyusen_UnInit();
 		Tornado_UnInit();
 		Replay_UnInit();
+
 		break;
 	case SCENE_REPLAY_RAID:
 		StopSound();
@@ -167,7 +172,7 @@ void Scene_Uninit(void)
 		break;
 	};
 
-	Fade_Stert(60, D3DCOLOR_RGBA(255, 255, 255, 255), true);
+	
 }
 
 void Scene_Update(void)

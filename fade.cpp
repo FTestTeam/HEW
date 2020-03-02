@@ -56,9 +56,9 @@ void Fade_Draw(void)
 		}
 		FadeVertex v[4] = {
 			{D3DXVECTOR4(0.0f,0.0f,0.0f,1.0f),g_FadeColor},
-			{D3DXVECTOR4(Window_GetWidth(),0.0f,0.0f,1.0f),g_FadeColor},
-			{D3DXVECTOR4(0.0f,Window_GetHeight(),0.0f,1.0f),g_FadeColor},
-			{D3DXVECTOR4(Window_GetWidth(),Window_GetHeight(),0.0f,1.0f),g_FadeColor}
+			{D3DXVECTOR4((float)Window_GetWidth(),0.0f,0.0f,1.0f),g_FadeColor},
+			{D3DXVECTOR4(0.0f,(float)Window_GetHeight(),0.0f,1.0f),g_FadeColor},
+			{D3DXVECTOR4((float)Window_GetWidth(),(float)Window_GetHeight(),0.0f,1.0f),g_FadeColor}
 		};
 
 		LPDIRECT3DDEVICE9 pDevice = NULL;

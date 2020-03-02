@@ -7,6 +7,7 @@
 #include "input.h"
 #include "joycon.h"
 #include "input_name.h"
+#include "sound.h"
 
 #define  SCORE_MAX (3)
 
